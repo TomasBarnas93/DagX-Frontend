@@ -1,5 +1,7 @@
 import img1 from "../assets/images/obraz-1.jpg"
 import img2 from "../assets/images/obraz-2.jpg"
+import img3 from "../assets/images/obraz-3.jpg"
+import img4 from "../assets/images/obraz-4.jpg"
 
 const konst = [
     {
@@ -9,6 +11,14 @@ const konst = [
     {
         name: "test2",
         image: img2
+    },
+    {
+        name: "test3",
+        image: img3
+    },
+    {
+        name: "test4",
+        image: img4
     }
 ]
 

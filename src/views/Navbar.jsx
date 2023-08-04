@@ -5,6 +5,7 @@ import {
   Flex,
   Spacer,
   Text,
+  Button,
   Link as ChakraLink,
   IconButton,
   useDisclosure,
@@ -12,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logopic from "../assets/images/logo.jpg";
-import { GB, PL, SE } from "country-flag-icons/react/3x2";
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
@@ -27,7 +27,6 @@ const Navbar = () => {
   return (
     <Flex
       bg="#f5f5dc"
-      p={2}
       alignItems="center"
       position="fixed"
       top="0"
@@ -94,7 +93,7 @@ const Navbar = () => {
               <Text fontFamily="Poppins">Contact</Text>
             </ChakraLink>
           </Box>
-          <Box p="2">
+          <Box p="4">
             <ChakraLink
               as={Link}
               to="/about"
@@ -106,7 +105,7 @@ const Navbar = () => {
             </ChakraLink>
           </Box>
           <Spacer />
-          <Box pr="20">
+          <Box mr="20">
             <ChakraLink
               as={Link}
               to="/create"
@@ -117,14 +116,11 @@ const Navbar = () => {
               <Text fontFamily="Poppins">Create</Text>
             </ChakraLink>
           </Box>
-          <Box mr="1rem">
-            <GB title="Great Britain" className="flag-icon" />
-          </Box>
-          <Box mr="1rem">
-            <PL title="Poland" className="flag-icon" />
-          </Box>
-          <Box mr="1rem">
-            <SE title="Sweden" className="flag-icon" />
+          <Spacer />
+          <Box mr="10">
+            <Button m="1" bg="#f5f5dc">SV</Button>
+            <Button m="1" bg="#f5f5dc">PL</Button>
+            <Button m="1" bg="#f5f5dc">GB</Button>
           </Box>
         </Flex>
       )}
@@ -181,15 +177,6 @@ const Navbar = () => {
             >
               <Text fontFamily="Poppins">Create</Text>
             </ChakraLink>
-          </Box>
-          <Box p="2">
-            <GB title="Great Britain" className="flag-icon" />
-          </Box>
-          <Box p="2">
-            <PL title="Poland" className="flag-icon" />
-          </Box>
-          <Box p="2">
-            <SE title="Sweden" className="flag-icon" />
           </Box>
         </Flex>
       )}

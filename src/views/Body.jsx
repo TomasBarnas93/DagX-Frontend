@@ -7,7 +7,7 @@ import Design from "../pages/Create/Design";
 
 function Body() {
   return (
-    <main>
+    <main style={{ paddingTop: '4.5rem' }}>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />

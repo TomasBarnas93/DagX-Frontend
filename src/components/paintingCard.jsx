@@ -1,23 +1,16 @@
 import React from "react";
-import { Box, Heading, Image } from "@chakra-ui/react";
+import { Image, Card, CardBody, Heading, Flex } from '@chakra-ui/react'
 
 function PaintingCard({ name, image }) {
   return (
-    <Box
-      maxW="md"
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      boxShadow="lg"
-      h="50%"
-    >
-      <Image src={image} alt={name} />
-      <Box p="4">
-        <Heading as="h3" size="md" fontFamily="Poppins">
-          {name}
-        </Heading>
-      </Box>
-    </Box>
+    <Card marginTop={5} maxW="md">
+      <CardBody>
+        <Image src={image} borderRadius='lg' w="50vh" h="50vh" objectFit="cover" />
+        <Flex justifyContent="center" alignItems="center">
+          <Heading size="lg">{name}</Heading>
+        </Flex>
+      </CardBody>
+    </Card>
   );
 }
 
