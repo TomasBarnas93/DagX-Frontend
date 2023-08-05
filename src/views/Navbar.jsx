@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import {
+  Select,
   Image,
   Box,
   Flex,
   Spacer,
   Text,
-  Button,
   Link as ChakraLink,
   IconButton,
   useDisclosure,
@@ -118,9 +118,11 @@ const Navbar = () => {
           </Box>
           <Spacer />
           <Box mr="10">
-            <Button m="1" bg="#f5f5dc">SV</Button>
-            <Button m="1" bg="#f5f5dc">PL</Button>
-            <Button m="1" bg="#f5f5dc">GB</Button>
+          <Select>
+              <option>PL</option>
+              <option>GB</option>
+              <option>SV</option>
+            </Select>
           </Box>
         </Flex>
       )}
@@ -177,6 +179,13 @@ const Navbar = () => {
             >
               <Text fontFamily="Poppins">Create</Text>
             </ChakraLink>
+          </Box>
+          <Box>
+            <Select>
+              <option>PL</option>
+              <option>GB</option>
+              <option>SV</option>
+            </Select>
           </Box>
         </Flex>
       )}

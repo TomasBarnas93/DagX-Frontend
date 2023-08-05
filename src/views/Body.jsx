@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import Contact from "../pages/Contact/Contact";
 import About from "../pages/About/About";
 import Design from "../pages/Create/Design";
+import Detail from "../pages/Details/Detail";
 
 function Body() {
   return (
@@ -13,6 +14,7 @@ function Body() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/create" element={<Design />} />
+        <Route path="/detail/:id" element={<Detail />} />
       </Routes>
     </main>
   );

@@ -5,18 +5,22 @@ import img4 from "../assets/images/obraz-4.jpg"
 
 const konst = [
     {
+        id: "1",
         name: "test",
         image: img1
     },
     {
+        id: "2",
         name: "test2",
         image: img2
     },
     {
+        id: "3",
         name: "test3",
         image: img3
     },
     {
+        id: "4",
         name: "test4",
         image: img4
     }
