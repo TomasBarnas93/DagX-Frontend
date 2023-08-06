@@ -37,8 +37,8 @@ function Design() {
   };
 
   const saveCanvas = () => {
-    const canvas = canvasRef.current;
-    const image = canvas.toDataURL("image/png");
+    // const canvas = canvasRef.current;
+    // const image = canvas.toDataURL("image/png");
   };
 
   return (
