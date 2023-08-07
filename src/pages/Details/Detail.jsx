@@ -1,8 +1,6 @@
 import React from "react";
 import {
   Image,
-  Card,
-  CardBody,
   Heading,
   Flex,
   Container,
@@ -24,20 +22,18 @@ function Detail() {
 
   return (
     <Container>
-      <Card marginTop={5} maxW="md">
-        <CardBody>
+    
           <Image
             src={image}
             borderRadius="lg"
-            w="50vh"
+            w="100%"
             h="50vh"
             objectFit="cover"
           />
           <Flex justifyContent="center" alignItems="center">
             <Heading size="lg">{name}</Heading>
           </Flex>
-        </CardBody>
-      </Card>
+  
       <Link to="/contact">
         <Button colorScheme='red'>Ask for price</Button>
       </Link>
