@@ -1,65 +1,91 @@
-import React, { useRef, useState } from "react";
-import { Button, Container } from "@chakra-ui/react";
+import React, { useState, useRef } from 'react';
+import { ChromePicker } from 'react-color';
 
 function Design() {
   const canvasRef = useRef(null);
-  const [isPainting, setIsPainting] = useState(false);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [color, setColor] = useState('#000000');
 
-  const startPainting = () => {
-    setIsPainting(true);
+  const startDrawing = (e) => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    const { offsetX, offsetY } = e.nativeEvent;
+
+    context.strokeStyle = color;
+    context.lineWidth = 5;
+    context.lineCap = 'round';
+    context.beginPath();
+    context.moveTo(offsetX, offsetY);
+
+    setIsDrawing(true);
   };
 
-  const stopPainting = () => {
-    setIsPainting(false);
-  };
-
-  const handlePainting = (e) => {
-    if (!isPainting) return;
+  const draw = (e) => {
+    if (!isDrawing) return;
 
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const x = e.nativeEvent.offsetX;
-    const y = e.nativeEvent.offsetY;
+    const context = canvas.getContext('2d');
+    const { offsetX, offsetY } = e.nativeEvent;
 
-    ctx.lineWidth = 5;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "black";
-    ctx.lineTo(x, y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
+    context.lineTo(offsetX, offsetY);
+    context.stroke();
   };
 
-  const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const endDrawing = () => {
+    setIsDrawing(false);
+  };
+
+  const handleColorChange = (newColor) => {
+    setColor(newColor.hex);
   };
 
   const saveCanvas = () => {
-    // const canvas = canvasRef.current;
-    // const image = canvas.toDataURL("image/png");
+    const canvas = canvasRef.current;
+    const image = canvas.toDataURL('image/png');
+
+    if (window.navigator.msSaveBlob) {
+      // For Microsoft browsers (Edge, IE)
+      const blob = dataURItoBlob(image);
+      window.navigator.msSaveBlob(blob, 'my_drawing.png');
+    } else {
+      // For other browsers
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'my_drawing.png';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.click();
+    }
+  };
+
+  const dataURItoBlob = (dataURI) => {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([uint8Array], { type: mimeString });
   };
 
   return (
-    <Container>
+    <div>
+      <div>
+        <ChromePicker color={color} onChange={handleColorChange} />
+      </div>
       <canvas
         ref={canvasRef}
-        width={600}
-        height={500}
-        style={{ border: "1px solid black" }}
-        onMouseDown={startPainting}
-        onMouseUp={stopPainting}
-        onMouseMove={handlePainting}
-        onMouseLeave={stopPainting}
+        width={800}
+        height={600}
+        onMouseDown={startDrawing}
+        onMouseMove={draw}
+        onMouseUp={endDrawing}
       />
-      <Button m={2} colorScheme="green" onClick={saveCanvas}>
-        Save
-      </Button>
-      <Button m={2} colorScheme="blue" onClick={clearCanvas}>
-        Clear
-      </Button>
-    </Container>
+      <button onClick={saveCanvas}>Save</button>
+    </div>
   );
 }
 
