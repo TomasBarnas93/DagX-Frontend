@@ -1,19 +1,45 @@
-import React, { useState, useRef } from 'react';
-import { ChromePicker } from 'react-color';
+import React, { useState, useRef, useEffect } from "react";
+import { ChromePicker } from "react-color";
+import { Box, Button, Flex } from "@chakra-ui/react";
+import './Design.css';
+import { Container } from "semantic-ui-react";
 
 function Design() {
   const canvasRef = useRef(null);
+  const hiddenCanvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState('#000000');
+  const [color, setColor] = useState("#000000");
+
+  useEffect(() => {
+    const resizeCanvas = () => {
+      const canvas = canvasRef.current;
+      const hiddenCanvas = hiddenCanvasRef.current;
+
+      const canvasWidth = window.innerWidth < 768 ? window.innerWidth * 0.9 : window.innerWidth * 0.8;
+      const canvasHeight = window.innerWidth < 768 ? window.innerWidth * 0.6 : window.innerWidth * 0.3;
+
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+      hiddenCanvas.width = window.innerWidth * 0.6;
+      hiddenCanvas.height = window.innerWidth * 0.3;
+    };
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, []);
 
   const startDrawing = (e) => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
     const { offsetX, offsetY } = e.nativeEvent;
 
     context.strokeStyle = color;
     context.lineWidth = 5;
-    context.lineCap = 'round';
+    context.lineCap = "round";
     context.beginPath();
     context.moveTo(offsetX, offsetY);
 
@@ -24,7 +50,7 @@ function Design() {
     if (!isDrawing) return;
 
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
     const { offsetX, offsetY } = e.nativeEvent;
 
     context.lineTo(offsetX, offsetY);
@@ -41,26 +67,32 @@ function Design() {
 
   const saveCanvas = () => {
     const canvas = canvasRef.current;
-    const image = canvas.toDataURL('image/png');
+    const hiddenCanvas = hiddenCanvasRef.current;
+    const context = hiddenCanvas.getContext("2d");
+
+    context.fillStyle = "#FFFFFF";
+    context.fillRect(0, 0, hiddenCanvas.width, hiddenCanvas.height);
+
+    context.drawImage(canvas, 0, 0);
+
+    const image = hiddenCanvas.toDataURL("image/png");
 
     if (window.navigator.msSaveBlob) {
-      // For Microsoft browsers (Edge, IE)
       const blob = dataURItoBlob(image);
-      window.navigator.msSaveBlob(blob, 'my_drawing.png');
+      window.navigator.msSaveBlob(blob, "my_drawing.png");
     } else {
-      // For other browsers
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = image;
-      link.download = 'my_drawing.png';
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
+      link.download = "my_drawing.png";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
       link.click();
     }
   };
 
   const dataURItoBlob = (dataURI) => {
-    const byteString = atob(dataURI.split(',')[1]);
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const byteString = atob(dataURI.split(",")[1]);
+    const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const uint8Array = new Uint8Array(arrayBuffer);
 
@@ -71,21 +103,56 @@ function Design() {
     return new Blob([uint8Array], { type: mimeString });
   };
 
+  const resetCanvas = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  };
   return (
-    <div>
-      <div>
-        <ChromePicker color={color} onChange={handleColorChange} />
-      </div>
+    <Container>
+      <Flex flexDirection={{ base: "column", md: "row" }} alignItems="center">
+        <Box className="toolbar">
+          <ChromePicker
+            color={color}
+            onChange={handleColorChange}
+            disableAlpha={true}
+          />
+        </Box>
+        <Box>
+          <canvas
+            ref={canvasRef}
+            className="drawing-canvas"
+            onMouseDown={startDrawing}
+            onMouseMove={draw}
+            onMouseUp={endDrawing}
+          />
+        </Box>
+      </Flex>
+      <Flex alignItems="center" justifyContent="center">
+        <Box>
+          <Button
+            className="save-button"
+            colorScheme="whatsapp"
+            onClick={saveCanvas}
+          >
+            Save
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            className="reset-button"
+            colorScheme="red"
+            onClick={resetCanvas}
+          >
+            Reset
+          </Button>
+        </Box>
+      </Flex>
       <canvas
-        ref={canvasRef}
-        width={800}
-        height={600}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={endDrawing}
+        ref={hiddenCanvasRef}
+        className="hidden-canvas"
       />
-      <button onClick={saveCanvas}>Save</button>
-    </div>
+    </Container>
   );
 }
 
