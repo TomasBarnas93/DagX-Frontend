@@ -1,22 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChromePicker } from "react-color";
 import { Box, Button, Flex } from "@chakra-ui/react";
-import './Design.css';
+import "./Design.css";
 import { Container } from "semantic-ui-react";
+import brushImage from "../../assets/images/Paint-brush.jpg";
+import eraserImage from "../../assets/images/Pink-eraser.svg.png";
 
 function Design() {
   const canvasRef = useRef(null);
   const hiddenCanvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState("#000000");
+  const [pencilSize, setPencilSize] = useState(5);
+  const [eraserMode, setEraserMode] = useState(false);
 
   useEffect(() => {
     const resizeCanvas = () => {
       const canvas = canvasRef.current;
       const hiddenCanvas = hiddenCanvasRef.current;
 
-      const canvasWidth = window.innerWidth < 768 ? window.innerWidth * 0.9 : window.innerWidth * 0.8;
-      const canvasHeight = window.innerWidth < 768 ? window.innerWidth * 0.6 : window.innerWidth * 0.3;
+      const canvasWidth =
+        window.innerWidth < 768
+          ? window.innerWidth * 0.9
+          : window.innerWidth * 0.8;
+      const canvasHeight =
+        window.innerWidth < 768
+          ? window.innerWidth * 0.6
+          : window.innerWidth * 0.3;
 
       canvas.width = canvasWidth;
       canvas.height = canvasHeight;
@@ -37,8 +47,8 @@ function Design() {
     const context = canvas.getContext("2d");
     const { offsetX, offsetY } = e.nativeEvent;
 
-    context.strokeStyle = color;
-    context.lineWidth = 5;
+    context.strokeStyle = eraserMode ? "#FFFFFF" : color;
+    context.lineWidth = eraserMode ? pencilSize * 2 : pencilSize;
     context.lineCap = "round";
     context.beginPath();
     context.moveTo(offsetX, offsetY);
@@ -108,20 +118,54 @@ function Design() {
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
   };
+
+  const toggleEraserMode = () => {
+    setEraserMode((prevEraserMode) => !prevEraserMode);
+  };
+
   return (
     <Container>
       <Flex flexDirection={{ base: "column", md: "row" }} alignItems="center">
-        <Box className="toolbar">
+        <Box className="toolbar" m={5}>
           <ChromePicker
             color={color}
             onChange={handleColorChange}
             disableAlpha={true}
           />
+          <input
+            type="range"
+            min="1"
+            max="20"
+            value={pencilSize}
+            onChange={(e) => setPencilSize(parseInt(e.target.value))}
+            className="range-input"
+          />
+          <Flex>
+            <Box m={2}>
+              <img
+                src={brushImage}
+                alt="Brush"
+                onClick={() => setEraserMode(false)}
+                className={`tool-icon ${!eraserMode ? "active-tool" : ""}`}
+              />
+            </Box>
+            <Box m={2}>
+              <img
+                src={eraserImage}
+                alt="Eraser"
+                onClick={() => toggleEraserMode()}
+                className={`tool-icon ${eraserMode ? "active-tool" : ""}`}
+              />
+            </Box>
+          </Flex>
         </Box>
         <Box>
           <canvas
             ref={canvasRef}
             className="drawing-canvas"
+            onTouchStart={(e) => startDrawing(e.touches[0])}
+            onTouchMove={(e) => draw(e.touches[0])}
+            onTouchEnd={endDrawing}
             onMouseDown={startDrawing}
             onMouseMove={draw}
             onMouseUp={endDrawing}
@@ -148,10 +192,7 @@ function Design() {
           </Button>
         </Box>
       </Flex>
-      <canvas
-        ref={hiddenCanvasRef}
-        className="hidden-canvas"
-      />
+      <canvas ref={hiddenCanvasRef} className="hidden-canvas" />
     </Container>
   );
 }
