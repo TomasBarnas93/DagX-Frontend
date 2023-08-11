@@ -13,15 +13,22 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logopic from "../assets/images/logo.jpg";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const { i18n } = useTranslation();
 
   const handleCloseMenu = () => {
     if (isMobile && isOpen) {
       onToggle();
     }
+  };
+
+  const handleLanguageChange = (e) => {
+    const selectedLanguage = e.target.value;
+    i18n.changeLanguage(selectedLanguage);
   };
 
   return (
@@ -105,7 +112,7 @@ const Navbar = () => {
             </ChakraLink>
           </Box>
           <Spacer />
-          <Box mr="20">
+          <Box p="4">
             <ChakraLink
               as={Link}
               to="/create"
@@ -129,10 +136,10 @@ const Navbar = () => {
           </Box>
           <Spacer />
           <Box mr="10">
-          <Select>
-              <option>PL</option>
-              <option>GB</option>
-              <option>SV</option>
+            <Select onChange={handleLanguageChange}>
+              <option value="en">GB</option>
+              <option value="pl">PL</option>
+              <option value="sv">SV</option>
             </Select>
           </Box>
         </Flex>
@@ -191,7 +198,7 @@ const Navbar = () => {
               <Text fontFamily="Poppins">Create</Text>
             </ChakraLink>
           </Box>
-          <Box mr="20">
+          <Box p="1">
             <ChakraLink
               as={Link}
               to="/touch"
@@ -203,10 +210,10 @@ const Navbar = () => {
             </ChakraLink>
           </Box>
           <Box>
-            <Select>
-              <option>PL</option>
-              <option>GB</option>
-              <option>SV</option>
+            <Select onChange={handleLanguageChange}>
+              <option value="en">GB</option>
+              <option value="pl">PL</option>
+              <option value="sv">SV</option>
             </Select>
           </Box>
         </Flex>

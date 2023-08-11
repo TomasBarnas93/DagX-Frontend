@@ -10,9 +10,11 @@ import {
 } from "@chakra-ui/react";
 import emailjs from "emailjs-com";
 import Swal from 'sweetalert2';
+import { useTranslation } from "react-i18next";
 
 function Contact() {
   const [recipientName, setRecipientName] = useState("");
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,28 +53,27 @@ function Contact() {
   const handleRecipientNameChange = (e) => {
     setRecipientName(e.target.value);
   };
-
-  return (
+ return (
     <Container>
       <FormControl as="form" onSubmit={handleSubmit}>
         <Flex direction="column">
-          <FormLabel marginTop={2}>First name</FormLabel>
+          <FormLabel marginTop={2}>{t('first_name')}</FormLabel>
           <Input name="from_name" w="50%" />
         </Flex>
         <Flex direction="column">
-          <FormLabel marginTop={2}>Last name</FormLabel>
+          <FormLabel marginTop={2}>{t('last_name')}</FormLabel>
           <Input name="to_name" w="50%" onChange={handleRecipientNameChange} />
         </Flex>
         <Flex direction="column">
-          <FormLabel marginTop={2}>Email address</FormLabel>
+          <FormLabel marginTop={2}>{t('email_address')}</FormLabel>
           <Input name="user_email" type="email" w="50%" />
         </Flex>
         <Flex direction="column">
-          <FormLabel marginTop={2}>Message</FormLabel>
+          <FormLabel marginTop={2}>{t('message')}</FormLabel>
           <Textarea name="message" w="50%" />
         </Flex>
         <Button colorScheme="yellow" marginTop={2} type="submit">
-          Send
+          {t('send')}
         </Button>
       </FormControl>
     </Container>

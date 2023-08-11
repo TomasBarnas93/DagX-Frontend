@@ -9,10 +9,12 @@ import {
 import { useParams } from "react-router-dom";
 import konst from "../../data/data";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Detail() {
   const { id } = useParams();
   const painting = konst.find((p) => p.id === id);
+  const { t } = useTranslation();
 
   if (!painting) {
     return <div>Painting not found</div>;
@@ -35,7 +37,7 @@ function Detail() {
           </Flex>
   
       <Link to="/contact">
-        <Button colorScheme='red'>Ask for price</Button>
+        <Button colorScheme='red'>{t('BtnAskForPrice')}</Button>
       </Link>
     </Container>
   );
