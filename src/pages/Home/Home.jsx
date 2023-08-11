@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div>
+    <div className="mainDiv">
       <img src={backgroundFoto} alt="background" className="homeMainFoto" />
       <Container maxW="container.lg">
         <Flex flexWrap="wrap" justifyContent="space-around">

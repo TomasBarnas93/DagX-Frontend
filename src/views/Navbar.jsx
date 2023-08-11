@@ -117,6 +117,18 @@ const Navbar = () => {
             </ChakraLink>
           </Box>
           <Spacer />
+          <Box mr="20">
+            <ChakraLink
+              as={Link}
+              to="/touch"
+              color="black"
+              fontSize="md"
+              onClick={handleCloseMenu}
+            >
+              <Text fontFamily="Poppins">Touch</Text>
+            </ChakraLink>
+          </Box>
+          <Spacer />
           <Box mr="10">
           <Select>
               <option>PL</option>

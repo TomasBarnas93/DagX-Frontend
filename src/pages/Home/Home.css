@@ -1,5 +1,12 @@
 .homeMainFoto{
+    position: relative !important;
     width: 100%;
     height: 90vh;
     background-position: center;
+}
+
+.mainDiv{
+    position: absolute !important;
+    justify-content: center;
+    align-items: center;
 }
