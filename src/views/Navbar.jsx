@@ -116,7 +116,6 @@ const Navbar = () => {
               <Text fontFamily="Poppins">Create</Text>
             </ChakraLink>
           </Box>
-          <Spacer />
           <Box mr="20">
             <ChakraLink
               as={Link}
@@ -190,6 +189,17 @@ const Navbar = () => {
               onClick={handleCloseMenu}
             >
               <Text fontFamily="Poppins">Create</Text>
+            </ChakraLink>
+          </Box>
+          <Box mr="20">
+            <ChakraLink
+              as={Link}
+              to="/touch"
+              color="black"
+              fontSize="md"
+              onClick={handleCloseMenu}
+            >
+              <Text fontFamily="Poppins">Touch</Text>
             </ChakraLink>
           </Box>
           <Box>
