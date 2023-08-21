@@ -14,21 +14,35 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logopic from "../assets/images/logo.jpg";
 import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { i18n } = useTranslation();
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { t } = useTranslation();
+
+  const handleLanguageChange = (e) => {
+    const newLanguage = e.target.value;
+    setSelectedLanguage(newLanguage);
+    i18n.changeLanguage(newLanguage);
+
+    localStorage.setItem("selectedLanguage", newLanguage);
+  };
+
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem("selectedLanguage");
+    if (storedLanguage) {
+      setSelectedLanguage(storedLanguage);
+      i18n.changeLanguage(storedLanguage);
+    }
+  }, [i18n]);
 
   const handleCloseMenu = () => {
     if (isMobile && isOpen) {
       onToggle();
     }
-  };
-
-  const handleLanguageChange = (e) => {
-    const selectedLanguage = e.target.value;
-    i18n.changeLanguage(selectedLanguage);
   };
 
   return (
@@ -41,6 +55,7 @@ const Navbar = () => {
       right="0"
       zIndex="100"
       justifyContent="space-between"
+      boxShadow='dark-lg'
     >
       <Box ml="1rem">
         <ChakraLink as={Link} to="/">
@@ -86,7 +101,7 @@ const Navbar = () => {
               fontSize="md"
               onClick={handleCloseMenu}
             >
-              <Text fontFamily="Poppins">Home</Text>
+              <Text fontFamily="Poppins">{t('Home')}</Text>
             </ChakraLink>
           </Box>
           <Box p="2">
@@ -97,7 +112,7 @@ const Navbar = () => {
               fontSize="md"
               onClick={handleCloseMenu}
             >
-              <Text fontFamily="Poppins">Contact</Text>
+              <Text fontFamily="Poppins">{t('Contact')}</Text>
             </ChakraLink>
           </Box>
           <Box p="4">
@@ -108,7 +123,7 @@ const Navbar = () => {
               fontSize="md"
               onClick={handleCloseMenu}
             >
-              <Text fontFamily="Poppins">About</Text>
+              <Text fontFamily="Poppins">{t('About')}</Text>
             </ChakraLink>
           </Box>
           <Spacer />
@@ -120,7 +135,7 @@ const Navbar = () => {
               fontSize="md"
               onClick={handleCloseMenu}
             >
-              <Text fontFamily="Poppins">Create</Text>
+              <Text fontFamily="Poppins">{t('Create')}</Text>
             </ChakraLink>
           </Box>
           <Box mr="20">
@@ -162,7 +177,7 @@ const Navbar = () => {
               fontSize="md"
               onClick={handleCloseMenu}
             >
-              <Text fontFamily="Poppins">Home</Text>
+              <Text fontFamily="Poppins">{t('Home')}</Text>
             </ChakraLink>
           </Box>
           <Box p="1">
@@ -173,7 +188,7 @@ const Navbar = () => {
               fontSize="md"
               onClick={handleCloseMenu}
             >
-              <Text fontFamily="Poppins">Contact</Text>
+              <Text fontFamily="Poppins">{t('Contact')}</Text>
             </ChakraLink>
           </Box>
           <Box p="1">
@@ -184,7 +199,7 @@ const Navbar = () => {
               fontSize="md"
               onClick={handleCloseMenu}
             >
-              <Text fontFamily="Poppins">About</Text>
+              <Text fontFamily="Poppins">{t('About')}</Text>
             </ChakraLink>
           </Box>
           <Box p="1">
@@ -195,7 +210,7 @@ const Navbar = () => {
               fontSize="md"
               onClick={handleCloseMenu}
             >
-              <Text fontFamily="Poppins">Create</Text>
+              <Text fontFamily="Poppins">{t('Create')}</Text>
             </ChakraLink>
           </Box>
           <Box p="1">
@@ -210,7 +225,7 @@ const Navbar = () => {
             </ChakraLink>
           </Box>
           <Box>
-            <Select onChange={handleLanguageChange}>
+            <Select value={selectedLanguage} onChange={handleLanguageChange}>
               <option value="en">GB</option>
               <option value="pl">PL</option>
               <option value="sv">SV</option>
