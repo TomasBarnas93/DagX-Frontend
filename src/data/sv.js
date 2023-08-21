@@ -6,6 +6,7 @@ export const svTranslation = {
   last_name: "Efternamn",
   email_address: "E-postadress",
   message: "Meddelande",
+  upload_file: "Ladda up filen",
   send: "Skicka",
   message_sent_success: "Meddelande skickades framgångsrikt",
   oops_something_wrong: "Hoppsan, något gick fel",

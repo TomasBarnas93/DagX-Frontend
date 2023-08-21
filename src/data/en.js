@@ -7,6 +7,7 @@ export const enTranslation = {
   last_name: "Last name",
   email_address: "Email address",
   message: "Message",
+  upload_file: "Upload file",
   send: "Send",
   message_sent_success: "Message Sent Successfully",
   oops_something_wrong: "Oops, something went wrong",
