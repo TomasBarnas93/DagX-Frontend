@@ -68,6 +68,7 @@ function Design() {
   };
 
   const startDrawing = (e) => {
+    document.body.style.overflow = 'hidden';
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     const { x, y } = getCoordinates(e, e.type);
@@ -96,6 +97,7 @@ function Design() {
 
   const endDrawing = (e) => {
     if (shape && startPoint) {
+      document.body.style.overflow = '';
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
       const { x, y } = getCoordinates(e, e.type);
