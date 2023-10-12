@@ -54,62 +54,76 @@ function Design() {
     };
   }, []);
 
+  const getCoordinates = (e) => {
+    if (e.nativeEvent) {
+      const { offsetX, offsetY } = e.nativeEvent;
+      return { x: offsetX, y: offsetY };
+    } else {
+      const rect = canvasRef.current.getBoundingClientRect();
+      const x = e.targetTouches[0].clientX - rect.left;
+      const y = e.targetTouches[0].clientY - rect.top;
+      return { x, y };
+    }
+  };
+
   const startDrawing = (e) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    const { offsetX, offsetY } = e.nativeEvent;
+    const { x, y } = getCoordinates(e);
 
     if (shape) {
-        setStartPoint({ x: offsetX, y: offsetY });
+      setStartPoint({ x, y });
     } else {
-        context.strokeStyle = eraserMode ? "#FFFFFF" : color;
-        context.lineWidth = eraserMode ? pencilSize * 2 : pencilSize;
-        context.lineCap = "round";
-        context.beginPath();
-        context.moveTo(offsetX, offsetY);
+      context.strokeStyle = eraserMode ? "#FFFFFF" : color;
+      context.lineWidth = eraserMode ? pencilSize * 2 : pencilSize;
+      context.lineCap = "round";
+      context.beginPath();
+      context.moveTo(x, y);
     }
 
     setIsDrawing(true);
-};
+  };
 
-const draw = (e) => {
-  if (!isDrawing || shape) return;
+  const draw = (e) => {
+    if (!isDrawing || shape) return;
 
-  const canvas = canvasRef.current;
-  const context = canvas.getContext("2d");
-  const { offsetX, offsetY } = e.nativeEvent;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    const { x, y } = getCoordinates(e);
 
-  context.lineTo(offsetX, offsetY);
-  context.stroke();
-};
+    context.lineTo(x, y);
+    context.stroke();
+  };
 
   const endDrawing = (e) => {
     if (shape && startPoint) {
-        const { offsetX, offsetY } = e.nativeEvent;
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+      const { x, y } = getCoordinates(e);
 
-        context.beginPath();
-        context.strokeStyle = color;
-        context.lineWidth = pencilSize;
-        if (shape === 'line') {
-            context.moveTo(startPoint.x, startPoint.y);
-            context.lineTo(offsetX, offsetY);
-        } else if (shape === 'circle') {
-            const radius = Math.sqrt((startPoint.x - offsetX)**2 + (startPoint.y - offsetY)**2);
-            context.arc(startPoint.x, startPoint.y, radius, 0, Math.PI * 2);
-        } else if (shape === 'triangle') {
-            context.moveTo(startPoint.x, startPoint.y);
-            context.lineTo(offsetX, offsetY);
-            context.lineTo(startPoint.x, offsetY);
-            context.closePath();
-        }
-        context.stroke();
+      context.beginPath();
+      context.strokeStyle = color;
+      context.lineWidth = pencilSize;
+      if (shape === "line") {
+        context.moveTo(startPoint.x, startPoint.y);
+        context.lineTo(x, y);
+      } else if (shape === "circle") {
+        const radius = Math.sqrt(
+          (startPoint.x - x) ** 2 + (startPoint.y - y) ** 2
+        );
+        context.arc(startPoint.x, startPoint.y, radius, 0, Math.PI * 2);
+      } else if (shape === "triangle") {
+        context.moveTo(startPoint.x, startPoint.y);
+        context.lineTo(x, y);
+        context.lineTo(startPoint.x, y);
+        context.closePath();
+      }
+      context.stroke();
     }
     setStartPoint(null);
     setIsDrawing(false);
     setShape(null);
-};
+  };
 
   const handleColorChange = (newColor) => {
     setColor(newColor.hex);
