@@ -54,23 +54,23 @@ function Design() {
     };
   }, []);
 
-  const getCoordinates = (e) => {
-    if (e.nativeEvent) {
-      const { offsetX, offsetY } = e.nativeEvent;
-      return { x: offsetX, y: offsetY };
-    } else {
+  const getCoordinates = (e, eventType) => {
+    let x, y;
+    if (eventType.startsWith("touch")) {
       const rect = canvasRef.current.getBoundingClientRect();
-      const x = e.targetTouches[0].clientX - rect.left;
-      const y = e.targetTouches[0].clientY - rect.top;
-      return { x, y };
+      x = e.touches[0].clientX - rect.left;
+      y = e.touches[0].clientY - rect.top;
+    } else {
+      x = e.nativeEvent.offsetX;
+      y = e.nativeEvent.offsetY;
     }
+    return { x, y };
   };
 
   const startDrawing = (e) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    const { x, y } = getCoordinates(e);
-
+    const { x, y } = getCoordinates(e, e.type);
     if (shape) {
       setStartPoint({ x, y });
     } else {
@@ -86,10 +86,9 @@ function Design() {
 
   const draw = (e) => {
     if (!isDrawing || shape) return;
-
+    const { x, y } = getCoordinates(e, e.type);
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    const { x, y } = getCoordinates(e);
 
     context.lineTo(x, y);
     context.stroke();
@@ -99,8 +98,7 @@ function Design() {
     if (shape && startPoint) {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
-      const { x, y } = getCoordinates(e);
-
+      const { x, y } = getCoordinates(e, e.type);
       context.beginPath();
       context.strokeStyle = color;
       context.lineWidth = pencilSize;
@@ -123,6 +121,21 @@ function Design() {
     setStartPoint(null);
     setIsDrawing(false);
     setShape(null);
+  };
+
+  const handleStart = (e) => {
+    e.preventDefault();
+    startDrawing(e);  
+  };
+  
+  const handleMove = (e) => {
+    e.preventDefault();
+    draw(e);  
+  };
+  
+  const handleEnd = (e) => {
+    e.preventDefault();
+    endDrawing(e);  
   };
 
   const handleColorChange = (newColor) => {
@@ -255,12 +268,12 @@ function Design() {
           <canvas
             ref={canvasRef}
             className="drawing-canvas"
-            onTouchStart={(e) => startDrawing(e.touches[0])}
-            onTouchMove={(e) => draw(e.touches[0])}
-            onTouchEnd={endDrawing}
-            onMouseDown={startDrawing}
-            onMouseMove={draw}
-            onMouseUp={endDrawing}
+            onTouchStart={handleStart}
+            onTouchMove={handleMove}
+            onTouchEnd={handleEnd}
+            onMouseDown={handleStart}
+            onMouseMove={handleMove}
+            onMouseUp={handleEnd}
           />
         </Box>
       </Flex>
