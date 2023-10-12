@@ -1,82 +1,97 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   FormControl,
   FormLabel,
   Input,
-  Button,
-  Flex,
-  Container,
   Textarea,
-} from "@chakra-ui/react";
-import emailjs from "emailjs-com";
+  Button,
+  Box,
+  VStack,
+} from '@chakra-ui/react';
 import Swal from 'sweetalert2';
-import { useTranslation } from "react-i18next";
 
 function Contact() {
-  const [recipientName, setRecipientName] = useState("");
-  const { t } = useTranslation();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+    attachment: null,
+  });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      attachment: e.target.files[0],
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const formDataObj = new FormData();
+    formDataObj.append('name', formData.name);
+    formDataObj.append('email', formData.email);
+    formDataObj.append('message', formData.message);
+    formDataObj.append('attachment', formData.attachment);
 
-    const SERVICE_ID = "service_nrj1kkw";
-    const TEMPLATE_ID = "template_uwd8mki"; 
-    const USER_ID = "hM2zYKNrjou6hmE5B"; 
-
-    const formData = {
-      from_name: e.target.elements.from_name.value,
-      to_name: recipientName,
-      message: e.target.elements.message.value,
-      user_email: e.target.elements.user_email.value
-    };
-
-    emailjs
-      .send(SERVICE_ID, TEMPLATE_ID, formData, USER_ID)
-      .then((response) => {
-        console.log("Email sent successfully:", response);
-        Swal.fire({
-          icon: 'success',
-          title: 'Message Sent Successfully',
-        });
-        e.target.reset();
-      })
-      .catch((error) => {
-        console.error("Error sending email:", error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops, something went wrong',
-          text: error.text,
-        });
+    try {
+      const response = await fetch('http://localhost:3000/contact_form', {
+        method: 'POST',
+        body: formDataObj,
       });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+
+      const result = await response.json();
+      console.log("Email sent successfully:", result);
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+      });
+      e.target.reset();
+    } catch (error) {
+      console.error("Error sending email:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Wrong",
+        text: error.message,
+      });
+    }
   };
 
-  const handleRecipientNameChange = (e) => {
-    setRecipientName(e.target.value);
-  };
- return (
-    <Container>
-      <FormControl as="form" onSubmit={handleSubmit}>
-        <Flex direction="column">
-          <FormLabel marginTop={2}>{t('first_name')}</FormLabel>
-          <Input name="from_name" w="50%" />
-        </Flex>
-        <Flex direction="column">
-          <FormLabel marginTop={2}>{t('last_name')}</FormLabel>
-          <Input name="to_name" w="50%" onChange={handleRecipientNameChange} />
-        </Flex>
-        <Flex direction="column">
-          <FormLabel marginTop={2}>{t('email_address')}</FormLabel>
-          <Input name="user_email" type="email" w="50%" />
-        </Flex>
-        <Flex direction="column">
-          <FormLabel marginTop={2}>{t('message')}</FormLabel>
-          <Textarea name="message" w="50%" />
-        </Flex>
-        <Button colorScheme="yellow" marginTop={2} type="submit">
-          {t('send')}
-        </Button>
-      </FormControl>
-    </Container>
+  return (
+    <Box p={5}>
+      <form onSubmit={handleSubmit}>
+        <VStack spacing={5}>
+          <FormControl isRequired>
+            <FormLabel>Name</FormLabel>
+            <Input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel>Email</FormLabel>
+            <Input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel>Message</FormLabel>
+            <Textarea name="message" value={formData.message} onChange={handleChange} placeholder="Message" />
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel>Attachment</FormLabel>
+            <Input type="file" onChange={handleFileChange} />
+          </FormControl>
+          <Button type="submit" colorScheme="blue">Submit</Button>
+        </VStack>
+      </form>
+    </Box>
   );
 }
 

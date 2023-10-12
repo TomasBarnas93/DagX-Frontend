@@ -138,21 +138,10 @@ const Navbar = () => {
               <Text fontFamily="Poppins">{t('Create')}</Text>
             </ChakraLink>
           </Box>
-          <Box mr="20">
-            <ChakraLink
-              as={Link}
-              to="/touch"
-              color="black"
-              fontSize="md"
-              onClick={handleCloseMenu}
-            >
-              <Text fontFamily="Poppins">Touch</Text>
-            </ChakraLink>
-          </Box>
           <Spacer />
           <Box mr="10">
             <Select onChange={handleLanguageChange}>
-              <option value="en">GB</option>
+              <option value="en">EN</option>
               <option value="pl">PL</option>
               <option value="sv">SV</option>
             </Select>
@@ -213,20 +202,9 @@ const Navbar = () => {
               <Text fontFamily="Poppins">{t('Create')}</Text>
             </ChakraLink>
           </Box>
-          <Box p="1">
-            <ChakraLink
-              as={Link}
-              to="/touch"
-              color="black"
-              fontSize="md"
-              onClick={handleCloseMenu}
-            >
-              <Text fontFamily="Poppins">Touch</Text>
-            </ChakraLink>
-          </Box>
           <Box>
             <Select value={selectedLanguage} onChange={handleLanguageChange}>
-              <option value="en">GB</option>
+              <option value="en">EN</option>
               <option value="pl">PL</option>
               <option value="sv">SV</option>
             </Select>
