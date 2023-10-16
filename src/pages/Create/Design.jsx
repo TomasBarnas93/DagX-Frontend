@@ -117,7 +117,7 @@ const resizedCoordinates = (clientX, clientY, position, coordinates) => {
     case "end":
       return { x1, y1, x2: clientX, y2: clientY };
     default:
-      return null; //should not really get here...
+      return null; 
   }
 };
 
@@ -306,18 +306,18 @@ const Design = () => {
     setElements(elementsCopy, true);
   };
 
-  const getMouseCoordinates = event => {
-    const clientX = event.clientX - panOffset.x;
-    const clientY = event.clientY - panOffset.y;
-    return { clientX, clientY };
+  const getEventCoordinates = (event) => {
+    const isTouchEvent = event.type.startsWith('touch');
+    const { clientX, clientY } = isTouchEvent ? event.touches[0] : event;
+    return { clientX: clientX - panOffset.x, clientY: clientY - panOffset.y };
   };
 
-  const handleMouseDown = event => {
+  const handleStart = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { clientX, clientY } = getEventCoordinates(event);
     if (action === "writing") return;
-
-    const { clientX, clientY } = getMouseCoordinates(event);
-
-    if (event.button === 1 || pressedKeys.has(" ")) {
+     if (event.button === 1 || pressedKeys.has(" ")) {
       setAction("panning");
       setStartPanMousePosition({ x: clientX, y: clientY });
       return;
@@ -353,9 +353,10 @@ const Design = () => {
     }
   };
 
-  const handleMouseMove = event => {
-    const { clientX, clientY } = getMouseCoordinates(event);
-
+  const handleMove = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { clientX, clientY } = getEventCoordinates(event);
     if (action === "panning") {
       const deltaX = clientX - startPanMousePosition.x;
       const deltaY = clientY - startPanMousePosition.y;
@@ -403,8 +404,10 @@ const Design = () => {
     }
   };
 
-  const handleMouseUp = event => {
-    const { clientX, clientY } = getMouseCoordinates(event);
+  const handleEnd = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { clientX, clientY } = getEventCoordinates(event);
     if (selectedElement) {
       if (
         selectedElement.type === "text" &&
@@ -491,13 +494,16 @@ const Design = () => {
         />
       ) : null}
       <canvas
-        id="canvas"
-        width={window.innerWidth}
-        height={window.innerHeight}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        style={{ position: "absolute", zIndex: 1 }}
+      id="canvas"
+      width={window.innerWidth}
+      height={window.innerHeight}
+      onMouseDown={handleStart}
+      onMouseMove={handleMove}
+      onMouseUp={handleEnd}
+      onTouchStart={handleStart}
+      onTouchMove={handleMove}
+      onTouchEnd={handleEnd}
+      style={{ position: "absolute", zIndex: 1 }}
       >
         Canvas
       </canvas>
