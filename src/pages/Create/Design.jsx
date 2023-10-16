@@ -1,18 +1,18 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import rough from "roughjs/bundled/rough.esm";
+import rough from "roughjs";
 import getStroke from "perfect-freehand";
 
 const generator = rough.generator();
 
-const createElement = (id, x1, y1, x2, y2, type) => {
+const createElement = (id, x1, y1, x2, y2, type, color) => {
   switch (type) {
     case "line":
     case "rectangle":
       const roughElement =
         type === "line"
-          ? generator.line(x1, y1, x2, y2)
-          : generator.rectangle(x1, y1, x2 - x1, y2 - y1);
-      return { id, x1, y1, x2, y2, type, roughElement };
+          ? generator.line(x1, y1, x2, y2, { stroke: color })
+          : generator.rectangle(x1, y1, x2 - x1, y2 - y1, { stroke: color });  
+      return { id, x1, y1, x2, y2, type, roughElement, color };
     case "pencil":
       return { id, type, points: [{ x: x1, y: y1 }] };
     case "text":
@@ -160,9 +160,14 @@ const getSvgPathFromStroke = stroke => {
   return d.join(" ");
 };
 
-const drawElement = (roughCanvas, context, element) => {
+const drawElement = (roughCanvas, context, element, color) => {
+  context.strokeStyle = color;
+  context.fillStyle = color;
+
   switch (element.type) {
     case "line":
+      roughCanvas.draw(element.roughElement);
+      break;
     case "rectangle":
       roughCanvas.draw(element.roughElement);
       break;
@@ -218,23 +223,25 @@ const Design = () => {
   const [startPanMousePosition, setStartPanMousePosition] = React.useState({ x: 0, y: 0 });
   const textAreaRef = useRef();
   const pressedKeys = usePressedKeys();
+  const [color, setColor] = useState("#000000");
 
   useLayoutEffect(() => {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
     const roughCanvas = rough.canvas(canvas);
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
+  
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  
     context.save();
     context.translate(panOffset.x, panOffset.y);
-
+  
     elements.forEach(element => {
       if (action === "writing" && selectedElement.id === element.id) return;
-      drawElement(roughCanvas, context, element);
+      drawElement(roughCanvas, context, element, color);
     });
     context.restore();
-  }, [elements, action, selectedElement, panOffset]);
+  }, [elements, action, selectedElement, panOffset, color]);
 
   useEffect(() => {
     const undoRedoFunction = event => {
@@ -283,7 +290,7 @@ const Design = () => {
     switch (type) {
       case "line":
       case "rectangle":
-        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type);
+        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type, color);
         break;
       case "pencil":
         elementsCopy[id].points = [...elementsCopy[id].points, { x: x2, y: y2 }];
@@ -345,7 +352,7 @@ const Design = () => {
       }
     } else {
       const id = elements.length;
-      const element = createElement(id, clientX, clientY, clientX, clientY, tool);
+      const element = createElement(id, clientX, clientY, clientX, clientY, tool, color);
       setElements(prevState => [...prevState, element]);
       setSelectedElement(element);
 
@@ -439,6 +446,19 @@ const Design = () => {
     updateElement(id, x1, y1, null, null, type, { text: event.target.value });
   };
 
+  const clearCanvas = () => {
+    setElements([]);
+  };
+
+  const saveImage = () => {
+    const canvas = document.getElementById("canvas");
+    const dataUrl = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "design.png";
+    link.click();
+  };
+
   return (
     <div>
       <div style={{ position: "fixed", zIndex: 2 }}>
@@ -467,6 +487,11 @@ const Design = () => {
         <label htmlFor="pencil">Pencil</label>
         <input type="radio" id="text" checked={tool === "text"} onChange={() => setTool("text")} />
         <label htmlFor="text">Text</label>
+
+        <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+        <button onClick={clearCanvas}>Clear</button>
+        <button onClick={saveImage}>Save Image</button>
+
       </div>
       <div style={{ position: "fixed", zIndex: 2, bottom: 0, padding: 10 }}>
         <button onClick={undo}>Undo</button>
@@ -497,10 +522,10 @@ const Design = () => {
       id="canvas"
       width={window.innerWidth}
       height={window.innerHeight}
-      onMouseDown={handleStart}
+      onMouseDown={(e) => handleStart(e, color)}
       onMouseMove={handleMove}
       onMouseUp={handleEnd}
-      onTouchStart={handleStart}
+      onTouchStart={(e) => handleStart(e, color)}
       onTouchMove={handleMove}
       onTouchEnd={handleEnd}
       style={{ position: "absolute", zIndex: 1 }}
