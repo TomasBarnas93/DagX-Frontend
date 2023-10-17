@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import rough from "roughjs";
 import getStroke from "perfect-freehand";
-import './Design.css';
+import "./Design.css";
 
 const generator = rough.generator();
 
@@ -12,10 +12,10 @@ const createElement = (id, x1, y1, x2, y2, type, color) => {
       const roughElement =
         type === "line"
           ? generator.line(x1, y1, x2, y2, { stroke: color })
-          : generator.rectangle(x1, y1, x2 - x1, y2 - y1, { stroke: color });  
+          : generator.rectangle(x1, y1, x2 - x1, y2 - y1, { stroke: color });
       return { id, x1, y1, x2, y2, type, roughElement, color };
     case "pencil":
-      return { id, type, points: [{ x: x1, y: y1 }] };
+      return { id, type, points: [{ x: x1, y: y1 }], color };
     case "text":
       return { id, type, x1, y1, x2, y2, text: "" };
     default:
@@ -54,7 +54,9 @@ const positionWithinElement = (x, y, element) => {
       const betweenAnyPoint = element.points.some((point, index) => {
         const nextPoint = element.points[index + 1];
         if (!nextPoint) return false;
-        return onLine(point.x, point.y, nextPoint.x, nextPoint.y, x, y, 5) != null;
+        return (
+          onLine(point.x, point.y, nextPoint.x, nextPoint.y, x, y, 5) != null
+        );
       });
       return betweenAnyPoint ? "inside" : null;
     case "text":
@@ -64,15 +66,19 @@ const positionWithinElement = (x, y, element) => {
   }
 };
 
-const distance = (a, b) => Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+const distance = (a, b) =>
+  Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 
 const getElementAtPosition = (x, y, elements) => {
   return elements
-    .map(element => ({ ...element, position: positionWithinElement(x, y, element) }))
-    .find(element => element.position !== null);
+    .map((element) => ({
+      ...element,
+      position: positionWithinElement(x, y, element),
+    }))
+    .find((element) => element.position !== null);
 };
 
-const adjustElementCoordinates = element => {
+const adjustElementCoordinates = (element) => {
   const { type, x1, y1, x2, y2 } = element;
   if (type === "rectangle") {
     const minX = Math.min(x1, x2);
@@ -89,7 +95,7 @@ const adjustElementCoordinates = element => {
   }
 };
 
-const cursorForPosition = position => {
+const cursorForPosition = (position) => {
   switch (position) {
     case "tl":
     case "br":
@@ -118,16 +124,17 @@ const resizedCoordinates = (clientX, clientY, position, coordinates) => {
     case "end":
       return { x1, y1, x2: clientX, y2: clientY };
     default:
-      return null; 
+      return null;
   }
 };
 
-const useHistory = initialState => {
+const useHistory = (initialState) => {
   const [index, setIndex] = useState(0);
   const [history, setHistory] = useState([initialState]);
 
   const setState = (action, overwrite = false) => {
-    const newState = typeof action === "function" ? action(history[index]) : action;
+    const newState =
+      typeof action === "function" ? action(history[index]) : action;
     if (overwrite) {
       const historyCopy = [...history];
       historyCopy[index] = newState;
@@ -135,17 +142,18 @@ const useHistory = initialState => {
     } else {
       const updatedState = [...history].slice(0, index + 1);
       setHistory([...updatedState, newState]);
-      setIndex(prevState => prevState + 1);
+      setIndex((prevState) => prevState + 1);
     }
   };
 
-  const undo = () => index > 0 && setIndex(prevState => prevState - 1);
-  const redo = () => index < history.length - 1 && setIndex(prevState => prevState + 1);
+  const undo = () => index > 0 && setIndex((prevState) => prevState - 1);
+  const redo = () =>
+    index < history.length - 1 && setIndex((prevState) => prevState + 1);
 
   return [history[index], setState, undo, redo];
 };
 
-const getSvgPathFromStroke = stroke => {
+const getSvgPathFromStroke = (stroke) => {
   if (!stroke.length) return "";
 
   const d = stroke.reduce(
@@ -161,14 +169,13 @@ const getSvgPathFromStroke = stroke => {
   return d.join(" ");
 };
 
-const drawElement = (roughCanvas, context, element, color) => {
-  context.strokeStyle = color;
-  context.fillStyle = color;
+const drawElement = (roughCanvas, context, element) => {
+  const drawingColor = element.color || "#000000";
+  context.strokeStyle = drawingColor;
+  context.fillStyle = drawingColor;
 
   switch (element.type) {
     case "line":
-      roughCanvas.draw(element.roughElement);
-      break;
     case "rectangle":
       roughCanvas.draw(element.roughElement);
       break;
@@ -186,18 +193,18 @@ const drawElement = (roughCanvas, context, element, color) => {
   }
 };
 
-const adjustmentRequired = type => ["line", "rectangle"].includes(type);
+const adjustmentRequired = (type) => ["line", "rectangle"].includes(type);
 
 const usePressedKeys = () => {
   const [pressedKeys, setPressedKeys] = useState(new Set());
 
   useEffect(() => {
-    const handleKeyDown = event => {
-      setPressedKeys(prevKeys => new Set(prevKeys).add(event.key));
+    const handleKeyDown = (event) => {
+      setPressedKeys((prevKeys) => new Set(prevKeys).add(event.key));
     };
 
-    const handleKeyUp = event => {
-      setPressedKeys(prevKeys => {
+    const handleKeyUp = (event) => {
+      setPressedKeys((prevKeys) => {
         const updatedKeys = new Set(prevKeys);
         updatedKeys.delete(event.key);
         return updatedKeys;
@@ -221,32 +228,35 @@ const Design = () => {
   const [tool, setTool] = useState("rectangle");
   const [selectedElement, setSelectedElement] = useState(null);
   const [panOffset, setPanOffset] = React.useState({ x: 0, y: 0 });
-  const [startPanMousePosition, setStartPanMousePosition] = React.useState({ x: 0, y: 0 });
+  const [startPanMousePosition, setStartPanMousePosition] = React.useState({
+    x: 0,
+    y: 0,
+  });
   const textAreaRef = useRef();
   const pressedKeys = usePressedKeys();
   const [color, setColor] = useState("#000000");
 
   useEffect(() => {
     const preventDefault = (e) => e.preventDefault();
-    document.addEventListener('touchmove', preventDefault, { passive: false });
-    
+    document.addEventListener("touchmove", preventDefault, { passive: false });
+
     return () => {
-      document.removeEventListener('touchmove', preventDefault);
+      document.removeEventListener("touchmove", preventDefault);
     };
   }, []);
-  
+
   useLayoutEffect(() => {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
     const roughCanvas = rough.canvas(canvas);
-  
+
     context.fillStyle = "#ffffff";
     context.fillRect(0, 0, canvas.width, canvas.height);
-  
+
     context.save();
     context.translate(panOffset.x, panOffset.y);
-  
-    elements.forEach(element => {
+
+    elements.forEach((element) => {
       if (action === "writing" && selectedElement.id === element.id) return;
       drawElement(roughCanvas, context, element, color);
     });
@@ -254,7 +264,7 @@ const Design = () => {
   }, [elements, action, selectedElement, panOffset, color]);
 
   useEffect(() => {
-    const undoRedoFunction = event => {
+    const undoRedoFunction = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "z") {
         if (event.shiftKey) {
           redo();
@@ -271,8 +281,8 @@ const Design = () => {
   }, [undo, redo]);
 
   useEffect(() => {
-    const panFunction = event => {
-      setPanOffset(prevState => ({
+    const panFunction = (event) => {
+      setPanOffset((prevState) => ({
         x: prevState.x - event.deltaX,
         y: prevState.y - event.deltaY,
       }));
@@ -296,14 +306,18 @@ const Design = () => {
 
   const updateElement = (id, x1, y1, x2, y2, type, options) => {
     const elementsCopy = [...elements];
+    const color = (options?.color || elements[id]?.color) ?? "#000000";
 
     switch (type) {
       case "line":
       case "rectangle":
-        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type);
+        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type, color);
         break;
       case "pencil":
-        elementsCopy[id].points = [...elementsCopy[id].points, { x: x2, y: y2 }];
+        elementsCopy[id].points = [
+          ...elementsCopy[id].points,
+          { x: x2, y: y2 },
+        ];
         break;
       case "text":
         const textWidth = document
@@ -312,7 +326,15 @@ const Design = () => {
           .measureText(options.text).width;
         const textHeight = 24;
         elementsCopy[id] = {
-          ...createElement(id, x1, y1, x1 + textWidth, y1 + textHeight, type),
+          ...createElement(
+            id,
+            x1,
+            y1,
+            x1 + textWidth,
+            y1 + textHeight,
+            type,
+            color
+          ),
           text: options.text,
         };
         break;
@@ -324,9 +346,12 @@ const Design = () => {
   };
 
   const getEventCoordinates = (event) => {
-    const isTouchEvent = event.type.startsWith('touch');
-    const { clientX, clientY } = isTouchEvent ? event.touches[0] : event;
-    return { clientX: clientX - panOffset.x, clientY: clientY - panOffset.y };
+    const touchEvent = event.changedTouches ? event.changedTouches[0] : null;
+    const { clientX, clientY } = touchEvent || event;
+    const rect = event.target.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    return { clientX: x - panOffset.x, clientY: y - panOffset.y };
   };
 
   const handleStart = (event) => {
@@ -334,7 +359,7 @@ const Design = () => {
     event.stopPropagation();
     const { clientX, clientY } = getEventCoordinates(event);
     if (action === "writing") return;
-     if (event.button === 1 || pressedKeys.has(" ")) {
+    if (event.button === 1 || pressedKeys.has(" ")) {
       setAction("panning");
       setStartPanMousePosition({ x: clientX, y: clientY });
       return;
@@ -344,15 +369,15 @@ const Design = () => {
       const element = getElementAtPosition(clientX, clientY, elements);
       if (element) {
         if (element.type === "pencil") {
-          const xOffsets = element.points.map(point => clientX - point.x);
-          const yOffsets = element.points.map(point => clientY - point.y);
+          const xOffsets = element.points.map((point) => clientX - point.x);
+          const yOffsets = element.points.map((point) => clientY - point.y);
           setSelectedElement({ ...element, xOffsets, yOffsets });
         } else {
           const offsetX = clientX - element.x1;
           const offsetY = clientY - element.y1;
           setSelectedElement({ ...element, offsetX, offsetY });
         }
-        setElements(prevState => prevState);
+        setElements((prevState) => prevState);
 
         if (element.position === "inside") {
           setAction("moving");
@@ -362,8 +387,16 @@ const Design = () => {
       }
     } else {
       const id = elements.length;
-      const element = createElement(id, clientX, clientY, clientX, clientY, tool, color);
-      setElements(prevState => [...prevState, element]);
+      const element = createElement(
+        id,
+        clientX,
+        clientY,
+        clientX,
+        clientY,
+        tool,
+        color
+      );
+      setElements((prevState) => [...prevState, element]);
       setSelectedElement(element);
 
       setAction(tool === "text" ? "writing" : "drawing");
@@ -386,13 +419,15 @@ const Design = () => {
 
     if (tool === "selection") {
       const element = getElementAtPosition(clientX, clientY, elements);
-      event.target.style.cursor = element ? cursorForPosition(element.position) : "default";
+      event.target.style.cursor = element
+        ? cursorForPosition(element.position)
+        : "default";
     }
 
     if (action === "drawing") {
       const index = elements.length - 1;
       const { x1, y1 } = elements[index];
-      updateElement(index, x1, y1, clientX, clientY, tool);
+      updateElement(index, x1, y1, clientX, clientY, tool, { color });
     } else if (action === "moving") {
       if (selectedElement.type === "pencil") {
         const newPoints = selectedElement.points.map((_, index) => ({
@@ -412,11 +447,24 @@ const Design = () => {
         const newX1 = clientX - offsetX;
         const newY1 = clientY - offsetY;
         const options = type === "text" ? { text: selectedElement.text } : {};
-        updateElement(id, newX1, newY1, newX1 + width, newY1 + height, type, options);
+        updateElement(
+          id,
+          newX1,
+          newY1,
+          newX1 + width,
+          newY1 + height,
+          type,
+          options
+        );
       }
     } else if (action === "resizing") {
       const { id, type, position, ...coordinates } = selectedElement;
-      const { x1, y1, x2, y2 } = resizedCoordinates(clientX, clientY, position, coordinates);
+      const { x1, y1, x2, y2 } = resizedCoordinates(
+        clientX,
+        clientY,
+        position,
+        coordinates
+      );
       updateElement(id, x1, y1, x2, y2, type);
     }
   };
@@ -437,7 +485,10 @@ const Design = () => {
 
       const index = selectedElement.id;
       const { id, type } = elements[index];
-      if ((action === "drawing" || action === "resizing") && adjustmentRequired(type)) {
+      if (
+        (action === "drawing" || action === "resizing") &&
+        adjustmentRequired(type)
+      ) {
         const { x1, y1, x2, y2 } = adjustElementCoordinates(elements[index]);
         updateElement(id, x1, y1, x2, y2, type);
       }
@@ -449,7 +500,7 @@ const Design = () => {
     setSelectedElement(null);
   };
 
-  const handleBlur = event => {
+  const handleBlur = (event) => {
     const { id, x1, y1, type } = selectedElement;
     setAction("none");
     setSelectedElement(null);
@@ -479,7 +530,12 @@ const Design = () => {
           onChange={() => setTool("selection")}
         />
         <label htmlFor="selection">Selection</label>
-        <input type="radio" id="line" checked={tool === "line"} onChange={() => setTool("line")} />
+        <input
+          type="radio"
+          id="line"
+          checked={tool === "line"}
+          onChange={() => setTool("line")}
+        />
         <label htmlFor="line">Line</label>
         <input
           type="radio"
@@ -495,13 +551,21 @@ const Design = () => {
           onChange={() => setTool("pencil")}
         />
         <label htmlFor="pencil">Pencil</label>
-        <input type="radio" id="text" checked={tool === "text"} onChange={() => setTool("text")} />
+        <input
+          type="radio"
+          id="text"
+          checked={tool === "text"}
+          onChange={() => setTool("text")}
+        />
         <label htmlFor="text">Text</label>
 
-        <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+        <input
+          type="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+        />
         <button onClick={clearCanvas}>Clear</button>
         <button onClick={saveImage}>Save Image</button>
-
       </div>
       <div style={{ position: "fixed", zIndex: 2, bottom: 0, padding: 10 }}>
         <button onClick={undo}>Undo</button>
@@ -529,16 +593,16 @@ const Design = () => {
         />
       ) : null}
       <canvas
-      id="canvas"
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onMouseDown={(e) => handleStart(e, color)}
-      onMouseMove={handleMove}
-      onMouseUp={handleEnd}
-      onTouchStart={(e) => handleStart(e, color)}
-      onTouchMove={handleMove}
-      onTouchEnd={handleEnd}
-      style={{ position: "absolute", zIndex: 1, touchAction: "none" }}
+        id="canvas"
+        width={window.innerWidth}
+        height={window.innerHeight}
+        onMouseDown={(e) => handleStart(e, color)}
+        onMouseMove={handleMove}
+        onMouseUp={handleEnd}
+        onTouchStart={(e) => handleStart(e, color)}
+        onTouchMove={handleMove}
+        onTouchEnd={handleEnd}
+        style={{ position: "absolute", zIndex: 1, touchAction: "none" }}
       >
         Canvas
       </canvas>
