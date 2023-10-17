@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import rough from "roughjs";
 import getStroke from "perfect-freehand";
+import './Design.css';
 
 const generator = rough.generator();
 
@@ -225,6 +226,15 @@ const Design = () => {
   const pressedKeys = usePressedKeys();
   const [color, setColor] = useState("#000000");
 
+  useEffect(() => {
+    const preventDefault = (e) => e.preventDefault();
+    document.addEventListener('touchmove', preventDefault, { passive: false });
+    
+    return () => {
+      document.removeEventListener('touchmove', preventDefault);
+    };
+  }, []);
+  
   useLayoutEffect(() => {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
@@ -290,7 +300,7 @@ const Design = () => {
     switch (type) {
       case "line":
       case "rectangle":
-        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type, color);
+        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type);
         break;
       case "pencil":
         elementsCopy[id].points = [...elementsCopy[id].points, { x: x2, y: y2 }];
@@ -460,7 +470,7 @@ const Design = () => {
   };
 
   return (
-    <div>
+    <div style={{ overscrollBehavior: "none" }}>
       <div style={{ position: "fixed", zIndex: 2 }}>
         <input
           type="radio"
@@ -528,7 +538,7 @@ const Design = () => {
       onTouchStart={(e) => handleStart(e, color)}
       onTouchMove={handleMove}
       onTouchEnd={handleEnd}
-      style={{ position: "absolute", zIndex: 1 }}
+      style={{ position: "absolute", zIndex: 1, touchAction: "none" }}
       >
         Canvas
       </canvas>
