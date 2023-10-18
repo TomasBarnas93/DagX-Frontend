@@ -1,112 +1,62 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import rough from "roughjs";
-import getStroke from "perfect-freehand";
 import "./Design.css";
 
 const generator = rough.generator();
 
-const createElement = (id, x1, y1, x2, y2, type, color) => {
+const createElement = (id, x1, y1, x2, y2, type, color, thickness) => {
   switch (type) {
     case "line":
     case "rectangle":
       const roughElement =
         type === "line"
-          ? generator.line(x1, y1, x2, y2, { stroke: color })
-          : generator.rectangle(x1, y1, x2 - x1, y2 - y1, { stroke: color });
-      return { id, x1, y1, x2, y2, type, roughElement, color };
+          ? generator.line(x1, y1, x2, y2, {
+              stroke: color,
+              strokeWidth: thickness,
+            })
+          : generator.rectangle(x1, y1, x2 - x1, y2 - y1, {
+              stroke: color,
+              strokeWidth: thickness,
+            });
+      return { id, x1, y1, x2, y2, type, roughElement, color, thickness };
+    case "triangle":
+      const roughTriangleElement = generator.polygon(
+        [
+          [x1, y1],
+          [x2, y1],
+          [x1, y2],
+        ],
+        { stroke: color, strokeWidth: thickness }
+      );
+      return {
+        id,
+        x1,
+        y1,
+        x2,
+        y2,
+        type,
+        roughTriangleElement,
+        color,
+        thickness,
+      };
+    case "circle":
+      const radius = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+      const roughCircleElement = generator.circle(
+        (x1 + x2) / 2,
+        (y1 + y2) / 2,
+        radius,
+        {
+          stroke: color,
+          strokeWidth: thickness,
+        }
+      );
+      return { id, x1, y1, x2, y2, type, roughCircleElement, color, thickness };
     case "pencil":
-      return { id, type, points: [{ x: x1, y: y1 }], color };
+      return { id, type, points: [{ x: x1, y: y1 }], color, thickness };
     case "text":
       return { id, type, x1, y1, x2, y2, text: "" };
     default:
       throw new Error(`Type not recognised: ${type}`);
-  }
-};
-
-const nearPoint = (x, y, x1, y1, name) => {
-  return Math.abs(x - x1) < 5 && Math.abs(y - y1) < 5 ? name : null;
-};
-
-const onLine = (x1, y1, x2, y2, x, y, maxDistance = 1) => {
-  const a = { x: x1, y: y1 };
-  const b = { x: x2, y: y2 };
-  const c = { x, y };
-  const offset = distance(a, b) - (distance(a, c) + distance(b, c));
-  return Math.abs(offset) < maxDistance ? "inside" : null;
-};
-
-const positionWithinElement = (x, y, element) => {
-  const { type, x1, x2, y1, y2 } = element;
-  switch (type) {
-    case "line":
-      const on = onLine(x1, y1, x2, y2, x, y);
-      const start = nearPoint(x, y, x1, y1, "start");
-      const end = nearPoint(x, y, x2, y2, "end");
-      return start || end || on;
-    case "rectangle":
-      const topLeft = nearPoint(x, y, x1, y1, "tl");
-      const topRight = nearPoint(x, y, x2, y1, "tr");
-      const bottomLeft = nearPoint(x, y, x1, y2, "bl");
-      const bottomRight = nearPoint(x, y, x2, y2, "br");
-      const inside = x >= x1 && x <= x2 && y >= y1 && y <= y2 ? "inside" : null;
-      return topLeft || topRight || bottomLeft || bottomRight || inside;
-    case "pencil":
-      const betweenAnyPoint = element.points.some((point, index) => {
-        const nextPoint = element.points[index + 1];
-        if (!nextPoint) return false;
-        return (
-          onLine(point.x, point.y, nextPoint.x, nextPoint.y, x, y, 5) != null
-        );
-      });
-      return betweenAnyPoint ? "inside" : null;
-    case "text":
-      return x >= x1 && x <= x2 && y >= y1 && y <= y2 ? "inside" : null;
-    default:
-      throw new Error(`Type not recognised: ${type}`);
-  }
-};
-
-const distance = (a, b) =>
-  Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
-
-const getElementAtPosition = (x, y, elements) => {
-  return elements
-    .map((element) => ({
-      ...element,
-      position: positionWithinElement(x, y, element),
-    }))
-    .find((element) => element.position !== null);
-};
-
-const adjustElementCoordinates = (element) => {
-  const { type, x1, y1, x2, y2 } = element;
-  if (type === "rectangle") {
-    const minX = Math.min(x1, x2);
-    const maxX = Math.max(x1, x2);
-    const minY = Math.min(y1, y2);
-    const maxY = Math.max(y1, y2);
-    return { x1: minX, y1: minY, x2: maxX, y2: maxY };
-  } else {
-    if (x1 < x2 || (x1 === x2 && y1 < y2)) {
-      return { x1, y1, x2, y2 };
-    } else {
-      return { x1: x2, y1: y2, x2: x1, y2: y1 };
-    }
-  }
-};
-
-const cursorForPosition = (position) => {
-  switch (position) {
-    case "tl":
-    case "br":
-    case "start":
-    case "end":
-      return "nwse-resize";
-    case "tr":
-    case "bl":
-      return "nesw-resize";
-    default:
-      return "move";
   }
 };
 
@@ -153,35 +103,38 @@ const useHistory = (initialState) => {
   return [history[index], setState, undo, redo];
 };
 
-const getSvgPathFromStroke = (stroke) => {
-  if (!stroke.length) return "";
-
-  const d = stroke.reduce(
-    (acc, [x0, y0], i, arr) => {
-      const [x1, y1] = arr[(i + 1) % arr.length];
-      acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
-      return acc;
-    },
-    ["M", ...stroke[0], "Q"]
-  );
-
-  d.push("Z");
-  return d.join(" ");
-};
-
 const drawElement = (roughCanvas, context, element) => {
   const drawingColor = element.color || "#000000";
   context.strokeStyle = drawingColor;
   context.fillStyle = drawingColor;
+  context.lineWidth = element.thickness || 1;
 
   switch (element.type) {
     case "line":
     case "rectangle":
       roughCanvas.draw(element.roughElement);
       break;
+    case "triangle":
+      roughCanvas.draw(element.roughTriangleElement);
+      break;
+    case "circle":
+      const radius = Math.sqrt(
+        Math.pow(element.x2 - element.x1, 2) +
+          Math.pow(element.y2 - element.y1, 2)
+      );
+      context.beginPath();
+      context.arc(element.x1, element.y1, radius, 0, Math.PI * 2, false);
+      context.stroke();
+      break;
     case "pencil":
-      const stroke = getSvgPathFromStroke(getStroke(element.points));
-      context.fill(new Path2D(stroke));
+      if (element.points.length > 1) {
+        context.beginPath();
+        context.moveTo(element.points[0].x, element.points[0].y);
+        for (let i = 1; i < element.points.length; i++) {
+          context.lineTo(element.points[i].x, element.points[i].y);
+        }
+        context.stroke();
+      }
       break;
     case "text":
       context.textBaseline = "top";
@@ -192,8 +145,6 @@ const drawElement = (roughCanvas, context, element) => {
       throw new Error(`Type not recognised: ${element.type}`);
   }
 };
-
-const adjustmentRequired = (type) => ["line", "rectangle"].includes(type);
 
 const usePressedKeys = () => {
   const [pressedKeys, setPressedKeys] = useState(new Set());
@@ -235,6 +186,7 @@ const Design = () => {
   const textAreaRef = useRef();
   const pressedKeys = usePressedKeys();
   const [color, setColor] = useState("#000000");
+  const [lineThickness, setLineThickness] = useState(2);
 
   useEffect(() => {
     const preventDefault = (e) => e.preventDefault();
@@ -307,11 +259,82 @@ const Design = () => {
   const updateElement = (id, x1, y1, x2, y2, type, options) => {
     const elementsCopy = [...elements];
     const color = (options?.color || elements[id]?.color) ?? "#000000";
+    const thickness =
+      (options?.thickness || elements[id]?.thickness) ?? lineThickness;
 
     switch (type) {
       case "line":
       case "rectangle":
-        elementsCopy[id] = createElement(id, x1, y1, x2, y2, type, color);
+        elementsCopy[id] = createElement(
+          id,
+          x1,
+          y1,
+          x2,
+          y2,
+          type,
+          color,
+          thickness
+        );
+        break;
+        case "triangle":
+        const centerX = (x1 + x2) / 2;
+        const centerY = (y1 + y2) / 2;
+        const width = Math.abs(x2 - x1);
+        const height = Math.abs(y2 - y1);
+        let vertices;
+    if (y2 >= y1) {
+        // Upright triangle
+        vertices = [
+            [centerX, centerY - height / 2],
+            [centerX - width / 2, centerY + height / 2],
+            [centerX + width / 2, centerY + height / 2],
+        ];
+    } else {
+        // Upside-down triangle
+        vertices = [
+            [centerX, centerY + height / 2],
+            [centerX - width / 2, centerY - height / 2],
+            [centerX + width / 2, centerY - height / 2],
+        ];
+    }
+    const roughTriangleElement = generator.polygon(vertices, {
+        stroke: color,
+        strokeWidth: thickness,
+    });
+    elementsCopy[id] = {
+        id,
+        x1,
+        y1,
+        x2,
+        y2,
+        type,
+        roughTriangleElement,
+        color,
+        thickness,
+    };
+    break;
+      case "circle":
+        const radius = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        const roughCirculeElement = generator.circle(
+          (x1 + x2) / 2,
+          (y1 + y2) / 2,
+          radius,
+          {
+            stroke: color,
+            strokeWidth: thickness,
+          }
+        );
+        elementsCopy[id] = {
+          id,
+          x1,
+          y1,
+          x2,
+          y2,
+          type,
+          color,
+          thickness,
+          roughCirculeElement,
+        };
         break;
       case "pencil":
         elementsCopy[id].points = [
@@ -333,7 +356,8 @@ const Design = () => {
             x1 + textWidth,
             y1 + textHeight,
             type,
-            color
+            color,
+            lineThickness
           ),
           text: options.text,
         };
@@ -358,34 +382,15 @@ const Design = () => {
     event.preventDefault();
     event.stopPropagation();
     const { clientX, clientY } = getEventCoordinates(event);
-    if (action === "writing") return;
     if (event.button === 1 || pressedKeys.has(" ")) {
       setAction("panning");
       setStartPanMousePosition({ x: clientX, y: clientY });
       return;
     }
-
-    if (tool === "selection") {
-      const element = getElementAtPosition(clientX, clientY, elements);
-      if (element) {
-        if (element.type === "pencil") {
-          const xOffsets = element.points.map((point) => clientX - point.x);
-          const yOffsets = element.points.map((point) => clientY - point.y);
-          setSelectedElement({ ...element, xOffsets, yOffsets });
-        } else {
-          const offsetX = clientX - element.x1;
-          const offsetY = clientY - element.y1;
-          setSelectedElement({ ...element, offsetX, offsetY });
-        }
-        setElements((prevState) => prevState);
-
-        if (element.position === "inside") {
-          setAction("moving");
-        } else {
-          setAction("resizing");
-        }
-      }
-    } else {
+    if (tool === "eraser") {
+      setAction("erasing");
+      return;
+  } else {
       const id = elements.length;
       const element = createElement(
         id,
@@ -394,11 +399,12 @@ const Design = () => {
         clientX,
         clientY,
         tool,
-        color
+        color,
+        lineThickness
       );
       setElements((prevState) => [...prevState, element]);
       setSelectedElement(element);
-
+  
       setAction(tool === "text" ? "writing" : "drawing");
     }
   };
@@ -407,6 +413,15 @@ const Design = () => {
     event.preventDefault();
     event.stopPropagation();
     const { clientX, clientY } = getEventCoordinates(event);
+    const isIntersecting = (x, y, element) => {
+  
+  };
+    if (action === "erasing") {
+      const elementsCopy = elements.filter((element) => {
+          return !isIntersecting(clientX, clientY, element);
+      });
+      setElements(elementsCopy);
+  }
     if (action === "panning") {
       const deltaX = clientX - startPanMousePosition.x;
       const deltaY = clientY - startPanMousePosition.y;
@@ -416,14 +431,6 @@ const Design = () => {
       });
       return;
     }
-
-    if (tool === "selection") {
-      const element = getElementAtPosition(clientX, clientY, elements);
-      event.target.style.cursor = element
-        ? cursorForPosition(element.position)
-        : "default";
-    }
-
     if (action === "drawing") {
       const index = elements.length - 1;
       const { x1, y1 } = elements[index];
@@ -482,16 +489,6 @@ const Design = () => {
         setAction("writing");
         return;
       }
-
-      const index = selectedElement.id;
-      const { id, type } = elements[index];
-      if (
-        (action === "drawing" || action === "resizing") &&
-        adjustmentRequired(type)
-      ) {
-        const { x1, y1, x2, y2 } = adjustElementCoordinates(elements[index]);
-        updateElement(id, x1, y1, x2, y2, type);
-      }
     }
 
     if (action === "writing") return;
@@ -525,18 +522,20 @@ const Design = () => {
       <div style={{ position: "fixed", zIndex: 2 }}>
         <input
           type="radio"
-          id="selection"
-          checked={tool === "selection"}
-          onChange={() => setTool("selection")}
-        />
-        <label htmlFor="selection">Selection</label>
-        <input
-          type="radio"
           id="line"
           checked={tool === "line"}
           onChange={() => setTool("line")}
         />
         <label htmlFor="line">Line</label>
+        &nbsp;
+        <input
+          type="radio"
+          id="circle"
+          checked={tool === "circle"}
+          onChange={() => setTool("circle")}
+        />
+        <label htmlFor="rectangle">Circle</label>
+        &nbsp;
         <input
           type="radio"
           id="rectangle"
@@ -544,6 +543,15 @@ const Design = () => {
           onChange={() => setTool("rectangle")}
         />
         <label htmlFor="rectangle">Rectangle</label>
+        &nbsp;
+        <input
+          type="radio"
+          id="triangle"
+          checked={tool === "triangle"}
+          onChange={() => setTool("triangle")}
+        />
+        <label htmlFor="triangle">Triangle</label>
+        &nbsp;
         <input
           type="radio"
           id="pencil"
@@ -551,24 +559,35 @@ const Design = () => {
           onChange={() => setTool("pencil")}
         />
         <label htmlFor="pencil">Pencil</label>
+        &nbsp;
         <input
           type="radio"
-          id="text"
-          checked={tool === "text"}
-          onChange={() => setTool("text")}
+          id="eraser"
+          checked={tool === "eraser"}
+          onChange={() => setTool("eraser")}
         />
-        <label htmlFor="text">Text</label>
-
+        <label htmlFor="eraser">Eraser</label>
+        &nbsp;
         <input
           type="color"
           value={color}
           onChange={(e) => setColor(e.target.value)}
         />
+        &nbsp;
+        <input
+          type="range"
+          min="1"
+          max="20"
+          value={lineThickness}
+          onChange={(e) => setLineThickness(Number(e.target.value))}
+        />
+        &nbsp;
         <button onClick={clearCanvas}>Clear</button>
-        <button onClick={saveImage}>Save Image</button>
-      </div>
-      <div style={{ position: "fixed", zIndex: 2, bottom: 0, padding: 10 }}>
+        &nbsp;
+        <button onClick={saveImage}>Save</button>
+        &nbsp;
         <button onClick={undo}>Undo</button>
+        &nbsp;
         <button onClick={redo}>Redo</button>
       </div>
       {action === "writing" ? (

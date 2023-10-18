@@ -11,6 +11,7 @@ import { I18nextProvider } from "react-i18next";
 import { enTranslation } from "./data/en";
 import { svTranslation } from "./data/sv";
 import { plTranslation } from "./data/pl";
+import { LanguageProvider } from "./services/LanguageContext";
 
 const resources = {
   en: {
@@ -26,7 +27,7 @@ const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: "en",
+  lng: localStorage.getItem("selectedLanguage") || "sv",
   keySeparator: false,
   interpolation: {
     escapeValue: false,
@@ -36,11 +37,13 @@ i18n.use(initReactI18next).init({
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
   <ChakraProvider>
+  <LanguageProvider>
     <BrowserRouter>
       <React.StrictMode>
         <App />
       </React.StrictMode>
     </BrowserRouter>
+    </LanguageProvider>
   </ChakraProvider>
   </I18nextProvider>,
   document.getElementById("root")
