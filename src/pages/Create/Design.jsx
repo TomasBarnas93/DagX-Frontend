@@ -382,7 +382,7 @@ const Design = () => {
     event.preventDefault();
     event.stopPropagation();
     const { clientX, clientY } = getEventCoordinates(event);
-  
+    if (event.target.type === 'range') return; 
     if (event.button === 1 || pressedKeys.has(" ")) {
       setAction("panning");
       setStartPanMousePosition({ x: clientX, y: clientY });
@@ -422,28 +422,11 @@ const Design = () => {
     }
   };
 
-  let previousDistance = null;
   const handleMove = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (event.touches && event.touches.length === 2) {
-        const [touch1, touch2] = event.touches;
-        const distance = Math.hypot(
-            touch2.clientX - touch1.clientX,
-            touch2.clientY - touch1.clientY
-        );
-
-        if (previousDistance !== null) {
-            const deltaDistance = distance - previousDistance;
-            setLineThickness((prevThickness) => Math.max(1, prevThickness + deltaDistance / 10));  
-        }
-
-        previousDistance = distance;
-        return;  
-    } else {
-        previousDistance = null;  
-    }
+    if (event.target.type === 'range') return; 
 
     const { clientX, clientY } = getEventCoordinates(event);
   
@@ -511,6 +494,7 @@ const Design = () => {
     event.preventDefault();
     event.stopPropagation();
     const { clientX, clientY } = getEventCoordinates(event);
+    if (event.target.type === 'range') return; 
     if (selectedElement) {
       if (
         selectedElement.type === "text" &&
@@ -610,7 +594,10 @@ const Design = () => {
           min="1"
           max="20"
           value={lineThickness}
-          onInput={(e) => setLineThickness(Number(e.target.value))}
+          onChange={(e) => setLineThickness(Number(e.target.value))}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          onTouchEnd={(e) => e.stopPropagation()}
         />
         &nbsp;
         <button onClick={clearCanvas}>Clear</button>
