@@ -14,13 +14,14 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logopic from "../assets/images/logo.jpg";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { LanguageContext } from "../services/LanguageContext";
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext);
   const { t } = useTranslation();
 
   const handleLanguageChange = (e) => {
@@ -30,14 +31,6 @@ const Navbar = () => {
 
     localStorage.setItem("selectedLanguage", newLanguage);
   };
-
-  useEffect(() => {
-    const storedLanguage = localStorage.getItem("selectedLanguage");
-    if (storedLanguage) {
-      setSelectedLanguage(storedLanguage);
-      i18n.changeLanguage(storedLanguage);
-    }
-  }, [i18n]);
 
   const handleCloseMenu = () => {
     if (isMobile && isOpen) {
@@ -140,7 +133,8 @@ const Navbar = () => {
           </Box>
           <Spacer />
           <Box mr="10">
-            <Select onChange={handleLanguageChange}>
+            <Select onChange={handleLanguageChange}
+            value={selectedLanguage}>
               <option value="en">EN</option>
               <option value="pl">PL</option>
               <option value="sv">SV</option>
@@ -203,7 +197,8 @@ const Navbar = () => {
             </ChakraLink>
           </Box>
           <Box>
-            <Select value={selectedLanguage} onChange={handleLanguageChange}>
+            <Select onChange={handleLanguageChange}
+            value={selectedLanguage}>
               <option value="en">EN</option>
               <option value="pl">PL</option>
               <option value="sv">SV</option>
