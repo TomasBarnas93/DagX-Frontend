@@ -187,7 +187,6 @@ const Design = () => {
   const pressedKeys = usePressedKeys();
   const [color, setColor] = useState("#000000");
   const [lineThickness, setLineThickness] = useState(2);
-  const [startThicknessMousePosition, setStartThicknessMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const preventDefault = (e) => e.preventDefault();
@@ -277,43 +276,43 @@ const Design = () => {
           thickness
         );
         break;
-      case "triangle":
+        case "triangle":
         const centerX = (x1 + x2) / 2;
         const centerY = (y1 + y2) / 2;
         const width = Math.abs(x2 - x1);
         const height = Math.abs(y2 - y1);
         let vertices;
-        if (y2 >= y1) {
-          // Upright triangle
-          vertices = [
+    if (y2 >= y1) {
+        // Upright triangle
+        vertices = [
             [centerX, centerY - height / 2],
             [centerX - width / 2, centerY + height / 2],
             [centerX + width / 2, centerY + height / 2],
-          ];
-        } else {
-          // Upside-down triangle
-          vertices = [
+        ];
+    } else {
+        // Upside-down triangle
+        vertices = [
             [centerX, centerY + height / 2],
             [centerX - width / 2, centerY - height / 2],
             [centerX + width / 2, centerY - height / 2],
-          ];
-        }
-        const roughTriangleElement = generator.polygon(vertices, {
-          stroke: color,
-          strokeWidth: thickness,
-        });
-        elementsCopy[id] = {
-          id,
-          x1,
-          y1,
-          x2,
-          y2,
-          type,
-          roughTriangleElement,
-          color,
-          thickness,
-        };
-        break;
+        ];
+    }
+    const roughTriangleElement = generator.polygon(vertices, {
+        stroke: color,
+        strokeWidth: thickness,
+    });
+    elementsCopy[id] = {
+        id,
+        x1,
+        y1,
+        x2,
+        y2,
+        type,
+        roughTriangleElement,
+        color,
+        thickness,
+    };
+    break;
       case "circle":
         const radius = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         const roughCirculeElement = generator.circle(
@@ -383,16 +382,12 @@ const Design = () => {
     event.preventDefault();
     event.stopPropagation();
     const { clientX, clientY } = getEventCoordinates(event);
-
+  
     if (event.button === 1 || pressedKeys.has(" ")) {
       setAction("panning");
       setStartPanMousePosition({ x: clientX, y: clientY });
       return;
-    }
-    if (action === "adjustingThickness") {
-      setStartThicknessMousePosition({ x: clientX, y: clientY });
-      return;
-  }
+    } 
     if (tool === "eraser") {
       const id = elements.length;
       const element = createElement(
@@ -422,29 +417,40 @@ const Design = () => {
       );
       setElements((prevState) => [...prevState, element]);
       setSelectedElement(element);
-
+  
       setAction(tool === "text" ? "writing" : "drawing");
     }
   };
 
+  let previousDistance = null;
   const handleMove = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    
-    const { clientX, clientY } = getEventCoordinates(event);
-  
-    if (action === "adjustingThickness") {
-      const deltaY = event instanceof TouchEvent ? event.touches[0].clientY - startThicknessMousePosition.y : event.movementY;
-      setLineThickness((prevThickness) => Math.max(1, prevThickness + deltaY));
-      return;
+
+    if (event.touches && event.touches.length === 2) {
+        const [touch1, touch2] = event.touches;
+        const distance = Math.hypot(
+            touch2.clientX - touch1.clientX,
+            touch2.clientY - touch1.clientY
+        );
+
+        if (previousDistance !== null) {
+            const deltaDistance = distance - previousDistance;
+            setLineThickness((prevThickness) => Math.max(1, prevThickness + deltaDistance / 10));  
+        }
+
+        previousDistance = distance;
+        return;  
+    } else {
+        previousDistance = null;  
     }
 
+    const { clientX, clientY } = getEventCoordinates(event);
+  
     if (action === "erasing") {
       const index = elements.length - 1;
       const { x1, y1 } = elements[index];
-      updateElement(index, x1, y1, clientX, clientY, "pencil", {
-        color: "#ffffff",
-      });
+      updateElement(index, x1, y1, clientX, clientY, "pencil", { color: "#ffffff" });
       return;
     }
     if (action === "panning") {
