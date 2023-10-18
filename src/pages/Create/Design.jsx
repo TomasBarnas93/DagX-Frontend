@@ -187,6 +187,7 @@ const Design = () => {
   const pressedKeys = usePressedKeys();
   const [color, setColor] = useState("#000000");
   const [lineThickness, setLineThickness] = useState(2);
+  const [startThicknessMousePosition, setStartThicknessMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const preventDefault = (e) => e.preventDefault();
@@ -276,43 +277,43 @@ const Design = () => {
           thickness
         );
         break;
-        case "triangle":
+      case "triangle":
         const centerX = (x1 + x2) / 2;
         const centerY = (y1 + y2) / 2;
         const width = Math.abs(x2 - x1);
         const height = Math.abs(y2 - y1);
         let vertices;
-    if (y2 >= y1) {
-        // Upright triangle
-        vertices = [
+        if (y2 >= y1) {
+          // Upright triangle
+          vertices = [
             [centerX, centerY - height / 2],
             [centerX - width / 2, centerY + height / 2],
             [centerX + width / 2, centerY + height / 2],
-        ];
-    } else {
-        // Upside-down triangle
-        vertices = [
+          ];
+        } else {
+          // Upside-down triangle
+          vertices = [
             [centerX, centerY + height / 2],
             [centerX - width / 2, centerY - height / 2],
             [centerX + width / 2, centerY - height / 2],
-        ];
-    }
-    const roughTriangleElement = generator.polygon(vertices, {
-        stroke: color,
-        strokeWidth: thickness,
-    });
-    elementsCopy[id] = {
-        id,
-        x1,
-        y1,
-        x2,
-        y2,
-        type,
-        roughTriangleElement,
-        color,
-        thickness,
-    };
-    break;
+          ];
+        }
+        const roughTriangleElement = generator.polygon(vertices, {
+          stroke: color,
+          strokeWidth: thickness,
+        });
+        elementsCopy[id] = {
+          id,
+          x1,
+          y1,
+          x2,
+          y2,
+          type,
+          roughTriangleElement,
+          color,
+          thickness,
+        };
+        break;
       case "circle":
         const radius = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         const roughCirculeElement = generator.circle(
@@ -382,15 +383,32 @@ const Design = () => {
     event.preventDefault();
     event.stopPropagation();
     const { clientX, clientY } = getEventCoordinates(event);
+
     if (event.button === 1 || pressedKeys.has(" ")) {
       setAction("panning");
       setStartPanMousePosition({ x: clientX, y: clientY });
       return;
     }
+    if (action === "adjustingThickness") {
+      setStartThicknessMousePosition({ x: clientX, y: clientY });
+      return;
+  }
     if (tool === "eraser") {
+      const id = elements.length;
+      const element = createElement(
+        id,
+        clientX,
+        clientY,
+        clientX,
+        clientY,
+        "pencil",
+        "#ffffff",
+        lineThickness
+      );
+      setElements((prevState) => [...prevState, element]);
       setAction("erasing");
       return;
-  } else {
+    } else {
       const id = elements.length;
       const element = createElement(
         id,
@@ -404,7 +422,7 @@ const Design = () => {
       );
       setElements((prevState) => [...prevState, element]);
       setSelectedElement(element);
-  
+
       setAction(tool === "text" ? "writing" : "drawing");
     }
   };
@@ -412,16 +430,23 @@ const Design = () => {
   const handleMove = (event) => {
     event.preventDefault();
     event.stopPropagation();
+    
     const { clientX, clientY } = getEventCoordinates(event);
-    const isIntersecting = (x, y, element) => {
   
-  };
+    if (action === "adjustingThickness") {
+      const deltaY = event instanceof TouchEvent ? event.touches[0].clientY - startThicknessMousePosition.y : event.movementY;
+      setLineThickness((prevThickness) => Math.max(1, prevThickness + deltaY));
+      return;
+    }
+
     if (action === "erasing") {
-      const elementsCopy = elements.filter((element) => {
-          return !isIntersecting(clientX, clientY, element);
+      const index = elements.length - 1;
+      const { x1, y1 } = elements[index];
+      updateElement(index, x1, y1, clientX, clientY, "pencil", {
+        color: "#ffffff",
       });
-      setElements(elementsCopy);
-  }
+      return;
+    }
     if (action === "panning") {
       const deltaX = clientX - startPanMousePosition.x;
       const deltaY = clientY - startPanMousePosition.y;
@@ -579,7 +604,7 @@ const Design = () => {
           min="1"
           max="20"
           value={lineThickness}
-          onChange={(e) => setLineThickness(Number(e.target.value))}
+          onInput={(e) => setLineThickness(Number(e.target.value))}
         />
         &nbsp;
         <button onClick={clearCanvas}>Clear</button>
