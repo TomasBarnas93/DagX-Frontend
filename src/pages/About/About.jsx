@@ -4,10 +4,10 @@ import image from "../../assets/images/about-face.jpg";
 
 function About() {
   return (
-    <Container>
+    <Container maxW="container.lg">
       <Flex flexWrap="wrap" justifyContent="space-between">
         <Box width={{ base: "100%", md: "50%" }}>
-          <Text>
+          <Text fontSize='2xl'>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
             dolores cupiditate veniam quis quaerat cumque, illum dolorum. Nulla
             architecto sed soluta sequi consequuntur, illo nostrum alias error
@@ -22,7 +22,7 @@ function About() {
             ullam tempore corporis tempora sed deleniti.
           </Text>
         </Box>
-        <Box width={{ base: "100%", md: "45%" }}>
+        <Box width={{ base: "100%", md: "50%" }}>
           <Image src={image} w="100%" />
         </Box>
       </Flex>

@@ -8,9 +8,11 @@ import "./Home.css";
 function Home() {
   return (
     <div className="mainDiv">
+      <div className="homeDivVideo">
       <video autoPlay loop muted className="homeMainVideo">
         <source src={homeVideo} type="video/mp4" />
       </video>
+      </div>
       <Container maxW="container.lg">
         <Flex flexWrap="wrap" justifyContent="space-around">
           {konst.map((painting) => (
