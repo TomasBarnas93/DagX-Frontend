@@ -442,31 +442,82 @@ const Design = () => {
   };
 
   return (
-    <Box overscrollBehavior="none">
-      <Flex position="fixed" zIndex={2}>
-        <RadioGroup defaultValue="rectangle" onChange={(value) => setTool(value)}>
-          <Radio value="line">Line</Radio>
-          <Radio value="circle">Circle</Radio>
-          <Radio value="rectangle">Rectangle</Radio>
-          <Radio value="triangle">Triangle</Radio>
-          <Radio value="pencil">Pencil</Radio>
-          <Radio value="eraser">Eraser</Radio>
-        </RadioGroup>
-        <Input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
-        <Slider aria-label="Slider with custom handle" min={1} max={20} value={lineThickness} onChange={(value) => setLineThickness(value)}>
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-        <ButtonGroup>
-          <Button onClick={clearCanvas}>Clear</Button>
-          <Button onClick={saveImage}>Save</Button>
-          <Button onClick={undo}>Undo</Button>
-          <Button onClick={redo}>Redo</Button>
-        </ButtonGroup>
-        <Input type="color" value={backgroundColor} onChange={(e) => setBackgroundColor(e.target.value)} />
-      </Flex>
+    <div style={{ overscrollBehavior: "none" }}>
+      <div style={{ position: "fixed", zIndex: 2 }}>
+        <input
+          type="radio"
+          id="line"
+          checked={tool === "line"}
+          onChange={() => setTool("line")}
+        />
+        <label htmlFor="line">Line</label>
+        &nbsp;
+        <input
+          type="radio"
+          id="circle"
+          checked={tool === "circle"}
+          onChange={() => setTool("circle")}
+        />
+        <label htmlFor="rectangle">Circle</label>
+        &nbsp;
+        <input
+          type="radio"
+          id="rectangle"
+          checked={tool === "rectangle"}
+          onChange={() => setTool("rectangle")}
+        />
+        <label htmlFor="rectangle">Rectangle</label>
+        &nbsp;
+        <input
+          type="radio"
+          id="triangle"
+          checked={tool === "triangle"}
+          onChange={() => setTool("triangle")}
+        />
+        <label htmlFor="triangle">Triangle</label>
+        &nbsp;
+        <input
+          type="radio"
+          id="pencil"
+          checked={tool === "pencil"}
+          onChange={() => setTool("pencil")}
+        />
+        <label htmlFor="pencil">Pencil</label>
+        &nbsp;
+        <input
+          type="radio"
+          id="eraser"
+          checked={tool === "eraser"}
+          onChange={() => setTool("eraser")}
+        />
+        <label htmlFor="eraser">Eraser</label>
+        &nbsp;
+        <input
+          type="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+        />
+        &nbsp;
+        <input
+          type="range"
+          min="1"
+          max="20"
+          value={lineThickness}
+          onChange={(e) => setLineThickness(Number(e.target.value))}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          onTouchEnd={(e) => e.stopPropagation()}
+        />
+        &nbsp;
+        <button onClick={clearCanvas}>Clear</button>
+        &nbsp;
+        <button onClick={saveImage}>Save</button>
+        &nbsp;
+        <button onClick={undo}>Undo</button>
+        &nbsp;
+        <button onClick={redo}>Redo</button>
+        <input type="color" value={backgroundColor} onChange={(e) => setBackgroundColor(e.target.value)} />
+      </div>
       <canvas
         id="canvas"
         width={window.innerWidth}
@@ -480,7 +531,7 @@ const Design = () => {
         style={{ position: "absolute", zIndex: 1, touchAction: "none" }}
       >
       </canvas>
-    </Box>
+    </div>
   );
 };
 
