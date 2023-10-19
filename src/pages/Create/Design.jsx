@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import rough from "roughjs";
 import "./Design.css";
-import { Box, Button, ButtonGroup, Flex, Radio, RadioGroup, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Input } from "@chakra-ui/react";
 
 const generator = rough.generator();
 
