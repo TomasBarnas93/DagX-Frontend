@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Flex, Box, Link as ChakraLink, Text } from "@chakra-ui/react";
-import homeVideo from "../../assets/videos/HomeVideo.mp4";
-import PaintingCard from "../../components/paintingCard";
-import konst from "../../data/data";
+import homeVideo from "../assets/videos/HomeVideo.mp4";
+import PaintingCard from "../components/paintingCard";
+import konst from "../data/data";
 import { Link } from "react-router-dom";
 
 function Home() {

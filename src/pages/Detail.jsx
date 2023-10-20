@@ -7,7 +7,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import konst from "../../data/data";
+import konst from "../data/data";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 

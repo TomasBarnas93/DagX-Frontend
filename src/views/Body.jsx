@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/Home/Home";
-import Contact from "../pages/Contact/Contact";
-import About from "../pages/About/About";
-import Design from "../pages/Create/Design";
-import Detail from "../pages/Details/Detail";
+import Home from "../pages/Home";
+import Contact from "../pages/Contact";
+import About from "../pages/About";
+import Design from "../pages/Design";
+import Detail from "../pages/Detail";
 
 function Body() {
   return (
