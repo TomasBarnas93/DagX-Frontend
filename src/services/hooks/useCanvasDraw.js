@@ -2,7 +2,6 @@ import { useState, useLayoutEffect, useEffect } from "react";
 import { createElement, updateElement } from "../helpers/elementCreators";
 import { getEventCoordinates, resizedCoordinates } from "../helpers/utils";
 import { useHistory } from "./useHistory";
-import { useZoom } from "./useZoom";
 import rough from "roughjs";
 
 export const useCanvasDraw = (
@@ -21,7 +20,8 @@ export const useCanvasDraw = (
     y: 0,
   });
   const [undo, redo] = useHistory([]);
-  const { scale, handleZoom, resetZoom } = useZoom();
+  const [zoomScale, setZoomScale] = useState(1);
+  const [startDistance, setStartDistance] = useState(0);
 
   const handleStart = (event) => {
     event.preventDefault();
@@ -181,6 +181,26 @@ export const useCanvasDraw = (
     link.click();
   };
 
+  const handleZoom = (event) => {
+    if (event.touches.length === 2) {
+      const dx = event.touches[0].pageX - event.touches[1].pageX;
+      const dy = event.touches[0].pageY - event.touches[1].pageY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (startDistance === 0) {
+        setStartDistance(distance);
+      } else {
+        const newScale = distance / startDistance;
+        setZoomScale(newScale);
+      }
+    }
+  };
+
+  const resetZoom = () => {
+    setStartDistance(0);
+  };
+
+
   useLayoutEffect(() => {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
@@ -188,7 +208,7 @@ export const useCanvasDraw = (
 
     context.fillStyle = backgroundColor;
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.setTransform(scale, 0, 0, scale, 0, 0);
+    context.setTransform(zoomScale, 0, 0, zoomScale, 0, 0);
     context.save();
     context.translate(panOffset.x, panOffset.y);
 
@@ -197,7 +217,7 @@ export const useCanvasDraw = (
       drawElement(roughCanvas, context, element, color);
     });
     context.restore();
-  }, [elements, action, panOffset, color, backgroundColor, scale]);
+  }, [elements, action, panOffset, color, backgroundColor, zoomScale]);
 
   useEffect(() => {
     const undoRedoFunction = (event) => {
