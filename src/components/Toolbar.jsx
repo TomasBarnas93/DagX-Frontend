@@ -1,4 +1,31 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
+import line from "../assets/images/ToolbarImages/line.svg";
+import background_color from "../assets/images/ToolbarImages/background_color.svg";
+import circle from "../assets/images/ToolbarImages/circle.svg";
+import clear from "../assets/images/ToolbarImages/clear.svg";
+import color_plate from "../assets/images/ToolbarImages/color_plate.svg";
+import eraser from "../assets/images/ToolbarImages/eraser.svg";
+import pencil from "../assets/images/ToolbarImages/pencil.svg";
+import rectangle from "../assets/images/ToolbarImages/rectangle.svg";
+import redoBtn from "../assets/images/ToolbarImages/redo.svg";
+import undoBtn from "../assets/images/ToolbarImages/undo.svg";
+import triangle from "../assets/images/ToolbarImages/triangle.svg";
+import save from "../assets/images/ToolbarImages/save.svg";
+import {
+  ButtonGroup,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  Button,
+  Image,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  Box,
+  Flex,
+} from "@chakra-ui/react";
 
 const Toolbar = ({
   tool,
@@ -14,88 +41,156 @@ const Toolbar = ({
   backgroundColor,
   setBackgroundColor,
 }) => {
+  const colorInputRef = useRef(null);
+  const backgroundColorInputRef = useRef(null);
+  const activeButtonStyle = { backgroundColor: '#718096' };
+  const inactiveButtonStyle = {};
+
+  useEffect(() => {
+    if (colorInputRef.current) {
+      colorInputRef.current.click();
+    }
+    if (backgroundColorInputRef.current) {
+      backgroundColorInputRef.current.click();
+    }
+  }, []);
+
   return (
-    <div style={{ overscrollBehavior: "none" }}>
-      <div style={{ position: "fixed", zIndex: 2 }}>
-        <input
-          type="radio"
-          id="line"
-          checked={tool === "line"}
-          onChange={() => setTool("line")}
-        />
-        <label htmlFor="line">Line</label>
-        &nbsp;
-        <input
-          type="radio"
-          id="circle"
-          checked={tool === "circle"}
-          onChange={() => setTool("circle")}
-        />
-        <label htmlFor="rectangle">Circle</label>
-        &nbsp;
-        <input
-          type="radio"
-          id="rectangle"
-          checked={tool === "rectangle"}
-          onChange={() => setTool("rectangle")}
-        />
-        <label htmlFor="rectangle">Rectangle</label>
-        &nbsp;
-        <input
-          type="radio"
-          id="triangle"
-          checked={tool === "triangle"}
-          onChange={() => setTool("triangle")}
-        />
-        <label htmlFor="triangle">Triangle</label>
-        &nbsp;
-        <input
-          type="radio"
-          id="pencil"
-          checked={tool === "pencil"}
-          onChange={() => setTool("pencil")}
-        />
-        <label htmlFor="pencil">Pencil</label>
-        &nbsp;
-        <input
-          type="radio"
-          id="eraser"
-          checked={tool === "eraser"}
-          onChange={() => setTool("eraser")}
-        />
-        <label htmlFor="eraser">Eraser</label>
-        &nbsp;
-        <input
-          type="color"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-        />
-        &nbsp;
-        <input
-          type="range"
-          min="1"
-          max="20"
-          value={lineThickness}
-          onChange={(e) => setLineThickness(Number(e.target.value))}
-          onTouchStart={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
-          onTouchEnd={(e) => e.stopPropagation()}
-        />
-        &nbsp;
-        <button onClick={clearCanvas}>Clear</button>
-        &nbsp;
-        <button onClick={saveImage}>Save</button>
-        &nbsp;
-        <button onClick={undo}>Undo</button>
-        &nbsp;
-        <button onClick={redo}>Redo</button>
-        <input
-          type="color"
-          value={backgroundColor}
-          onChange={(e) => setBackgroundColor(e.target.value)}
-        />
-      </div>
-    </div>
+    <Flex
+      position="fixed"
+      top={10}
+      zIndex={2}
+      alignItems="center"
+      justifyContent="center"
+      width="100%"
+      padding={5}
+      flexWrap="wrap"
+    >
+        <ButtonGroup m={5} gap="1"  flexWrap="wrap">
+          <Button
+            id="line"
+            style={tool === 'line' ? activeButtonStyle : inactiveButtonStyle}
+            checked={tool === "line"}
+            onClick={() => setTool("line")}
+          >
+            <Image src={line} alt="lineImg"></Image>
+          </Button>
+          <Button
+            id="circle"
+            style={tool === 'circle' ? activeButtonStyle : inactiveButtonStyle}
+            checked={tool === "circle"}
+            onClick={() => setTool("circle")}
+          >
+            <Image src={circle} alt="circuleImg" />
+          </Button>
+          <Button
+            id="rectangle"
+            style={tool === 'rectangle' ? activeButtonStyle : inactiveButtonStyle}
+            checked={tool === "rectangle"}
+            onClick={() => setTool("rectangle")}
+          >
+            <Image src={rectangle} alt="rectangleImg" />
+          </Button>
+          <Button
+            id="triangle"
+            style={tool === 'triangle' ? activeButtonStyle : inactiveButtonStyle}
+            checked={tool === "triangle"}
+            onClick={() => setTool("triangle")}
+          >
+            <Image src={triangle} alt="triangleImg" />
+          </Button>
+          <Button
+            id="pencil"
+            style={tool === 'pencil' ? activeButtonStyle : inactiveButtonStyle}
+            checked={tool === "pencil"}
+            onClick={() => setTool("pencil")}
+          >
+            <Image src={pencil} alt="pencilImg" />
+          </Button>
+          <Button
+            id="eraser"
+            style={tool === 'eraser' ? activeButtonStyle : inactiveButtonStyle}
+            checked={tool === "eraser"}
+            onClick={() => setTool("eraser")}
+          >
+            <Image src={eraser} alt="eraserImg" />
+          </Button>
+          <Box width="10rem">
+            <Slider
+              aria-label="slider-ex-2"
+              min={0}
+              max={20}
+              value={lineThickness}
+              onChange={(value) => setLineThickness(value)}
+              onTouchStart={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+              onTouchEnd={(e) => e.stopPropagation()}
+              colorScheme="pink"
+              size="lg"
+            >
+              <SliderTrack bg="red.100">
+                <SliderFilledTrack bg="tomato" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+          </Box>
+          <Popover
+            onOpen={() =>
+              colorInputRef.current && colorInputRef.current.click()
+            }
+          >
+            <PopoverTrigger>
+              <Button>
+                <Image src={color_plate} alt="colorPlateImg" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent maxWidth="5rem" marginLeft={4} marginRight={4}>
+              <PopoverBody>
+                <input
+                  ref={colorInputRef}
+                  type="color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                />
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+          <Button onClick={clearCanvas}>
+            <Image src={clear} alt="clearImg" />
+          </Button>
+          <Button onClick={saveImage}>
+            <Image src={save} alt="saveImg" />
+          </Button>
+          <Button onClick={undo}>
+            <Image src={undoBtn} alt="undoImg" />
+          </Button>
+          <Button onClick={redo}>
+            <Image src={redoBtn} alt="redoImg" />
+          </Button>
+          <Popover
+            onOpen={() =>
+              backgroundColorInputRef.current &&
+              backgroundColorInputRef.current.click()
+            }
+          >
+            <PopoverTrigger>
+              <Button>
+                <Image src={background_color} alt="backgroundcolorImg" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent maxWidth="5rem">
+              <PopoverBody>
+                <input
+                  ref={backgroundColorInputRef}
+                  type="color"
+                  value={backgroundColor}
+                  onChange={(e) => setBackgroundColor(e.target.value)}
+                />
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </ButtonGroup>
+    </Flex>
   );
 };
 
