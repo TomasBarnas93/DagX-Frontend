@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import line from "../assets/images/ToolbarImages/line.svg";
 import background_color from "../assets/images/ToolbarImages/background_color.svg";
 import circle from "../assets/images/ToolbarImages/circle.svg";
@@ -45,15 +45,6 @@ const Toolbar = ({
   const backgroundColorInputRef = useRef(null);
   const activeButtonStyle = { backgroundColor: '#718096' };
   const inactiveButtonStyle = {};
-
-  useEffect(() => {
-    if (colorInputRef.current) {
-      colorInputRef.current.click();
-    }
-    if (backgroundColorInputRef.current) {
-      backgroundColorInputRef.current.click();
-    }
-  }, []);
 
   return (
     <Flex
