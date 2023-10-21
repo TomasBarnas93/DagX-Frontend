@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Canvas = ({ handleStart, handleMove, handleEnd }) => {
+const Canvas = ({ handleStart, handleMove, handleEnd, handleZoom, resetZoom }) => {
 
   return (
     <canvas
@@ -14,8 +14,15 @@ const Canvas = ({ handleStart, handleMove, handleEnd }) => {
       }}
       onMouseUp={handleEnd}
       onTouchStart={handleStart}
-      onTouchMove={handleMove}
-      onTouchEnd={handleEnd}
+      onTouchMove={event => {
+        event.preventDefault();
+        handleMove(event);
+        handleZoom(event);
+      }}
+      onTouchEnd={event => {
+        handleEnd(event);
+        resetZoom();
+      }}
       style={{ position: "absolute", zIndex: 1, touchAction: "none" }}
     >
     </canvas>

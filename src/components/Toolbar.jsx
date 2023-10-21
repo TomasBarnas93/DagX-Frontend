@@ -119,8 +119,8 @@ const Toolbar = ({
               colorScheme="pink"
               size="lg"
             >
-              <SliderTrack bg="red.100">
-                <SliderFilledTrack bg="tomato" />
+              <SliderTrack bg="#E2E8F0">
+                <SliderFilledTrack bg="#171923" />
               </SliderTrack>
               <SliderThumb />
             </Slider>
