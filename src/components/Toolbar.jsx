@@ -12,7 +12,6 @@ import undoBtn from "../assets/images/ToolbarImages/undo.svg";
 import triangle from "../assets/images/ToolbarImages/triangle.svg";
 import save from "../assets/images/ToolbarImages/save.svg";
 import {
-  ButtonGroup,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -25,6 +24,7 @@ import {
   SliderThumb,
   Box,
   Flex,
+  Grid,
 } from "@chakra-ui/react";
 
 const Toolbar = ({
@@ -57,7 +57,16 @@ const Toolbar = ({
       padding={5}
       flexWrap="wrap"
     >
-      <ButtonGroup m={5} gap="1" flexWrap="wrap" >
+      <Grid
+        templateColumns={[
+          "repeat(7, 1fr)",  // For smaller screens (base to sm)
+          "repeat(8, 1fr)",  // For small to medium screens (sm to md)
+          "repeat(13, 1fr)"  // For large and above screens (lg to xl)
+        ]}
+        gap={2}
+        width="100%"
+        margin={5}
+      >
         <Button
           id="line"
           style={tool === "line" ? activeButtonStyle : inactiveButtonStyle}
@@ -184,7 +193,7 @@ const Toolbar = ({
             </PopoverBody>
           </PopoverContent>
         </Popover>
-      </ButtonGroup>
+      </Grid>
     </Flex>
   );
 };

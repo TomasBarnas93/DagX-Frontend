@@ -5,7 +5,7 @@ import { useHistory} from '../services/hooks/useHistory';
 import {useCanvasDraw} from '../services/hooks/useCanvasDraw'; 
 import { usePressedKeys } from '../services/hooks/usePressedKeys';
 
-const Design = () => {
+const Create = () => {
     const [elements, setElements, undo, redo] = useHistory([]);
     const pressedKeys = usePressedKeys();
     const {
@@ -58,4 +58,4 @@ const Design = () => {
     );
 };
 
-export default Design;
+export default Create;

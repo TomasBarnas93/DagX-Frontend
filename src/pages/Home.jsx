@@ -9,30 +9,35 @@ function Home() {
   return (
     <Box>
       <Flex
-        flexDirection={["column", "row"]}
-        justifyContent={["flex-start", "space-between"]}
+        flexDirection="column"  
+        justifyContent="flex-start"
         alignItems="center"
-        w="100%"
-        h={["auto", "50vh"]}
+        width="100%"
         overflow="hidden"
         textAlign="justify"
-        gap={4}
-        marginLeft={{md: 4}}
       >
         <video
           autoPlay
           loop
           muted
           style={{
-            width: ["100%", "50%"],
+            width: "100%",
             objectFit: "cover",
-            maxHeight: ["50vh", "auto"]
+            maxHeight: "80vh",
+            filter: "grayscale(100%) contrast(170%) brightness(90%)",
+            opacity: 0.4,  
           }}
         >
           <source src={homeVideo} type="video/mp4" />
         </video>
-        <Text fontSize={{base: "2xl", md: "3xl"}} flex="1" textAlign={{base: "left" , md: "justify"}} mr={5} marginLeft={{base: 3}}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur eligendi reprehenderit quae voluptatum? Rem unde cupiditate excepturi dignissimos perferendis mollitia dolorum? Dicta vel optio atque deleniti ab ratione dolor perferendis fugiat sint, maxime aspernatur? A ipsum sint nisi ratione, cupiditate fugit animi, magnam cum voluptatem eos facere in tenetur vero. Culpa dolore expedita sed doloribus iusto suscipit quo praesentium rem, magnam ex dolores assumenda est tempora minima. Nobis quos repellat earum eaque placeat sunt doloremque sint, quas quis aliquam aperiam sit officia rerum mollitia cumque voluptatum tenetur eos, quibusdam vitae fugit dicta dolores maiores. Maiores vel magnam dolor velit voluptas?
+        <Text
+          fontSize={{base: "2xl", md: "3xl"}}
+          flex={1}
+          textAlign={{base: "left" , md: "justify"}}
+          marginLeft={{base: 3, md: 0}}
+          marginRight={{base: 3, md: 0}}
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem est deleniti ea labore...
         </Text>
       </Flex>
 
@@ -52,5 +57,4 @@ function Home() {
     </Box>
   );
 }
-
 export default Home;

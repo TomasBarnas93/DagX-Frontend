@@ -20,3 +20,21 @@ canvas {
     margin: 0;
     transform: none;
   }
+
+  .underlineCustom::after {
+    content: '';
+    display: block;
+    margin: auto;
+    height: 1px;
+    width: 40px;
+    background-color: black;
+}
+
+.underlineCustom2::after {
+    content: '';
+    display: block;
+    margin: auto;
+    height: 1px;
+    width: 30px;
+    background-color: black;
+}

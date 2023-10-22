@@ -16,7 +16,7 @@ const Canvas = ({ handleStart, handleMove, handleEnd }) => {
       onTouchStart={handleStart}
       onTouchMove={handleMove}
       onTouchEnd={handleEnd}
-      style={{ position: "absolute", zIndex: 1, touchAction: "none" }}
+      style={{ position: "absolute", zIndex: 1, touchAction: "none", border: "0.5px solid"}}
     >
     </canvas>
   );
