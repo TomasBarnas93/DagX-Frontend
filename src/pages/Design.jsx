@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Toolbar from '../components/Toolbar';
 import Canvas from '../components/Canvas';
 import { useHistory} from '../services/hooks/useHistory';
@@ -24,8 +24,17 @@ const Design = () => {
         setBackgroundColor,
     } = useCanvasDraw(elements, setElements, pressedKeys);
 
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, []);
+    
     return (
-        <div style={{ overscrollBehavior: "none" }}>
+        
+        <div style={{ overscrollBehavior: "none"}} >
             <Toolbar
                 tool={tool}
                 setTool={setTool}

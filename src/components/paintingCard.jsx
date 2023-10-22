@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function PaintingCard({ name, image, id }) {
   return (
     <Link to={`/detail/${id}`}>
-      <Card marginTop={5} maxW="md" boxShadow='dark-lg'>
+      <Card marginTop={5} maxW="md" boxShadow='lg'>
         <CardBody>
           <Image
             src={image}

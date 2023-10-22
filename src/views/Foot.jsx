@@ -1,7 +1,9 @@
 import React from "react";
-import { Icon, Link, Container, Box, Flex } from "@chakra-ui/react";
-import { MdFacebook } from "react-icons/md";
-import { FaInstagram } from "react-icons/fa";
+import { Image, Link as ChakraLink, Container, Box, Flex } from "@chakra-ui/react";
+import emailImg from '../assets/images/emailImg.PNG';
+import facebookImg from '../assets/images/facebookImg.PNG';
+import instagramImg from '../assets/images/instagramImg.PNG';
+import { Link } from "react-router-dom";
 
 function Foot() {
   let date = new Date();
@@ -12,12 +14,13 @@ function Foot() {
       <Container marginTop={5} textAlign="center">
         <Box>
           <Flex justify="center" gap={5}>
-            <Link href="https://www.facebook.com/DAGX.art">
-              <Icon as={MdFacebook} boxSize={6} />
-            </Link>
-            <Link href="https://www.instagram.com/dagx.art/">
-              <Icon as={FaInstagram} boxSize={6} />
-            </Link>
+            <ChakraLink href="https://www.facebook.com/DAGX.art" isExternal>
+              <Image src={facebookImg} />
+            </ChakraLink>
+            <ChakraLink href="https://www.instagram.com/dagx.art/" isExternal>
+              <Image src={instagramImg} />
+            </ChakraLink>
+            <ChakraLink as={Link} to="/contact"><Image src={emailImg}/></ChakraLink>
           </Flex>
         </Box>
       </Container>
