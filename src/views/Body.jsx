@@ -16,7 +16,7 @@ function Body() {
       marginTop:
         location.pathname === "/create"
           ? "10rem"
-          : (location.pathname === "/contact" || location.pathname === "/about"
+          : (location.pathname === "/contact" || location.pathname === "/about" || location.pathname === "/detail/:id"
           ? "5rem"
           : "25rem"),
     }}

@@ -1,24 +1,31 @@
 import React from "react";
-import { Image, Card, CardBody, Heading, Flex } from "@chakra-ui/react";
+import { Image, Box, Text, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-function PaintingCard({ name, image, id }) {
+function PaintingCard({ image, index }) {
   return (
-    <Link to={`/detail/${id}`}>
-      <Card marginTop={5} maxW="md" boxShadow='lg'>
-        <CardBody>
+    <Link to={`/detail/${index + 1}`}>
+      <Flex
+        flexDirection="row"
+        alignItems="center"
+        width="100%"
+        textAlign="justify"
+        mt={5}
+      >
+        <Link to={`/detail/${index + 1}`}>
           <Image
-            src={image}
-            borderRadius="lg"
-            w="50vh"
-            h="50vh"
+            src={image.url}
+            alt={`Painting ${index + 1}`}
+            key={index}
             objectFit="cover"
           />
-          <Flex justifyContent="center" alignItems="center">
-            <Heading size="lg">{name}</Heading>
-          </Flex>
-        </CardBody>
-      </Card>
+        </Link>
+        <Box ml={4} fontSize="2xl" fontWeight="bold">
+          <Text>{image.name}</Text>
+          <Text>{image.size}</Text>
+          <Text>{image.avalible === "yes" ? "Dostępny" : "Sprzedany"}</Text>
+        </Box>
+      </Flex>
     </Link>
   );
 }

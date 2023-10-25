@@ -1,43 +1,22 @@
-import React from "react";
-import {
-  Image,
-  Heading,
-  Flex,
-  Container,
-  Button,
-} from "@chakra-ui/react";
+import { Image, Heading, Container, Button } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import konst from "../data/data";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import React, { useContext } from "react";
+import { ImageContext } from "../services/ImageContext";
 
 function Detail() {
   const { id } = useParams();
-  const painting = konst.find((p) => p.id === id);
+  const images = useContext(ImageContext);
+  const image = images[id - 1];
   const { t } = useTranslation();
-
-  if (!painting) {
-    return <div>Painting not found</div>;
-  }
-
-  const { name, image } = painting;
 
   return (
     <Container>
-    
-          <Image
-            src={image}
-            borderRadius="lg"
-            w="100%"
-            h="50vh"
-            objectFit="cover"
-          />
-          <Flex justifyContent="center" alignItems="center">
-            <Heading size="lg">{name}</Heading>
-          </Flex>
-  
+      <Image src={image.url} />
+      <Heading size="lg">{image.name}</Heading>
       <Link to="/contact">
-        <Button colorScheme='red'>{t('BtnAskForPrice')}</Button>
+        <Button colorScheme="red">{t("BtnAskForPrice")}</Button>
       </Link>
     </Container>
   );

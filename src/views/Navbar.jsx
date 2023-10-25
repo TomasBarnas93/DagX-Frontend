@@ -73,7 +73,8 @@ const Navbar = () => {
         marginTop={
           location.pathname === "/create" ||
           location.pathname === "/about" ||
-          location.pathname === "/contact"
+          location.pathname === "/contact" ||
+          location.pathname === "/detail/:id"
             ? "0"
             : "5rem"
         }
