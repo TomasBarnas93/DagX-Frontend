@@ -2,8 +2,11 @@ export const enTranslation = {
   //Navbar
   Home: "Home",
   Contact: "Contact",
-  About: "About",
+  Projects: "Portfolio",
   Create: "Create",
+  Motto: "bstraction is the courage of the heart, expressed on canvas, where color and form become the language of the soul...",
+  MottoMobile: "Abstraction<br />is the courage of the heart, expressed on canvas, where color and form<br />become the language of the soul...",
+
 
   //Home
 
@@ -18,10 +21,10 @@ export const enTranslation = {
   oops_something_wrong: "Oops, something went wrong",
 
 
-  //About
+  //Projects
 
 
-  //Desgin
+  //Create
 
 
   //Details

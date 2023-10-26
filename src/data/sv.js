@@ -2,8 +2,9 @@ export const svTranslation = {
     //Navbar
     Home: "Hem",
     Contact: "Kontakt",
-    About: "Om mig",
+    Projects: "Portfölj",
     Create: "Skapa",
+    Motto: "bstraktion är hjärtats mod, uttryckt på duk, där färg och form blir själens språk...",
 
   //Home
 
@@ -16,9 +17,9 @@ export const svTranslation = {
   message_sent_success: "Meddelande skickades framgångsrikt",
   oops_something_wrong: "Hoppsan, något gick fel",
 
-  //About
+  //Projects
 
-  //Design
+  //Create
 
   //Details
   BtnAskForPrice: "Fråga efter pris",

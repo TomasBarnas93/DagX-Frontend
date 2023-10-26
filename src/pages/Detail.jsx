@@ -2,7 +2,7 @@ import { Image, Heading, Container, Button } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ImageContext } from "../services/ImageContext";
 
 function Detail() {
@@ -10,6 +10,10 @@ function Detail() {
   const images = useContext(ImageContext);
   const image = images[id - 1];
   const { t } = useTranslation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container>

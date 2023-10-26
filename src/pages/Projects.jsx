@@ -2,7 +2,7 @@ import { Container, Text, Flex, Box, Image } from "@chakra-ui/react";
 import React from "react";
 import image from "../assets/images/about-face.jpg";
 
-function About() {
+function Projects() {
   return (
     <Container maxW="container.lg">
       <Flex flexWrap="wrap" justifyContent="space-between">
@@ -30,4 +30,4 @@ function About() {
   );
 }
 
-export default About;
+export default Projects;

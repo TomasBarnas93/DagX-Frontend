@@ -2,8 +2,9 @@ export const plTranslation = {
     //Navbar
     Home: "Dom",
     Contact: "Kontakt",
-    About: "O mnie",
+    Projects: "Portfolio",
     Create: "Stwórz",
+    Motto: "bstrakcja to odwaga serca, wyrażona na płótnie, gdzie kolor i forma stają się językiem duszy...",
 
   //Home
 
@@ -16,9 +17,9 @@ export const plTranslation = {
   message_sent_success: "Wiadomość wysłana pomyślnie",
   oops_something_wrong: "Ups, coś poszło nie tak",
 
-  //About
+  //Projects
 
-  //Design
+  //Create
 
   //Details
   BtnAskForPrice: "Zapytaj o cenę",
