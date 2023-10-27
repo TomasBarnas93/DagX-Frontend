@@ -19,7 +19,7 @@ function Body() {
           location.pathname === "/create"
             ? "10rem"
             : location.pathname === "/contact" ||
-              location.pathname === "/about" ||
+              location.pathname === "/projects" ||
               location.pathname.startsWith("/detail/")
             ? "5rem"
             : "20rem",
@@ -27,7 +27,7 @@ function Body() {
           location.pathname === "/create"
             ? "10rem"
             : location.pathname === "/contact" ||
-              location.pathname === "/about" ||
+              location.pathname === "/projects" ||
               location.pathname.startsWith("/detail/")
             ? "5rem"
             : "25rem",

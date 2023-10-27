@@ -66,36 +66,23 @@ const Navbar = () => {
       right="0"
       zIndex="100"
       transition="background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s"
-      
     >
       {isHomePage && scrollPosition < 100 && (
         <Text
-        fontSize={isMobile ? "1.5rem" : "2.3rem"}
+          fontSize={isMobile ? "1.5rem" : "2.3rem"}
           textAlign="center"
           paddingTop="5rem"
           fontFamily="Poiret One"
           direction="row"
-          display={isMobile ? "block" : "inline"} 
-        >
-          <span
-            style={{
-              fontFamily: "Aerotis",
-              fontSize: isMobile ? "3rem" : "4.5rem",
-            }}
-          >
-            A
-          </span>
-          {isMobile ? ( 
-        <>
-        
-            bstrakcja
-            <br />to odwaga serca wyrażona na płótnie, gdzie kolor i forma
-            <br />stają się językiem duszy...
-        </>
-    ) : (
-      t("Motto")
-    )}
-</Text>
+          display={isMobile ? "block" : "inline"}
+          dangerouslySetInnerHTML={{
+            __html: `
+      <span style="font-family: Aerotis; font-size: ${
+        isMobile ? "3rem" : "4.5rem"
+      }">A</span>
+      ${isMobile ? t("MottoMobile") : t("Motto")}`,
+          }}
+        />
       )}
 
       <Flex
@@ -104,10 +91,10 @@ const Navbar = () => {
         justifyContent="space-between"
         marginTop={
           location.pathname === "/create" ||
-          location.pathname === "/about" ||
+          location.pathname === "/projects" ||
           location.pathname === "/contact" ||
           location.pathname.startsWith("/detail/")
-            ? "0"
+            ? "1rem"
             : "5rem"
         }
       >
@@ -133,23 +120,23 @@ const Navbar = () => {
               <Box>
                 <ChakraLink
                   as={Link}
-                  to="/contact"
-                  color="black"
-                  fontSize="1.9rem"
-                  className="underlineCustom2"
-                >
-                  <Text fontFamily="Poiret One">{t("Contact")}</Text>
-                </ChakraLink>
-              </Box>
-              <Box>
-                <ChakraLink
-                  as={Link}
                   to="/projects"
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
                 >
                   <Text fontFamily="Poiret One">{t("Projects")}</Text>
+                </ChakraLink>
+              </Box>
+              <Box>
+                <ChakraLink
+                  as={Link}
+                  to="/contact"
+                  color="black"
+                  fontSize="1.9rem"
+                  className="underlineCustom2"
+                >
+                  <Text fontFamily="Poiret One">{t("Contact")}</Text>
                 </ChakraLink>
               </Box>
               <Box>
@@ -198,7 +185,7 @@ const Navbar = () => {
             <DrawerOverlay>
               <DrawerContent>
                 <DrawerCloseButton />
-                <DrawerHeader borderBottomWidth="1px" marginRight={5}>
+                <DrawerHeader borderBottomWidth="1px" marginRight={10}>
                   <Flex justifyContent="end" width="100%">
                     <Select
                       onChange={handleLanguageChange}
@@ -224,8 +211,8 @@ const Navbar = () => {
                   >
                     {[
                       { path: "/", label: "Home" },
-                      { path: "/contact", label: "Contact" },
                       { path: "/projects", label: "Projects" },
+                      { path: "/contact", label: "Contact" },
                       { path: "/create", label: "Create" },
                     ].map((item) => (
                       <ChakraLink

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import homeVideo from "../assets/videos/HomeVideo.mp4";
-import PaintingCard from "../components/paintingCard";
+import PaintingCardRightText from "../components/paintingCardRightText";
 import { ImageContext } from "../services/ImageContext";
 
 function Home() {
@@ -62,8 +62,8 @@ function Home() {
       </Flex>
 
       <Box marginTop="30rem" width="100%" height="auto">
-        {images.map((image, index) => (
-          <PaintingCard image={image} index={index} key={index} />
+      {images.slice(0, 9).map((image, index) => (
+          <PaintingCardRightText image={image} index={index} key={index} />
         ))}
       </Box>
     </Box>

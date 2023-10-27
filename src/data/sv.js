@@ -5,17 +5,19 @@ export const svTranslation = {
     Projects: "Portfölj",
     Create: "Skapa",
     Motto: "bstraktion är hjärtats mod, uttryckt på duk, där färg och form blir själens språk...",
+    MottoMobile: "bstraktion<br /> är hjärtats mod, uttryckt på duk<br /> där färg och form blir själens språk...",
 
   //Home
 
   //Contact
-  first_name: "Förnamn",
-  last_name: "Efternamn",
-  email_address: "E-postadress",
-  message: "Meddelande",
-  send: "Skicka",
-  message_sent_success: "Meddelande skickades framgångsrikt",
-  oops_something_wrong: "Hoppsan, något gick fel",
+  Name: "Namn",
+  Email: "E-postadress",
+  Message: "Meddelande",
+  Size: "Tavlanstorlek",
+  Attachment: "Bifogad fil",
+  Send: "Skicka",
+  Success: "Meddelandet skickades framgångsrikt",
+  Wrong: "Hoppsan, något gick fel",
 
   //Projects
 
@@ -23,4 +25,8 @@ export const svTranslation = {
 
   //Details
   BtnAskForPrice: "Fråga efter pris",
+
+   //PaintingCard
+   Avalible: "TILLGÄNGLIG",
+   Sold: "SÅLD",
 };

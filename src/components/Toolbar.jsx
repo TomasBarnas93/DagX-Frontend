@@ -159,12 +159,6 @@ const Toolbar = ({
             </PopoverBody>
           </PopoverContent>
         </Popover>
-        <Button onClick={clearCanvas} size={["xs", "sm", "md", "lg"]}>
-          <Image src={clear} alt="clearImg" />
-        </Button>
-        <Button onClick={saveImage} size={["xs", "sm", "md", "lg"]}>
-          <Image src={save} alt="saveImg" />
-        </Button>
         <Button onClick={undo} size={["xs", "sm", "md", "lg"]}>
           <Image src={undoBtn} alt="undoImg" />
         </Button>
@@ -193,6 +187,12 @@ const Toolbar = ({
             </PopoverBody>
           </PopoverContent>
         </Popover>
+        <Button onClick={clearCanvas} size={["xs", "sm", "md", "lg"]}>
+          <Image src={clear} alt="clearImg" />
+        </Button>
+        <Button onClick={saveImage} size={["xs", "sm", "md", "lg"]}>
+          <Image src={save} alt="saveImg" />
+        </Button>
       </Grid>
     </Flex>
   );

@@ -24,7 +24,7 @@ function Foot() {
           </Flex>
         </Box>
       </Container>
-      <footer>&copy; {year} DagX | All rights reserved.</footer>
+      <footer>&copy; {year} DagX | ALL RIGHTS RESERVED</footer>
     </>
   );
 }

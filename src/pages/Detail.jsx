@@ -22,6 +22,9 @@ function Detail() {
       <Link to="/contact">
         <Button colorScheme="red">{t("BtnAskForPrice")}</Button>
       </Link>
+      <Link to="/">
+        <Button colorScheme="green">{t("BacktoHome")}</Button>
+      </Link>
     </Container>
   );
 }

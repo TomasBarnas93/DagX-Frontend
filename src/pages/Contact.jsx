@@ -6,11 +6,15 @@ import {
   Textarea,
   Button,
   VStack,
-  Container,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
 import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next";
 
 function Contact() {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -55,9 +59,10 @@ function Contact() {
 
       const result = await response.json();
       console.log("Email sent successfully:", result);
+      const sucessMessage = t("Success");
       Swal.fire({
         icon: "success",
-        title: "Success",
+        title: sucessMessage,
       });
       setFormData({
         name: "",
@@ -68,66 +73,90 @@ function Contact() {
       });
     } catch (error) {
       console.error("Error sending email:", error);
+      const wrongMessage = t("Wrong");
       Swal.fire({
         icon: "error",
-        title: "Wrong",
+        title: wrongMessage,
         text: error.message,
       });
     }
   };
 
   return (
-    <Container mt={5} p={5} boxShadow="dark-lg">
-      <form onSubmit={handleSubmit}>
-        <VStack spacing={5}>
-          <FormControl isRequired>
-            <FormLabel>Name</FormLabel>
-            <Input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Name"
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Email</FormLabel>
-            <Input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Email"
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Message</FormLabel>
-            <Textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Message"
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Size</FormLabel>
-            <Input
-              name="size"
-              value={formData.size}
-              onChange={handleChange}
-              placeholder="Size"
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Attachment</FormLabel>
-            <Input type="file" onChange={handleFileChange} />
-          </FormControl>
-          <Button type="submit" colorScheme="blue">
-            Submit
-          </Button>
-        </VStack>
-      </form>
-    </Container>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="85vh"
+    >
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        rounded="md"
+        width="50rem"
+        height="50rem"
+        backgroundColor="#f3eee7"
+        fontFamily="Poiret One"
+        className="imageWrapper"
+      >
+        <form onSubmit={handleSubmit}>
+          <VStack spacing={5}>
+            <FormControl isRequired>
+              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Name")}</FormLabel>
+              <Input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                border="1px solid darkgrey"
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Email")}</FormLabel>
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                border="1px solid darkgrey"
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Message")}</FormLabel>
+              <Textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                border="1px solid darkgrey"
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Size")}</FormLabel>
+              <Input
+                name="size"
+                value={formData.size}
+                onChange={handleChange}
+                border="1px solid darkgrey"
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Attachment")}</FormLabel>
+              <Input type="file" onChange={handleFileChange} />
+            </FormControl>
+            <Button
+              fontFamily="Poiret One"
+              type="submit"
+              backgroundColor="#DDDCDB"
+              size="lg"
+              fontSize="2xl"
+              fontWeight="normal"
+            >
+              {t("Send")}
+            </Button>
+          </VStack>
+        </form>
+      </Flex>
+    </Box>
   );
 }
 

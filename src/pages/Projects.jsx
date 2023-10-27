@@ -1,32 +1,51 @@
-import { Container, Text, Flex, Box, Image } from "@chakra-ui/react";
-import React from "react";
-import image from "../assets/images/about-face.jpg";
+import React, { useContext, useEffect } from "react";
+import { ImageContext } from "../services/ImageContext";
+import PaintingCardRightText from "../components/paintingCardRightText";
+import { Flex, Box, HStack } from "@chakra-ui/react";
+import PaintingCardLeftText from "../components/paintingCardLeftText";
 
 function Projects() {
+  const images = useContext(ImageContext);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Separate the images into small, big and all categories
+  const smallImages = images.filter(image => image.orientation === "horizontal");
+  const bigImages = images.filter(image => image.orientation === "vertical");
+  
+  // Split each category into left and right arrays
+  const leftSmallImages = smallImages.slice(0, smallImages.length / 2);
+  const rightSmallImages = smallImages.slice(smallImages.length / 2);
+  const leftBigImages = bigImages.slice(0, bigImages.length / 2);
+  const rightBigImages = bigImages.slice(bigImages.length / 2);
+
   return (
-    <Container maxW="container.lg">
-      <Flex flexWrap="wrap" justifyContent="space-between">
-        <Box width={{ base: "100%", md: "50%" }}>
-          <Text fontSize='2xl'>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-            dolores cupiditate veniam quis quaerat cumque, illum dolorum. Nulla
-            architecto sed soluta sequi consequuntur, illo nostrum alias error
-            doloribus eum distinctio deserunt eaque adipisci explicabo illum
-            dicta! Blanditiis, esse molestiae. Explicabo, accusantium
-            consequuntur sit animi numquam sunt, laboriosam voluptatum in quas
-            voluptates asperiores ex! Doloribus porro architecto reprehenderit
-            optio harum ab, voluptates facilis, deleniti nesciunt, numquam nam.
-            Vel ex est unde in rem sed voluptates aliquid! Sunt sed eligendi ad
-            delectus laborum fuga asperiores iusto excepturi, accusantium
-            corrupti accusamus dolores non adipisci fugit eaque? Praesentium
-            ullam tempore corporis tempora sed deleniti.
-          </Text>
-        </Box>
-        <Box width={{ base: "100%", md: "50%" }}>
-          <Image src={image} w="100%" />
-        </Box>
-      </Flex>
-    </Container>
+    <Flex direction="column" alignItems="center">
+      {/* Render small images */}
+      {leftSmallImages.map((leftImage, index) => {
+        const rightImage = rightSmallImages[index];
+        return (
+          <HStack key={index} spacing={4} width="100%">
+            <PaintingCardRightText image={leftImage} index={index} />
+            <Box borderLeft="1px solid black" height="200px" marginTop="12rem" />
+            {rightImage && <PaintingCardLeftText image={rightImage} index={index + leftSmallImages.length} />}
+          </HStack>
+        );
+      })}
+      {/* Render big images */}
+      {leftBigImages.map((leftImage, index) => {
+        const rightImage = rightBigImages[index];
+        return (
+          <HStack key={index} spacing={4} width="100%">
+            <PaintingCardRightText image={leftImage} index={index} />
+            <Box borderLeft="1px solid black" height="200px" marginTop="12rem"/>
+            {rightImage && <PaintingCardLeftText image={rightImage} index={index + leftBigImages.length} />}
+          </HStack>
+        );
+      })}
+    </Flex>
   );
 }
 

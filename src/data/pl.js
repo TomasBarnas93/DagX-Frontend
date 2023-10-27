@@ -5,17 +5,19 @@ export const plTranslation = {
     Projects: "Portfolio",
     Create: "Stwórz",
     Motto: "bstrakcja to odwaga serca, wyrażona na płótnie, gdzie kolor i forma stają się językiem duszy...",
+    MottoMobile: "bstrakcja<br /> to odwaga serca, wyrażona na płótnie, gdzie kolor i forma<br />stają się językiem duszy...",
 
   //Home
 
   //Contact
-  first_name: "Imię",
-  last_name: "Nazwisko",
-  email_address: "Adres e-mail",
-  message: "Wiadomość",
-  send: "Wyślij",
-  message_sent_success: "Wiadomość wysłana pomyślnie",
-  oops_something_wrong: "Ups, coś poszło nie tak",
+  Name: "Imię",
+  Email: "Adres e-mail",
+  Message: "Wiadomość",
+  Size: "Rozmiar obrazu",
+  Attachment: "Załącznik",
+  Send: "Wyślij",
+  Success: "Wiadomość została wysłana pomyślnie",
+  Wrong: "Ups, coś poszŁo nie tak",
 
   //Projects
 
@@ -23,4 +25,8 @@ export const plTranslation = {
 
   //Details
   BtnAskForPrice: "Zapytaj o cenę",
+
+  //PaintingCard
+  Avalible: "DOSTĘPNY",
+  Sold: "SPRZEDANY",
 };
