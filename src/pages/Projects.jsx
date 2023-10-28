@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { ImageContext } from "../services/ImageContext";
 import PaintingCardRightText from "../components/paintingCardRightText";
-import { Flex, Box, HStack } from "@chakra-ui/react";
+import { Flex, Box, HStack, useMediaQuery } from "@chakra-ui/react";
 import PaintingCardLeftText from "../components/paintingCardLeftText";
 
 function Projects() {
   const images = useContext(ImageContext);
+  const [isMobile] = useMediaQuery("(max-width: 48em)");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -21,6 +22,15 @@ function Projects() {
   const leftBigImages = bigImages.slice(0, bigImages.length / 2);
   const rightBigImages = bigImages.slice(bigImages.length / 2);
 
+  if (isMobile) {
+    return (
+      <Flex direction="column" alignItems="center">
+        {images.map((image, index) => (
+          <PaintingCardRightText key={index} image={image} index={index} />
+        ))}
+      </Flex>
+    );
+  }
   return (
     <Flex direction="column" alignItems="center">
       {/* Render small images */}

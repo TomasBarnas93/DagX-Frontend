@@ -51,7 +51,7 @@ function PaintingCardRightText({ image, index }) {
             alignItems="center"
             justifyContent="center"
             textAlign="center"
-            marginLeft="5rem"
+            marginLeft={{ base: location.pathname === "/projects" ? "5rem" :"11rem", md: location.pathname === "/projects" ? "5rem" : "5rem" }}
           >
             <Text fontSize={{ base: "2.5rem", md: "5xl" }}>{image.name}</Text>
             <Text fontSize={{ base: "1.2rem", md: "2xl" }}>{image.size}</Text>
