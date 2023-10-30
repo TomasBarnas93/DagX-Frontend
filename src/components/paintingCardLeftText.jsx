@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-function PaintingCardLeftText({ image, index, fontSizeName, fontSizeAvailable, fontSizeSize }) {
+function PaintingCardLeftText({ image, fontSizeName, fontSizeAvailable, fontSizeSize }) {
   const { t } = useTranslation();
 
   return (
@@ -20,7 +20,7 @@ function PaintingCardLeftText({ image, index, fontSizeName, fontSizeAvailable, f
     }}
     viewport={{ once: true }}
   >
-      <Link to={`/detail/${index + 1}`}>
+      <Link to={`/detail/${image.originalIndex + 1}`}>
         <Flex
           flexDirection={{ base: "column", md: "row" }}
           alignItems="center"
@@ -53,12 +53,11 @@ function PaintingCardLeftText({ image, index, fontSizeName, fontSizeAvailable, f
               {image.avalible === "yes" ? t("Available") : t("Sold")}
             </Text>
           </Box>
-          <Link to={`/detail/${index + 1}`}>
+          <Link to={`/detail/${image.originalIndex + 1}`}>
             <Box className="imageWrapper">
               <Image
                 src={image.url}
-                alt={`Painting ${index + 1}`}
-                key={index}
+                alt={`Painting`}
                 objectFit="cover"
                 width={{ base: "50rem", md: "90rem" }}
                 margin="auto"

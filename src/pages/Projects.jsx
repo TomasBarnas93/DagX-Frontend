@@ -12,11 +12,18 @@ function Projects() {
     window.scrollTo(0, 0);
   }, []);
 
+  const separateImages = (orientation) => {
+    return images.reduce((acc, image) => {
+      if (image.orientation === orientation) {
+        acc.push(image);
+      }
+      return acc;
+    }, []);
+  };
+
   // Separate the images into small, big and all categories
-  const smallImages = images.filter(
-    (image) => image.orientation === "horizontal"
-  );
-  const bigImages = images.filter((image) => image.orientation === "vertical");
+  const smallImages = separateImages("horizontal");
+  const bigImages = separateImages("vertical");
 
   // Split each category into left and right arrays
   const leftSmallImages = smallImages.slice(0, smallImages.length / 2);

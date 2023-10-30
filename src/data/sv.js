@@ -8,7 +8,8 @@ export const svTranslation = {
     MottoMobile: "bstraktion<br /> är hjärtats mod, uttryckt på duk<br /> där färg och form blir själens språk...",
 
   //Home
-
+  AboutHead: "ag är här för att förvandla din vision till verklighet.",
+  About: "Mitt namn är Dagmara Barnas och jag har ägnat mig åt måleri som en hobby, men med stor passion sedan 2018. Jag vill att din föreställning om en modern och smakfull inredning ska bli sann. Därför kan du beställa en abstrakt målning från mig med användning av blandade tekniker, precis som du drömmer om.",
   //Contact
   Name: "Namn",
   Email: "E-postadress",
@@ -24,7 +25,7 @@ export const svTranslation = {
   //Create
 
   //Details
-  BtnAskForPrice: "Fråga efter pris",
+  BtnAskForPrice: "FRÅGA EFTER PRIS",
 
    //PaintingCard
    Available: "TILLGÄNGLIG",

@@ -1,9 +1,18 @@
-import { Image, Heading, Container, Button, Box } from "@chakra-ui/react";
+import {
+  Image,
+  Text,
+  Flex,
+  Button,
+  Box,
+  Grid,
+  IconButton,
+} from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import React, { useContext, useEffect } from "react";
 import { ImageContext } from "../services/ImageContext";
+import { SlArrowLeft } from "react-icons/sl";
 
 function Detail() {
   const { id } = useParams();
@@ -16,21 +25,80 @@ function Detail() {
   }, []);
 
   return (
-    <Container>
-      <Image src={image.url} alt={image.name} />
-      <Heading size="lg">{image.name}</Heading>
-      {image.details && image.details.map((detail, index) => (
-        <Box key={index} mt={4}>
-          <Image src={detail.subUrl} alt={`Detail ${index + 1}`} />
-        </Box>
-      ))}
-      <Link to="/contact" mt={4}>
-        <Button colorScheme="red">{t("BtnAskForPrice")}</Button>
-      </Link>
-      <Link to="/" mt={4}>
-        <Button colorScheme="green">{t("BacktoHome")}</Button>
-      </Link>
-    </Container>
+    <Flex
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      mt="10rem"
+    >
+      <Box
+        textAlign="center"
+        mb={4}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Image
+          className="imageWrapper"
+          src={image.url}
+          alt={image.name}
+          height="50rem"
+          margin="auto"
+        />
+        <Text fontSize="5xl" mt={2}>
+          {image.name}
+        </Text>
+        <Text fontSize="3xl" mt={2}>
+          {image.size}
+        </Text>
+        <Text fontSize="3xl" mt={2} textAlign="center" m={10}>
+          {image.description}
+        </Text>
+      </Box>
+      <Grid templateColumns="repeat(2, 1fr)" gap="15rem" mt="3rem">
+        {image.details &&
+          image.details.slice(0, 2).map((detail, index) => (
+            <Box key={index}>
+              <Image
+                src={detail.subUrl}
+                alt={`Detail ${index + 1}`}
+                height="50rem"
+                className="imageWrapper"
+              />
+            </Box>
+          ))}
+      </Grid>
+      {image.details && image.details[2] && (
+        <Flex gap={10} flexDirection="row">
+          <Image
+            className="imageWrapper"
+            src={image.details[2].subUrl}
+            alt="Detail 3"
+            height="50rem"
+            mt="5rem"
+          />
+          <Image
+            className="imageWrapper"
+            src={image.details[3].subUrl}
+            alt="Detail 3"
+            height="50rem"
+            mt="5rem"
+          />
+        </Flex>
+      )}
+      <Box mt="3rem">
+      <Link to="/projects">
+          <IconButton
+            icon={<SlArrowLeft size="2.5rem" />}
+            variant="ghost"
+            boxSize="3em"
+            mr="2rem"
+          />
+        </Link>
+        <Link to="/contact">
+          <Button fontSize="2xl" h="3rem" fontFamily="Poiret One">{t("BtnAskForPrice")}</Button>
+        </Link>
+      </Box>
+    </Flex>
   );
 }
 

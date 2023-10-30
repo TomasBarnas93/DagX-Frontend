@@ -8,6 +8,8 @@ export const plTranslation = {
     MottoMobile: "bstrakcja<br /> to odwaga serca, wyrażona na płótnie, gdzie kolor i forma<br />stają się językiem duszy...",
 
   //Home
+  AboutHead:"estem tu aby zamienić Twoją wizję w rzeczywistość.",
+  About: "Nazywam się Dagmara Barnas i zajmuję się malarstwem hobbystycznie lecz z wielką pasją od 2018 roku. Chcę aby Twoje wyobrażenie o nowoczesnym i gustownym wnętrzu stało się prawdą. Dlatego też możesz zamówić u mnie obraz abstrakcyjny z wykorzystaniem technik mieszanych, taki jaki sobie wymarzysz.",
 
   //Contact
   Name: "Imię",
@@ -24,7 +26,7 @@ export const plTranslation = {
   //Create
 
   //Details
-  BtnAskForPrice: "Zapytaj o cenę",
+  BtnAskForPrice: "ZAPYTAJ O CENĘ",
 
   //PaintingCard
   Available: "DOSTĘPNY",

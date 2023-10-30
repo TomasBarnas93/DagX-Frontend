@@ -9,7 +9,8 @@ export const enTranslation = {
 
 
   //Home
-
+  AboutHead: "am here to turn your vision into reality.",
+  About: "My name is Dagmara Barnas and I have been engaging in painting as a hobby, but with great passion since 2018. I want your imagination of a modern and tasteful interior to come true. Therefore, you can order an abstract painting from me using mixed techniques, just as you dream of.",
 
   //Contact
   Name: "Name",
@@ -29,7 +30,7 @@ export const enTranslation = {
 
 
   //Details
-  BtnAskForPrice: "Ask for price",
+  BtnAskForPrice: "ASK FOR PRICE",
 
    //PaintingCard
    Available: "AVAILABLE",

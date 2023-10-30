@@ -28,12 +28,11 @@ const ImageProvider = ({ children }) => {
             }
           }
 
-          imagesArray.push({ ...imageData, details: detailsArray });
+          imagesArray.push({ ...imageData, details: detailsArray, originalIndex: i - 1 });
         } else {
           console.error(`No data found for image${i}`);
         }
       }
-      
       console.log(imagesArray);
       setImages(imagesArray);
     };

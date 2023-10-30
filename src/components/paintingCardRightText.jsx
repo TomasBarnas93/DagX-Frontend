@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-function PaintingCardRightText({ image, index, fontSizeName, fontSizeAvailable, fontSizeSize }) {
+function PaintingCardRightText({ image, fontSizeName, fontSizeAvailable, fontSizeSize }) {
   const { t } = useTranslation();
   const location = useLocation();
 
@@ -21,7 +21,7 @@ function PaintingCardRightText({ image, index, fontSizeName, fontSizeAvailable, 
     }}
     viewport={{ once: true }}
     >
-      <Link to={`/detail/${index + 1}`}>
+      <Link to={`/detail/${image.originalIndex + 1}`}>
         <Flex
           flexDirection={{ base: "column", md: "row" }}
           alignItems="center"
@@ -33,8 +33,7 @@ function PaintingCardRightText({ image, index, fontSizeName, fontSizeAvailable, 
           <Box className="imageWrapper">
             <Image
               src={image.url}
-              alt={`Painting ${index + 1}`}
-              key={index}
+              alt={`Painting`}
               objectFit="cover"
               width={{ base: "50rem", md: "90rem" }}
               margin="auto"
