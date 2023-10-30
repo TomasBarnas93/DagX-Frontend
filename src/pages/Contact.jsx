@@ -134,7 +134,7 @@ function Contact() {
                 border="1px solid darkgrey"
               />
             </FormControl>
-            <FormControl isRequired>
+            <FormControl>
               <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Size")}</FormLabel>
               <Input
                 name="size"
@@ -143,7 +143,7 @@ function Contact() {
                 border="1px solid darkgrey"
               />
             </FormControl>
-            <FormControl isRequired>
+            <FormControl>
               <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Attachment")}</FormLabel>
               <Input type="file" onChange={handleFileChange} />
             </FormControl>

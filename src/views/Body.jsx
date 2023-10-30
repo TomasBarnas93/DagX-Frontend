@@ -11,27 +11,25 @@ import { Box } from "@chakra-ui/react";
 function Body() {
   const location = useLocation();
 
+  const BodyMarginTop = () => {
+    if (location.pathname === "/create") {
+      return { base: "10rem", md: "10rem" };
+    } else if (
+      location.pathname === "/contact" ||
+      location.pathname.startsWith("/detail/")
+    ) {
+      return { base: "5rem", md: "5rem" };
+    } else if (location.pathname === "/") {
+      return { base: "20rem", md: "25rem" };
+    } else {
+      return { base: "0rem", md: "0rem" };
+    }
+  };
+
   return (
     <Box
       minHeight="100vh"
-      marginTop={{
-        base:
-          location.pathname === "/create"
-            ? "10rem"
-            : location.pathname === "/contact" ||
-              location.pathname === "/projects" ||
-              location.pathname.startsWith("/detail/")
-            ? "5rem"
-            : "20rem",
-        md:
-          location.pathname === "/create"
-            ? "10rem"
-            : location.pathname === "/contact" ||
-              location.pathname === "/projects" ||
-              location.pathname.startsWith("/detail/")
-            ? "5rem"
-            : "25rem",
-      }}
+      marginTop={BodyMarginTop()}
     >
       <Routes>
         <Route exact path="/" element={<Home />} />

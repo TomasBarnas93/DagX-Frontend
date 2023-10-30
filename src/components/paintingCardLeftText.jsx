@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-function PaintingCardLeftText({ image, index }) {
+function PaintingCardLeftText({ image, index, fontSizeName, fontSizeAvailable, fontSizeSize }) {
   const { t } = useTranslation();
 
   return (
@@ -40,14 +40,14 @@ function PaintingCardLeftText({ image, index }) {
             textAlign="center"
             marginLeft="5rem"
           >
-            <Text fontSize={{ base: "2.5rem", md: "5xl" }}>{image.name}</Text>
-            <Text fontSize={{ base: "1.2rem", md: "2xl" }}>{image.size}</Text>
+            <Text fontSize={fontSizeName}>{image.name}</Text>
+            <Text fontSize={fontSizeSize}>{image.size}</Text>
             <Box
               className="underlineCustom"
               marginTop={{ base: "1.5rem", md: "2rem" }}
             ></Box>
             <Text
-              fontSize={{ base: "1.2rem", md: "2xl" }}
+              fontSize={fontSizeAvailable}
               mt={{ base: 5, md: 10 }}
             >
               {image.avalible === "yes" ? t("Available") : t("Sold")}

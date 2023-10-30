@@ -27,6 +27,6 @@ export const plTranslation = {
   BtnAskForPrice: "Zapytaj o cenę",
 
   //PaintingCard
-  Avalible: "DOSTĘPNY",
+  Available: "DOSTĘPNY",
   Sold: "SPRZEDANY",
 };

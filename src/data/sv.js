@@ -27,6 +27,6 @@ export const svTranslation = {
   BtnAskForPrice: "Fråga efter pris",
 
    //PaintingCard
-   Avalible: "TILLGÄNGLIG",
+   Available: "TILLGÄNGLIG",
    Sold: "SÅLD",
 };

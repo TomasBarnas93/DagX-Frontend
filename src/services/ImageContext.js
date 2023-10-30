@@ -1,7 +1,7 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { storage, db } from '../services/helpers/firebase';
-import { ref, listAll } from 'firebase/storage';
-import { get, ref as dbRef } from 'firebase/database';
+import React, { createContext, useState, useEffect } from "react";
+import { storage, db } from "../services/helpers/firebase";
+import { ref, listAll } from "firebase/storage";
+import { get, ref as dbRef } from "firebase/database";
 
 export const ImageContext = createContext();
 
@@ -10,28 +10,39 @@ const ImageProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchImages = async () => {
-        let imagesArray = [];
-        const listRef = ref(storage);
-        const list = await listAll(listRef);
-      
-        for (let i = 1; i <= list.items.length; i++) {
-          const imageRef = dbRef(db, `images/image${i}`);
-          const imageSnap = await get(imageRef);
-          const imageData = imageSnap.val();
-          imagesArray.push({ ...imageData });
+      let imagesArray = [];
+      const listRef = ref(storage);
+      const list = await listAll(listRef);
+
+      for (let i = 1; i <= list.items.length; i++) {
+        const imageRef = dbRef(db, `images/image${i}`);
+        const imageSnap = await get(imageRef);
+        const imageData = imageSnap.val();
+
+        if (imageData) {
+          const detailsArray = [];
+          if (imageData.detailImages) {
+            for (const detailKey in imageData.detailImages) {
+              const detailData = imageData.detailImages[detailKey];
+              detailsArray.push({ subUrl: detailData.subUrl });
+            }
+          }
+
+          imagesArray.push({ ...imageData, details: detailsArray });
+        } else {
+          console.error(`No data found for image${i}`);
         }
-        
-        setImages(imagesArray);
-        console.log(imagesArray);
-      };
+      }
+      
+      console.log(imagesArray);
+      setImages(imagesArray);
+    };
 
     fetchImages();
   }, []);
 
   return (
-    <ImageContext.Provider value={images}>
-      {children}
-    </ImageContext.Provider>
+    <ImageContext.Provider value={images}>{children}</ImageContext.Provider>
   );
 };
 

@@ -113,6 +113,7 @@ const Navbar = () => {
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
+                  _hover={{ textDecoration: 'none' }}
                 >
                   <Text fontFamily="Poiret One">{t("Home")}</Text>
                 </ChakraLink>
@@ -124,6 +125,7 @@ const Navbar = () => {
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
+                  _hover={{ textDecoration: 'none' }}
                 >
                   <Text fontFamily="Poiret One">{t("Projects")}</Text>
                 </ChakraLink>
@@ -135,6 +137,7 @@ const Navbar = () => {
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
+                  _hover={{ textDecoration: 'none' }}
                 >
                   <Text fontFamily="Poiret One">{t("Contact")}</Text>
                 </ChakraLink>
@@ -146,6 +149,7 @@ const Navbar = () => {
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
+                  _hover={{ textDecoration: 'none' }}
                 >
                   <Text fontFamily="Poiret One">{t("Create")}</Text>
                 </ChakraLink>

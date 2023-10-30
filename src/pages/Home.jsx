@@ -62,8 +62,15 @@ function Home() {
       </Flex>
 
       <Box marginTop="30rem" width="100%" height="auto">
-      {images.slice(0, 9).map((image, index) => (
-          <PaintingCardRightText image={image} index={index} key={index} />
+        {images.slice(0, 9).map((image, index) => (
+          <PaintingCardRightText
+            image={image}
+            index={index}
+            key={index}
+            fontSizeName={{ base: "2.5rem", md: "5xl" }}
+            fontSizeSize={{ base: "1.2rem", md: "2xl" }}
+            fontSizeAvailable={{ base: "1.2rem", md: "2xl" }}
+          />
         ))}
       </Box>
     </Box>

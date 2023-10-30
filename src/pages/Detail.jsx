@@ -1,4 +1,4 @@
-import { Image, Heading, Container, Button } from "@chakra-ui/react";
+import { Image, Heading, Container, Button, Box } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -17,12 +17,17 @@ function Detail() {
 
   return (
     <Container>
-      <Image src={image.url} />
+      <Image src={image.url} alt={image.name} />
       <Heading size="lg">{image.name}</Heading>
-      <Link to="/contact">
+      {image.details && image.details.map((detail, index) => (
+        <Box key={index} mt={4}>
+          <Image src={detail.subUrl} alt={`Detail ${index + 1}`} />
+        </Box>
+      ))}
+      <Link to="/contact" mt={4}>
         <Button colorScheme="red">{t("BtnAskForPrice")}</Button>
       </Link>
-      <Link to="/">
+      <Link to="/" mt={4}>
         <Button colorScheme="green">{t("BacktoHome")}</Button>
       </Link>
     </Container>
