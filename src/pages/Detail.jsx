@@ -55,38 +55,41 @@ function Detail() {
         </Text>
       </Box>
       <Grid templateColumns="repeat(2, 1fr)" gap="15rem" mt="3rem">
-        {image.details &&
-          image.details.slice(0, 2).map((detail, index) => (
-            <Box key={index}>
-              <Image
-                src={detail.subUrl}
-                alt={`Detail ${index + 1}`}
-                height="50rem"
-                className="imageWrapper"
-              />
-            </Box>
-          ))}
+        {image.details?.slice(0, 2).map((detail, index) => (
+          <Box key={index}>
+            <Image
+              src={detail.subUrl}
+              alt={`Detail ${index + 1}`}
+              height="50rem"
+              className="imageWrapper"
+            />
+          </Box>
+        ))}
       </Grid>
-      {image.details && image.details[2] && (
-        <Flex gap={10} flexDirection="row">
+      {image.details?.[2] ? (
+        <Flex gap="15rem" flexDirection="row">
           <Image
             className="imageWrapper"
             src={image.details[2].subUrl}
             alt="Detail 3"
             height="50rem"
+            width={image.details.length === 4 ? "38rem" : "100%"}
             mt="5rem"
           />
-          <Image
-            className="imageWrapper"
-            src={image.details[3].subUrl}
-            alt="Detail 3"
-            height="50rem"
-            mt="5rem"
-          />
+          {image.details?.[3] && (
+            <Image
+              className="imageWrapper"
+              src={image.details[3].subUrl}
+              alt="Detail 4"
+              height="50rem"
+              width="38rem"
+              mt="5rem"
+            />
+          )}
         </Flex>
-      )}
+      ) : null}
       <Box mt="3rem">
-      <Link to="/projects">
+        <Link to="/projects">
           <IconButton
             icon={<SlArrowLeft size="2.5rem" />}
             variant="ghost"
@@ -95,7 +98,9 @@ function Detail() {
           />
         </Link>
         <Link to="/contact">
-          <Button fontSize="2xl" h="3rem" fontFamily="Poiret One">{t("BtnAskForPrice")}</Button>
+          <Button fontSize="2xl" h="3rem" fontFamily="Poiret One">
+            {t("BtnAskForPrice")}
+          </Button>
         </Link>
       </Box>
     </Flex>
