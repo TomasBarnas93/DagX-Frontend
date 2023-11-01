@@ -36,19 +36,19 @@ i18n.use(initReactI18next).init({
 });
 
 ReactDOM.render(
-  <I18nextProvider i18n={i18n}>
-    <ChakraProvider>
-      <LanguageProvider>
-        <ImageProvider>
-          <BrowserRouter>
+  <BrowserRouter>
+    <I18nextProvider i18n={i18n}>
+      <ChakraProvider>
+        <LanguageProvider>
+          <ImageProvider>
             <React.StrictMode>
               <App />
             </React.StrictMode>
-          </BrowserRouter>
-        </ImageProvider>
-      </LanguageProvider>
-    </ChakraProvider>
-  </I18nextProvider>,
+          </ImageProvider>
+        </LanguageProvider>
+      </ChakraProvider>
+    </I18nextProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

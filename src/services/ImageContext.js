@@ -24,13 +24,12 @@ const ImageProvider = ({ children }) => {
           if (imageData.detailImages) {
             for (const detailKey in imageData.detailImages) {
               const detailData = imageData.detailImages[detailKey];
-              detailsArray.push({ subUrl: detailData.subUrl });
+              detailsArray.push({ subUrl: detailData.subUrl, width: detailData.width });
             }
           }
 
           imagesArray.push({ ...imageData, details: detailsArray, originalIndex: i - 1 });
         } else {
-          console.error(`No data found for image${i}`);
         }
       }
       console.log(imagesArray);

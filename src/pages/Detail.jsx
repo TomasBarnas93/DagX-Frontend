@@ -1,4 +1,5 @@
 import {
+  Grid,
   Image,
   Text,
   Flex,
@@ -28,112 +29,76 @@ function Detail() {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      mt="10rem"
+      mt={{ base: "2rem", md: "10rem" }}
     >
       <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      textAlign="center"
-      mb={4}
-      fontFamily="Poiret One"
-    >
-      <Image
-        className="imageWrapper"
-        src={image.url}
-        alt={image.name}
-        height={{ base: "30rem", md: "50rem" }}
-        margin="auto"
-      />
-      <Text fontSize="5xl" mt={2} fontWeight="semibold">
-        {image.name}
-      </Text>
-      <Text fontSize="3xl" mt={2} fontWeight="semibold">
-        {image.size}
-      </Text>
-      <Box
-        className="underlineCustom"
-        marginTop={{ base: "1.5rem", md: "2rem" }}
-      ></Box>
-      <Text fontSize="3xl" mt={5} width="60%">
-        {image.description}
-      </Text>
-      <Link to="/contact">
-        <Button fontSize="2xl" h="3rem" fontFamily="Poiret One" mt={10}>
-          {t("BtnAskForPrice")}
-        </Button>
-      </Link>
-    </Box>
-    <Flex
-  flexDirection={["column", "row"]}  
-  width={["100%", "85%"]}  
-  justifyContent="space-around"
-  mt="3rem"
->
-  {image.details?.[0] && (
-    <Image
-      src={image.details[0].subUrl}
-      alt="Detail 1"
-      height={["40rem", "50rem"]}  
-      className="imageWrapper"
-    />
-  )}
-  {image.details?.[0] && image.details?.[1] && (
-    <Box
-      width={["0", "2px"]} 
-      backgroundColor="black"
-      height="30rem"
-      alignSelf="center"
-      mx="7.5rem"
-      display={["none", "block"]}  
-    />
-  )}
-  {image.details?.[1] && (
-    <Image
-      src={image.details[1].subUrl}
-      alt="Detail 2"
-      height={["40rem", "50rem"]} 
-      className="imageWrapper"
-    />
-  )}
-</Flex>
-{image.details?.[2] ? (
-  <Flex 
-    gap={["0", "7rem"]}  
-    flexDirection={["column", "row"]}
-  >
-    <Image
-      className="imageWrapper"
-      src={image.details[2].subUrl}
-      alt="Detail 3"
-      height={["40rem", "50rem"]}
-      width={image.details.length === 4 ? "38rem" : "100%"}
-      mt="5rem"
-    />
-    {image.details?.[3] ? (
-      <>
-        <Box
-          width={["0", "2px"]}
-          backgroundColor="black"
-          height="30rem"
-          alignSelf="center"
-          mx="7.5rem"
-          marginTop="9rem"
-          display={["none", "block"]} 
-        />
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        textAlign="center"
+        mb={4}
+        fontFamily="Poiret One"
+        width={{ base: "90%", md: "auto" }}
+      >
         <Image
           className="imageWrapper"
-          src={image.details[3].subUrl}
-          alt="Detail 4"
-          height={["40rem", "50rem"]}
-          width="38rem"
-          mt="5rem"
+          src={image.url}
+          alt={image.name}
+          height={{ base: "auto", md: "50rem" }}
+          width={{ base: "100%", md: "auto" }}
+          margin="auto"
         />
-      </>
-    ) : null}
-  </Flex>
-) : null}
+        <Text fontSize={{ base: "3xl", md: "5xl" }} mt={2} fontWeight="semibold">
+          {image.name}
+        </Text>
+        <Text fontSize={{ base: "2xl", md: "3xl" }} mt={2} fontWeight="semibold">
+          {image.size}
+        </Text>
+        <Box className="underlineCustom" mt={{ base: "1rem", md: "2rem" }}></Box>
+        <Text fontSize={{ base: "xl", md: "3xl" }} mt={5} width="100%">
+          {image.description}
+        </Text>
+        <Link to="/contact">
+          <Button fontSize={{ base: "xl", md: "2xl" }} h="3rem" fontFamily="Poiret One" mt={10}>
+            {t("BtnAskForPrice")}
+          </Button>
+        </Link>
+      </Box>
+      <Grid
+        templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+        gap="0.1rem"
+        width="100%"
+        mt="3rem"
+        marginLeft={{ base: "0", md: "5rem" }}
+        gridTemplateRows="auto"
+        gridAutoRows="auto"
+      >
+        {image.details?.map((detail, index) => (
+    <Image
+    mt={
+      (image.details.length === 3 && index === 2) ||
+      (image.details.length === 5 && index === 4) ||
+      (image.details.length === 7 && index === 6)
+      ? "6rem !important" 
+      : "3rem !important"
+    }
+    objectFit="cover"
+    key={index}
+    className="imageWrapper"
+    src={detail.subUrl}
+    alt={`Detail ${index + 1}`}
+    height={{ base: detail.width === "small" ? "20rem" : "auto", md: detail.width === "small" ? "50rem" : "50rem" }}
+    width={{ base: detail.width === "small" ? "20rem" : "90%", md: detail.width === "small" ? "40rem" : "auto" }} 
+    margin="auto"
+    gridColumn={
+      (image.details.length % 2 !== 0 && index === image.details.length - 1) 
+        ? { base: null, md: "span 2 / auto" }
+        : null
+    }
+  />
+        ))}
+      </Grid>
       <Box mt="3rem">
         <Link to="/projects">
           <IconButton
