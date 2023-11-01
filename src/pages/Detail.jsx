@@ -56,7 +56,7 @@ function Detail() {
           {image.size}
         </Text>
         <Box className="underlineCustom" mt={{ base: "1rem", md: "2rem" }}></Box>
-        <Text fontSize={{ base: "xl", md: "3xl" }} mt={5} width="100%">
+        <Text fontSize={{ base: "xl", md: "3xl" }} mt={5} width="60%">
           {image.description}
         </Text>
         <Link to="/contact">
@@ -88,7 +88,7 @@ function Detail() {
     className="imageWrapper"
     src={detail.subUrl}
     alt={`Detail ${index + 1}`}
-    height={{ base: detail.width === "small" ? "20rem" : "auto", md: detail.width === "small" ? "50rem" : "50rem" }}
+    height={{ base: detail.width === "small" ? "30rem" : "auto", md: detail.width === "small" ? "50rem" : "50rem" }}
     width={{ base: detail.width === "small" ? "20rem" : "90%", md: detail.width === "small" ? "40rem" : "auto" }} 
     margin="auto"
     gridColumn={
