@@ -4,7 +4,6 @@ import {
   Flex,
   Button,
   Box,
-  Grid,
   IconButton,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
@@ -32,62 +31,109 @@ function Detail() {
       mt="10rem"
     >
       <Box
-        textAlign="center"
-        mb={4}
-        justifyContent="center"
-        alignItems="center"
-      >
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      textAlign="center"
+      mb={4}
+      fontFamily="Poiret One"
+    >
+      <Image
+        className="imageWrapper"
+        src={image.url}
+        alt={image.name}
+        height={{ base: "30rem", md: "50rem" }}
+        margin="auto"
+      />
+      <Text fontSize="5xl" mt={2} fontWeight="semibold">
+        {image.name}
+      </Text>
+      <Text fontSize="3xl" mt={2} fontWeight="semibold">
+        {image.size}
+      </Text>
+      <Box
+        className="underlineCustom"
+        marginTop={{ base: "1.5rem", md: "2rem" }}
+      ></Box>
+      <Text fontSize="3xl" mt={5} width="60%">
+        {image.description}
+      </Text>
+      <Link to="/contact">
+        <Button fontSize="2xl" h="3rem" fontFamily="Poiret One" mt={10}>
+          {t("BtnAskForPrice")}
+        </Button>
+      </Link>
+    </Box>
+    <Flex
+  flexDirection={["column", "row"]}  
+  width={["100%", "85%"]}  
+  justifyContent="space-around"
+  mt="3rem"
+>
+  {image.details?.[0] && (
+    <Image
+      src={image.details[0].subUrl}
+      alt="Detail 1"
+      height={["40rem", "50rem"]}  
+      className="imageWrapper"
+    />
+  )}
+  {image.details?.[0] && image.details?.[1] && (
+    <Box
+      width={["0", "2px"]} 
+      backgroundColor="black"
+      height="30rem"
+      alignSelf="center"
+      mx="7.5rem"
+      display={["none", "block"]}  
+    />
+  )}
+  {image.details?.[1] && (
+    <Image
+      src={image.details[1].subUrl}
+      alt="Detail 2"
+      height={["40rem", "50rem"]} 
+      className="imageWrapper"
+    />
+  )}
+</Flex>
+{image.details?.[2] ? (
+  <Flex 
+    gap={["0", "7rem"]}  
+    flexDirection={["column", "row"]}
+  >
+    <Image
+      className="imageWrapper"
+      src={image.details[2].subUrl}
+      alt="Detail 3"
+      height={["40rem", "50rem"]}
+      width={image.details.length === 4 ? "38rem" : "100%"}
+      mt="5rem"
+    />
+    {image.details?.[3] ? (
+      <>
+        <Box
+          width={["0", "2px"]}
+          backgroundColor="black"
+          height="30rem"
+          alignSelf="center"
+          mx="7.5rem"
+          marginTop="9rem"
+          display={["none", "block"]} 
+        />
         <Image
           className="imageWrapper"
-          src={image.url}
-          alt={image.name}
-          height="50rem"
-          margin="auto"
+          src={image.details[3].subUrl}
+          alt="Detail 4"
+          height={["40rem", "50rem"]}
+          width="38rem"
+          mt="5rem"
         />
-        <Text fontSize="5xl" mt={2}>
-          {image.name}
-        </Text>
-        <Text fontSize="3xl" mt={2}>
-          {image.size}
-        </Text>
-        <Text fontSize="3xl" mt={2} textAlign="center" m={10}>
-          {image.description}
-        </Text>
-      </Box>
-      <Grid templateColumns="repeat(2, 1fr)" gap="15rem" mt="3rem">
-        {image.details?.slice(0, 2).map((detail, index) => (
-          <Box key={index}>
-            <Image
-              src={detail.subUrl}
-              alt={`Detail ${index + 1}`}
-              height="50rem"
-              className="imageWrapper"
-            />
-          </Box>
-        ))}
-      </Grid>
-      {image.details?.[2] ? (
-        <Flex gap="15rem" flexDirection="row">
-          <Image
-            className="imageWrapper"
-            src={image.details[2].subUrl}
-            alt="Detail 3"
-            height="50rem"
-            width={image.details.length === 4 ? "38rem" : "100%"}
-            mt="5rem"
-          />
-          {image.details?.[3] && (
-            <Image
-              className="imageWrapper"
-              src={image.details[3].subUrl}
-              alt="Detail 4"
-              height="50rem"
-              width="38rem"
-              mt="5rem"
-            />
-          )}
-        </Flex>
-      ) : null}
+      </>
+    ) : null}
+  </Flex>
+) : null}
       <Box mt="3rem">
         <Link to="/projects">
           <IconButton
@@ -96,11 +142,6 @@ function Detail() {
             boxSize="3em"
             mr="2rem"
           />
-        </Link>
-        <Link to="/contact">
-          <Button fontSize="2xl" h="3rem" fontFamily="Poiret One">
-            {t("BtnAskForPrice")}
-          </Button>
         </Link>
       </Box>
     </Flex>
