@@ -18,7 +18,11 @@ function Detail() {
   const { id } = useParams();
   const images = useContext(ImageContext);
   const image = images[id - 1];
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+   // Get the current language key
+   const langKey = i18n.language;
+   const description = image.descriptions[langKey];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,7 +61,7 @@ function Detail() {
         </Text>
         <Box className="underlineCustom" mt={{ base: "1rem", md: "2rem" }}></Box>
         <Text fontSize={{ base: "xl", md: "3xl" }} mt={5} width="60%">
-          {image.description}
+        {description}
         </Text>
         <Link to="/contact">
           <Button fontSize={{ base: "xl", md: "2xl" }} h="3rem" fontFamily="Poiret One" mt={10}>
