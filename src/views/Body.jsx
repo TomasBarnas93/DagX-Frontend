@@ -20,7 +20,7 @@ function Body() {
     ) {
       return { base: "5rem", md: "5rem" };
     } else if (location.pathname === "/") {
-      return { base: "20rem", md: "25rem" };
+      return { base: "20rem", md: "12rem" };
     } else {
       return { base: "0rem", md: "0rem" };
     }

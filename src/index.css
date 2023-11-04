@@ -49,3 +49,19 @@ canvas {
 .imageWrapper {
     box-shadow: 0 0.2rem 4rem 2rem rgb(0 0 0 / 0.2);
   }
+
+  .videoStyle {
+    width: 100%;
+    object-fit: cover;
+    max-height: 80vh;
+    filter: grayscale(100%) contrast(170%) brightness(90%);
+    opacity: 0.4;
+    margin-top: 6rem;
+}
+
+/* Video */
+@media (min-width: 769px) {
+    .videoStyle {
+        object-position: center -90rem;
+    }
+}  

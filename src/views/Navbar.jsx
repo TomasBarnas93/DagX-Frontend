@@ -56,6 +56,15 @@ const Navbar = () => {
     };
   }, []);
 
+  const getFontSize = () => {
+    switch (i18n.language) {
+      case 'en':
+        return isMobile ? "1.5rem" : "1.8rem";
+      default:
+        return isMobile ? "1.5rem" : "2rem";
+    }
+  };
+
   return (
     <Flex
       direction="column"
@@ -69,18 +78,19 @@ const Navbar = () => {
     >
       {isHomePage && scrollPosition < 100 && (
         <Text
-          fontSize={isMobile ? "1.5rem" : "2.3rem"}
+          fontSize={getFontSize()}
           textAlign="center"
-          paddingTop="5rem"
+          paddingTop="2rem"
+          marginBottom="-2rem"
           fontFamily="Poiret One"
           direction="row"
           display={isMobile ? "block" : "inline"}
           dangerouslySetInnerHTML={{
             __html: `
-      <span style="font-family: Aerotis; font-size: ${
-        isMobile ? "3rem" : "4.5rem"
-      }">A</span>
-      ${isMobile ? t("MottoMobile") : t("Motto")}`,
+            <span style="margin-right: -0.1rem; font-family: Poiret One; font-weight: bold;">${t(
+              "MottoHead"
+            )}</span>
+            ${isMobile ? t("MottoMobile") : t("Motto")}`,
           }}
         />
       )}
@@ -113,7 +123,7 @@ const Navbar = () => {
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
-                  _hover={{ textDecoration: 'none' }}
+                  _hover={{ textDecoration: "none" }}
                 >
                   <Text fontFamily="Poiret One">{t("Home")}</Text>
                 </ChakraLink>
@@ -125,7 +135,7 @@ const Navbar = () => {
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
-                  _hover={{ textDecoration: 'none' }}
+                  _hover={{ textDecoration: "none" }}
                 >
                   <Text fontFamily="Poiret One">{t("Projects")}</Text>
                 </ChakraLink>
@@ -137,7 +147,7 @@ const Navbar = () => {
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
-                  _hover={{ textDecoration: 'none' }}
+                  _hover={{ textDecoration: "none" }}
                 >
                   <Text fontFamily="Poiret One">{t("Contact")}</Text>
                 </ChakraLink>
@@ -149,7 +159,7 @@ const Navbar = () => {
                   color="black"
                   fontSize="1.9rem"
                   className="underlineCustom2"
-                  _hover={{ textDecoration: 'none' }}
+                  _hover={{ textDecoration: "none" }}
                 >
                   <Text fontFamily="Poiret One">{t("Create")}</Text>
                 </ChakraLink>

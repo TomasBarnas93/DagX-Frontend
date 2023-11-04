@@ -7,9 +7,7 @@ import { useTranslation } from "react-i18next";
 
 function Home() {
   const images = useContext(ImageContext);
-  const { t, i18n } = useTranslation();
-
-  const spanText = i18n.language === "en" ? "I" : "J";
+  const { t } = useTranslation();
 
   return (
     <Box>
@@ -36,14 +34,7 @@ function Home() {
           autoPlay
           loop
           muted
-          style={{
-            width: "100%",
-            objectFit: "cover",
-            maxHeight: "80vh",
-            filter: "grayscale(100%) contrast(170%) brightness(90%)",
-            opacity: 0.4,
-            marginTop: "6rem",
-          }}
+          className="videoStyle"
         >
           <source src={homeVideo} type="video/mp4" />
         </video>
@@ -54,18 +45,12 @@ function Home() {
           marginTop="-0.05rem"
         />
         <Text
-          fontSize={{ base: "2xl", md: "5xl" }}
+          fontSize={{ base: "1.5rem", md: "2rem" }}
           textAlign={{ base: "center", md: "center" }}
           marginLeft={{ base: 3, md: 5 }}
           marginRight={{ base: 3, md: 5 }}
-          dangerouslySetInnerHTML={{
-            __html: `
-            <span style="font-family: Aerotis; margin-right: -0.1rem">${spanText}</span>${t(
-              "AboutHead"
-            )}`,
-          }}
           fontFamily="Poiret One"
-        ></Text>
+        >{t("AboutHead")}</Text>
          <Box
               className="underlineCustom"
               marginTop={{ base: "1.5rem", md: "2rem" }}
