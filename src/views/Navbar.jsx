@@ -14,12 +14,12 @@ import {
   useDisclosure,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
 import { useContext, useEffect, useState } from "react";
 import { LanguageContext } from "../services/LanguageContext";
 import { Link, useLocation } from "react-router-dom";
 import { SlArrowUp } from "react-icons/sl";
+import { VscMenu } from "react-icons/vsc";
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
@@ -59,9 +59,11 @@ const Navbar = () => {
   const getFontSize = () => {
     switch (i18n.language) {
       case 'en':
-        return isMobile ? "1.5rem" : "1.8rem";
+        return isMobile ? "1.1rem" : "1.8rem";
+      case 'sv':
+        return isMobile ? "1.3rem" : "2rem";  
       default:
-        return isMobile ? "1.5rem" : "2rem";
+        return isMobile ? "1.3rem" : "2rem";
     }
   };
 
@@ -76,25 +78,26 @@ const Navbar = () => {
       zIndex="100"
       transition="background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s"
     >
-      {isHomePage && scrollPosition < 100 && (
-        <Text
-          fontSize={getFontSize()}
-          textAlign="center"
-          paddingTop="2rem"
-          marginBottom="-2rem"
-          fontFamily="Poiret One"
-          direction="row"
-          display={isMobile ? "block" : "inline"}
-          dangerouslySetInnerHTML={{
-            __html: `
-            <span style="margin-right: -0.1rem; font-family: Poiret One; font-weight: bold;">${t(
-              "MottoHead"
-            )}</span>
-            ${isMobile ? t("MottoMobile") : t("Motto")}`,
-          }}
-        />
-      )}
-
+{isHomePage && scrollPosition < 100 && (
+  <Box
+    textAlign="center"
+    paddingTop="2rem"
+    display="inline-block"
+    width={{base: "90%", md: "100%"}}
+  >
+    <Text
+      fontSize={getFontSize()}
+      fontFamily="Poiret One"
+      display="inline"
+      dangerouslySetInnerHTML={{
+        __html: `
+          <span style="font-weight: bold;">${t("MottoHead")}</span>
+          ${isMobile ? '<div class="underlineCustom" style="margin-top: 1.5rem;"></div>' : ''}
+          ${isMobile ? t("MottoMobile") : t("Motto")}`,
+      }}
+    />
+  </Box>
+)}
       <Flex
         width="100%"
         alignItems="center"
@@ -143,6 +146,18 @@ const Navbar = () => {
               <Box>
                 <ChakraLink
                   as={Link}
+                  to="/info"
+                  color="black"
+                  fontSize="1.9rem"
+                  className="underlineCustom2"
+                  _hover={{ textDecoration: "none" }}
+                >
+                  <Text fontFamily="Poiret One">{t("Info")}</Text>
+                </ChakraLink>
+              </Box>
+              <Box>
+                <ChakraLink
+                  as={Link}
                   to="/contact"
                   color="black"
                   fontSize="1.9rem"
@@ -184,7 +199,7 @@ const Navbar = () => {
 
         {isMobile && (
           <IconButton
-            icon={<HamburgerIcon />}
+            icon={<VscMenu />}
             size="lg"
             aria-label="Open navigation menu"
             variant="ghost"
@@ -215,7 +230,7 @@ const Navbar = () => {
                     </Select>
                   </Flex>
                 </DrawerHeader>
-                <DrawerBody fontSize="4xl" fontFamily="Poiret One">
+                <DrawerBody fontSize="3xl" fontFamily="Poiret One">
                   <Flex
                     direction="column"
                     gap={5}
@@ -226,6 +241,7 @@ const Navbar = () => {
                     {[
                       { path: "/", label: "Home" },
                       { path: "/projects", label: "Projects" },
+                      { path: "/info", label: "Info" },
                       { path: "/contact", label: "Contact" },
                       { path: "/create", label: "Create" },
                     ].map((item) => (

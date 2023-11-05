@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Intro from './views/Intro';
-import Body from './views/Body';
 import Navbar from './views/Navbar';
+import Body from './views/Body';
 import Foot from './views/Foot';
 
 function App() {
@@ -24,13 +25,17 @@ function App() {
       {showIntro ? (
         <Intro onAnimationEnd={handleAnimationEnd} />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
           <div>
             <Navbar />
             <Body />
           </div>
           <Foot />
-        </div>
+        </motion.div>
       )}
     </div>
   );

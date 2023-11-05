@@ -7,6 +7,7 @@ import Create from "../pages/Create";
 import Detail from "../pages/Detail";
 import { useLocation } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
+import Info from "../pages/Info";
 
 function Body() {
   const location = useLocation();
@@ -20,7 +21,7 @@ function Body() {
     ) {
       return { base: "5rem", md: "5rem" };
     } else if (location.pathname === "/") {
-      return { base: "20rem", md: "12rem" };
+      return { base: "10rem", md: "12rem" };
     } else {
       return { base: "0rem", md: "0rem" };
     }
@@ -36,6 +37,7 @@ function Body() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/info" element={<Info />} />
         <Route path="/detail/:id" element={<Detail />} />
       </Routes>
     </Box>

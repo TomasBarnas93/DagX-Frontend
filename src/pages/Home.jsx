@@ -7,7 +7,16 @@ import { useTranslation } from "react-i18next";
 
 function Home() {
   const images = useContext(ImageContext);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const getAboutWidth = () => {
+    switch (i18n.language) {
+      case 'pl':
+        return {base: "98%", md: "95%"};
+      default:
+        return {base: "90%", md: "95%"};
+    }
+  };
 
   return (
     <Box>
@@ -62,6 +71,7 @@ function Home() {
           marginRight={{ base: 3, md: 5 }}
           fontFamily="Poiret One"
           mt="3rem"
+          width={getAboutWidth}
         >
           {t("About")}
         </Text>
