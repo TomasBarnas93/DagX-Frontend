@@ -15,12 +15,12 @@ function Foot() {
         <Box>
           <Flex justify="center" gap={5}>
             <ChakraLink href="https://www.facebook.com/DAGX.art" isExternal>
-              <Image src={facebookImg} />
+              <Image src={facebookImg} width={{lg: "8rem"}}/>
             </ChakraLink>
             <ChakraLink href="https://www.instagram.com/dagx.art/" isExternal>
-              <Image src={instagramImg} />
+              <Image src={instagramImg} width={{lg: "8rem"}}/>
             </ChakraLink>
-            <ChakraLink as={Link} to="/contact"><Image src={emailImg}/></ChakraLink>
+            <ChakraLink as={Link} to="/contact"><Image src={emailImg} width={{lg: "8rem"}}/></ChakraLink>
           </Flex>
         </Box>
       </Container>

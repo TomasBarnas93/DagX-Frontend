@@ -124,7 +124,7 @@ const Navbar = () => {
                   as={Link}
                   to="/"
                   color="black"
-                  fontSize="1.9rem"
+                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -136,7 +136,7 @@ const Navbar = () => {
                   as={Link}
                   to="/projects"
                   color="black"
-                  fontSize="1.9rem"
+                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -148,7 +148,7 @@ const Navbar = () => {
                   as={Link}
                   to="/info"
                   color="black"
-                  fontSize="1.9rem"
+                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -160,7 +160,7 @@ const Navbar = () => {
                   as={Link}
                   to="/contact"
                   color="black"
-                  fontSize="1.9rem"
+                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -172,7 +172,7 @@ const Navbar = () => {
                   as={Link}
                   to="/create"
                   color="black"
-                  fontSize="1.9rem"
+                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -187,7 +187,7 @@ const Navbar = () => {
                 onChange={handleLanguageChange}
                 value={selectedLanguage}
                 fontFamily="Poiret One"
-                fontSize="1.5rem"
+                fontSize={{xl: "1.5rem", lg: "1.2rem"}}
               >
                 <option value="en">EN</option>
                 <option value="pl">PL</option>

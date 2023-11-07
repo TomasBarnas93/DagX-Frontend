@@ -43,6 +43,8 @@ canvas {
     box-shadow: 0 0.2rem 4rem 2rem rgb(0 0 0 / 0.2);
   }
 
+/* ///////////////////////////////////// */
+/* Video */
   .videoStyle {
     width: 100%;
     object-fit: cover;
@@ -52,9 +54,16 @@ canvas {
     margin-top: 6rem;
 }
 
-/* Video */
+/* Mobile */
 @media (min-width: 769px) {
     .videoStyle {
         object-position: center -90rem;
     }
-}  
+}
+/* Laptop */
+@media (min-width: 1024px) {
+    .videoStyle {
+        object-position: center -55rem;
+    }
+}
+/* ///////////////////////////////////// */
