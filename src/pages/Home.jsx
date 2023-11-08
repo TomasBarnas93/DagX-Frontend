@@ -83,6 +83,7 @@ function Home() {
             image={image}
             index={image.originalIndex}
             key={index}
+            alt={`Image ${index + 1}`}
             fontSizeName={{ base: "2.5rem", md: "5xl" }}
             fontSizeSize={{ base: "1.2rem", md: "2xl" }}
             fontSizeAvailable={{ base: "1.2rem", md: "2xl" }}

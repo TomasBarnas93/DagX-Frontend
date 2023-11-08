@@ -106,6 +106,7 @@ const Navbar = () => {
           location.pathname === "/create" ||
           location.pathname === "/projects" ||
           location.pathname === "/contact" ||
+          location.pathname === "/info" ||
           location.pathname.startsWith("/detail/")
             ? "1rem"
             : "5rem"

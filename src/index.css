@@ -63,7 +63,14 @@ canvas {
 /* Laptop */
 @media (min-width: 1024px) {
     .videoStyle {
-        object-position: center -55rem;
+        object-position: center -90rem;
+    }
+}
+@media (min-width: 770px) and (max-width: 1201px) {
+    .videoStyle {
+        max-height: 60vh; 
+        object-position: center center; 
+        
     }
 }
 /* ///////////////////////////////////// */

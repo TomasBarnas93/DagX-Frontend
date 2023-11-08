@@ -20,7 +20,7 @@ function Body() {
       location.pathname.startsWith("/detail/")
     ) {
       return { base: "5rem", lg: "11rem", xl: "5rem" };
-    } else if (location.pathname === "/") {
+    } else if (location.pathname === "/" || location.pathname === "/info") {
       return { base: "10rem", md: "12rem" };
     } else {
       return { base: "0rem", md: "0rem" };
@@ -28,10 +28,7 @@ function Body() {
   };
 
   return (
-    <Box
-      minHeight="100vh"
-      marginTop={BodyMarginTop()}
-    >
+    <Box minHeight="100vh" marginTop={BodyMarginTop()}>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />

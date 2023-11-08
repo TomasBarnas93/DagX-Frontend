@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { ImageContext } from "../services/ImageContext";
 import PaintingCardRightText from "../components/paintingCardRightText";
-import { Flex, Box, HStack, useMediaQuery } from "@chakra-ui/react";
+import { Flex, Box, HStack, useBreakpointValue } from "@chakra-ui/react";
 import PaintingCardLeftText from "../components/paintingCardLeftText";
 
 function Projects() {
   const images = useContext(ImageContext);
-  const [isMobile] = useMediaQuery("(max-width: 48em)");
+ const isMobile = useBreakpointValue({ base: true, md: true, lg: true, xl: false });
 
   useEffect(() => {
     window.scrollTo(0, 0);
