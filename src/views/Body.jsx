@@ -20,8 +20,10 @@ function Body() {
       location.pathname.startsWith("/detail/")
     ) {
       return { base: "5rem", lg: "11rem", xl: "5rem" };
-    } else if (location.pathname === "/" || location.pathname === "/info") {
+    } else if (location.pathname === "/") {
       return { base: "10rem", md: "12rem" };
+    } else if (location.pathname === "/info") {
+      return { base: "5rem", md: "12rem" }; 
     } else {
       return { base: "0rem", md: "0rem" };
     }

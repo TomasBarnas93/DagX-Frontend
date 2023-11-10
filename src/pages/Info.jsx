@@ -1,82 +1,129 @@
 import React from "react";
-import { List, Flex, Box, Image } from "@chakra-ui/react";
+import { List, Flex, Box, Image, useBreakpointValue } from "@chakra-ui/react";
 import infoImg from "../assets/images/InfoImg.jpg";
 import listPunkt1 from "../assets/images/listPunkt1.png";
-// import listPunkt2 from "../assets/images/listPunkt2.png";
+import { useTranslation } from "react-i18next";
+import listPunkt2 from "../assets/images/listPunkt2.png";
 
 const Info = () => {
-  const CustomListIcon = ({ src, ...props }) => (
-    <Box as="span" {...props}>
-      <Image src={src} alt="List Icon" boxSize="15rem" />
-    </Box>
+  const {t} = useTranslation();
+
+  const CustomListIcon = ({ src }) => (
+    <Image
+      src={src}
+      alt="List Icon"
+      boxSize={{ base: "8rem", md: "9rem", lg: "10rem", xl: "10rem" }}
+      marginRight={{ base: "-2rem", md: "none" }}
+      marginLeft={{ base: "-2rem", md: "none" }}
+    />
   );
 
+  const fontSize = useBreakpointValue({
+    base: "xl",
+    md: "2xl",
+    lg: "2xl",
+    xl: "3xl",
+  });
+
   return (
-    <Flex display="flex" justifyContent="center" alignItems="center">
-      <Box textAlign="center">
-        <List>
-          <Flex as="li" alignItems="center" fontSize="3xl" >
-            <CustomListIcon src={listPunkt1} color="green.500" />
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      justifyContent="center"
+      alignItems="flex-start"
+      textAlign="left"
+      fontFamily="Poiret One"
+      fontWeight="bold"
+    >
+      <Box>
+        <List styleType="none" paddingRight={{ base: "2rem", md: "0" }}>
+          <Flex
+            as="li"
+            alignItems="center"
+            fontSize={fontSize}
+            marginBottom="2rem"
+          >
+            <CustomListIcon src={listPunkt2} />
             <Box>
-              Konstverk kan beställas elektroniskt via min Facebook eller
-              Instagram. En beställning anses vara giltig efter att ha mottagit
-              bekräftelse från mig.
+              {t("Punkt1")}
             </Box>
           </Flex>
-          <Flex as="li" alignItems="center" fontSize="3xl" >
-            <CustomListIcon src={listPunkt1} color="green.500" />
-            <Box >
-              För att beställa en tavla behöver du skriva några viktiga uppgifter
-              så att jag kan fastställa priset för konstverket: Storlek, hur många
-              och vilka färger vill du ha i sin tavla och om den ska ha en
-              struktur.
+          <Flex
+            as="li"
+            alignItems="center"
+            fontSize={fontSize}
+            marginBottom="2rem"
+          >
+            <CustomListIcon src={listPunkt2} />
+            <Box>
+            {t("Punkt2")}
             </Box>
           </Flex>
-          <Flex as="li" alignItems="center" fontSize="3xl" >
-            <CustomListIcon src={listPunkt1} color="green.500" />
-            <Box >
-              Vi diskuterar vilken effekt du önskar. Om jag ska anpassa konstverk
-              till inredning eller kanske du har en inspiration vilken ska jag
-              följa?
+          <Flex
+            as="li"
+            alignItems="center"
+            fontSize={fontSize}
+            marginBottom={{base: "-0.5rem",md: "-2rem"}}
+          >
+            <CustomListIcon src={listPunkt1} />
+            <Box>
+            {t("Punkt3")}
             </Box>
           </Flex>
-          <Flex as="li" alignItems="center" fontSize="3xl" >
-            <CustomListIcon src={listPunkt1} color="green.500" />
-            <Box >
-              Du har rätt till ett gratis korrigering.
+          <Flex
+            as="li"
+            alignItems="center"
+            fontSize={fontSize}
+            marginBottom={{base: "-1.5rem",md: "-3rem"}}
+          >
+            <CustomListIcon src={listPunkt1} />
+            <Box> {t("Punkt4")}</Box>
+          </Flex>
+          <Flex
+            as="li"
+            alignItems="center"
+            fontSize={fontSize}
+            marginBottom={{base: "none",md: "-1rem"}}
+          >
+            <CustomListIcon src={listPunkt1} />
+            <Box>
+            {t("Punkt5")}
             </Box>
           </Flex>
-          <Flex as="li" alignItems="center" fontSize="3xl" >
-            <CustomListIcon src={listPunkt1} color="green.500" />
-            <Box >
-              Jag kommer att skicka filmer eller bilder ”bakom scen” om du önskar
-              bli uppdaterad.
+          <Flex
+            as="li"
+            alignItems="center"
+            fontSize={fontSize}
+            marginBottom={{base: "none",md: "-3rem"}}
+          >
+            <CustomListIcon src={listPunkt1} />
+            <Box>
+            {t("Punkt6")}
             </Box>
           </Flex>
-          <Flex as="li" alignItems="center" fontSize="3xl" >
-            <CustomListIcon src={listPunkt1} color="green.500" />
-            <Box >
-              Möjlig leverans inom Sverige via PostNord eller DHL/UPS/BRING.
-              Avhämtning på plats möjligt i Stockholm.
-            </Box>
-          </Flex>
-          <Flex as="li" alignItems="center" fontSize="3xl" >
-            <CustomListIcon src={listPunkt1} color="green.500" />
-            <Box >
-              För beställning till Polen gäller leverans via färjan. Lite längre
-              väntetid kan förekomma.
+          <Flex
+            as="li"
+            alignItems="center"
+            fontSize={fontSize}
+            marginBottom="1rem"
+          >
+            <CustomListIcon src={listPunkt1} />
+            <Box>
+            {t("Punkt7")}
             </Box>
           </Flex>
         </List>
       </Box>
-      <Box>
+      <Box
+        display={{ base: "none", md: "none", lg: "none", xl: "block" }}
+        marginLeft={{ md: "1rem", lg: "2rem" }}
+      >
         <Image
           src={infoImg}
           alt="Image"
           objectFit="cover"
-          width={{ base: "50rem", md: "50rem", lg: "50rem", xl: "100rem" }}
-          margin="auto"
+          width={{ md: "100rem", lg: "100rem", xl: "200rem" }}
           transform="rotate(90deg)"
+          marginTop="25rem"
         />
       </Box>
     </Flex>

@@ -23,17 +23,19 @@ export const enTranslation = {
   Success: "Message Sent Successfully",
   Wrong: "Oops, something went wrong",
 
-
-  //Projects
-
-
-  //Create
-
-
   //Details
   BtnAskForPrice: "ASK FOR PRICE",
 
    //PaintingCard
    Available: "AVAILABLE",
    Sold: "SOLD",
+
+   //Info
+   Punkt1: "Artworks can be ordered electronically via my Facebook or Instagram. An order is considered valid after receiving confirmation from me.",
+   Punkt2: "To order a painting, you need to provide some important details so that I can determine the price of the artwork: size, how many, and what colors you want in your painting and whether it should have a structure.",
+   Punkt3: "We will discuss what effect you wish to achieve. Should I adapt the artwork to the interior, or perhaps you have an inspiration I should follow?",
+   Punkt4: "You are entitled to one free correction.",
+   Punkt5: 'I will send videos or pictures "behind the scenes" if you wish to be updated.',
+   Punkt6: "Possible delivery within Sweden via PostNord or DHL/UPS/BRING. Pickup on-site possible in Stockholm.",
+   Punkt7: "For orders to Poland, delivery is by ferry. A slightly longer waiting time may occur.",
 };

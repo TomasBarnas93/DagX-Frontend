@@ -21,14 +21,19 @@ export const svTranslation = {
   Success: "Meddelandet skickades framgångsrikt",
   Wrong: "Hoppsan, något gick fel",
 
-  //Projects
-
-  //Create
-
   //Details
   BtnAskForPrice: "FRÅGA EFTER PRIS",
 
    //PaintingCard
    Available: "TILLGÄNGLIG",
    Sold: "SÅLD",
+
+   //Info
+   Punkt1: "Konstverk kan beställas elektroniskt via min Facebook eller Instagram. En beställning anses vara giltig efter att ha mottagit bekräftelse från mig.",
+   Punkt2: "För att beställa en tavla behöver du skriva några viktiga uppgifter så att jag kan fastställa priset för konstverket: Storlek, hur många och vilka färger vill du ha i sin tavla och om den ska ha en struktur.",
+   Punkt3: "Vi diskuterar vilken effekt du önskar. Om jag ska anpassa konstverk till inredning eller kanske du har en inspiration vilken ska jag följa?",
+   Punkt4: "Du har rätt till ett gratis korrigering.",
+   Punkt5: "Jag kommer att skicka filmer eller bilder ”bakom scen” om du önskar bli uppdaterad.",
+   Punkt6: "Möjlig leverans inom Sverige via PostNord eller DHL/UPS/BRING. Avhämtning på plats möjligt i Stockholm.",
+   Punkt7: "För beställning till Polen gäller leverans via färjan. Lite längre väntetid kan förekomma.",
 };
