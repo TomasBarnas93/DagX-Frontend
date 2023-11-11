@@ -56,16 +56,20 @@ const Navbar = () => {
     };
   }, []);
 
-  const getFontSize = () => {
-    switch (i18n.language) {
-      case 'en':
-        return isMobile ? "1.1rem" : "1.8rem";
-      case 'sv':
-        return isMobile ? "1.3rem" : "2rem";  
-      default:
-        return isMobile ? "1.3rem" : "2rem";
-    }
+  const useGetFontSize = () => {
+    const fontSizes = {
+      base: { en: "1.1rem", sv: "1.3rem", pl: "1.3rem" }, 
+      md: { en: "1.5rem", sv: "1.6rem", pl: "1.6rem" }, 
+      lg: { en: "2rem", sv: "2rem", pl: "2rem" }, 
+      xl: { en: "1.8rem", sv: "2rem", pl: "2rem" }, 
+    };
+  
+    const fontSizeForBreakpoint = useBreakpointValue(fontSizes);
+  
+    return fontSizeForBreakpoint[i18n.language] || fontSizeForBreakpoint.base;
   };
+
+  const fontSize = useGetFontSize();
 
   return (
     <Flex
@@ -86,7 +90,7 @@ const Navbar = () => {
     width={{base: "90%", md: "100%"}}
   >
     <Text
-      fontSize={getFontSize()}
+      fontSize={fontSize}
       fontFamily="Poiret One"
       display="inline"
       dangerouslySetInnerHTML={{
@@ -109,7 +113,7 @@ const Navbar = () => {
           location.pathname === "/info" ||
           location.pathname.startsWith("/detail/")
             ? "1rem"
-            : "5rem"
+            : "3rem"
         }
       >
         <Flex flex="1" justifyContent="center" alignItems="center">
@@ -125,7 +129,7 @@ const Navbar = () => {
                   as={Link}
                   to="/"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -137,7 +141,7 @@ const Navbar = () => {
                   as={Link}
                   to="/projects"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -149,7 +153,7 @@ const Navbar = () => {
                   as={Link}
                   to="/info"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -161,7 +165,7 @@ const Navbar = () => {
                   as={Link}
                   to="/contact"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -173,7 +177,7 @@ const Navbar = () => {
                   as={Link}
                   to="/create"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -188,7 +192,7 @@ const Navbar = () => {
                 onChange={handleLanguageChange}
                 value={selectedLanguage}
                 fontFamily="Poiret One"
-                fontSize={{xl: "1.5rem", lg: "1.2rem"}}
+                fontSize={{xl: "1.5rem", lg: "1.2rem" , md: "1.4rem"}}
               >
                 <option value="en">EN</option>
                 <option value="pl">PL</option>

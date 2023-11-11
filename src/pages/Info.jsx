@@ -35,22 +35,23 @@ const Info = () => {
       direction={{ base: "column", md: "row" }}
       justifyContent="center"
       alignItems="center"
-      textAlign="left"
+      textAlign={{ base: "left", md: "justify" }}
       fontFamily="Poiret One"
-      width="90%"
     >
-      <Box>
+      <Box width="90%">
         <List styleType="none" paddingRight={{ base: "2rem", md: "0" }}>
           <Flex
             direction="column"
             alignItems="center"
             justifyContent="center"
             alignContent="center"
+
           >
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
               marginBottom={{base: "0.5rem", md: "2rem"}}
+              textAlign="center"
             >
               {t("Punkt1Head")}
             </Text>

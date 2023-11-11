@@ -20,7 +20,7 @@ function Detail() {
   const images = useContext(ImageContext);
   const image = images[id - 1];
   const { t, i18n } = useTranslation();
-  const isMobile = useBreakpointValue({ base: true, md: true, lg: true, xl: false });
+  const isMobile = useBreakpointValue({ base: true, md: true, lg: true, xl: false, sm: true });
 
   // Get the current language key
   const langKey = i18n.language;
@@ -67,7 +67,7 @@ function Detail() {
           className="imageWrapper"
           src={image.url}
           alt={image.name}
-          height={{ base: "auto", md: "50rem" }}
+          height={{ base: "auto", md: "auto", xl: "50rem" }}
           width={{ base: "100%", md: "auto" }}
           margin="auto"
         />
@@ -79,7 +79,7 @@ function Detail() {
           {image.name}
         </Text>
         <Text
-          fontSize={{ base: "2xl", lg: "2xl", xl: "5xl" }}
+          fontSize={{ base: "2xl", lg: "2xl", xl: "3xl" }}
           mt={2}
           fontWeight="semibold"
         >
@@ -90,9 +90,9 @@ function Detail() {
           mt={{ base: "1rem", md: "2rem" }}
         ></Box>
         <Text
-          fontSize={{ base: "xl", lg: "2xl", xl: "3xl" }}
+          fontSize={{ base: "xl", lg: "2xl", xl: "3xl", md: "3xl" }}
           mt={5}
-          width="60%"
+          width={{ base: "80%", lg: "70%", xl: "60%", md: "80%" }}
         >
           {description}
         </Text>
@@ -113,6 +113,7 @@ function Detail() {
           md: "1fr",
           lg: "1fr 1fr",
           xl: "1fr 1fr",
+          sm: "1fr",
         }}
         gap="0.1rem"
         width="100%"
@@ -139,11 +140,15 @@ function Detail() {
               base: detail.width === "small" ? "30rem" : "auto",
               lg: detail.width === "small" ? "20rem" : "40rem",
               xl: detail.width === "small" ? "50rem" : "50rem",
+              sm: detail.width === "small" ? "40rem" : "auto",
+              md: detail.width === "small" ? "40rem" : "auto",
             }}
             width={{
               base: detail.width === "small" ? "20rem" : "90%",
               lg: detail.width === "small" ? "30rem" : "80%",
               xl: detail.width === "small" ? "40rem" : "auto",
+              sm: detail.width === "small" ? "30rem" : "80%",
+              md: detail.width === "small" ? "30rem" : "80%",
             }}
             margin="auto"
             gridColumn={

@@ -66,6 +66,7 @@ canvas {
         object-position: center -90rem;
     }
 }
+
 @media (min-width: 770px) and (max-width: 1201px) {
     .videoStyle {
         max-height: 60vh; 
@@ -73,4 +74,22 @@ canvas {
         
     }
 }
+
+@media (min-width: 1025px) and (max-width: 1366px) {
+    .videoStyle {
+        object-position: center -60rem;
+    }
+}
+
+@media screen and (min-width: 1202px) and (max-width: 1440px) {
+    .videoStyle {
+      object-position: center -60rem;
+    }
+  }
+
+  @media screen and (min-width: 1629px) {
+    .videoStyle {
+      object-position: center -90rem; 
+    }
+  }
 /* ///////////////////////////////////// */
