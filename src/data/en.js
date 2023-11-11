@@ -31,11 +31,12 @@ export const enTranslation = {
    Sold: "SOLD",
 
    //Info
-   Punkt1: "Artworks can be ordered electronically via my Facebook or Instagram. An order is considered valid after receiving confirmation from me.",
-   Punkt2: "To order a painting, you need to provide some important details so that I can determine the price of the artwork: size, how many, and what colors you want in your painting and whether it should have a structure.",
-   Punkt3: "We will discuss what effect you wish to achieve. Should I adapt the artwork to the interior, or perhaps you have an inspiration I should follow?",
-   Punkt4: "You are entitled to one free correction.",
-   Punkt5: 'I will send videos or pictures "behind the scenes" if you wish to be updated.',
-   Punkt6: "Possible delivery within Sweden via PostNord or DHL/UPS/BRING. Pickup on-site possible in Stockholm.",
-   Punkt7: "For orders to Poland, delivery is by ferry. A slightly longer waiting time may occur.",
+   Punkt1Head: "ORDERING PROCESS",
+   Punkt1: "To commission a unique piece of art, please reach out via webside DAGX.se, Facebook or Instagram. Once the order is confirmed through these platforms, it is considered officially accepted. Details such as size, color choices, number of colors, and any specific texture should be specified to facilitate a customized creation process and determine the final price. ",
+   Punkt2Head: "REALIZATION",
+   Punkt2: "The design of the artwork is discussed to ensure it aligns with the client’s vision, including any adaptations to interior design or specific sources of inspiration. Clients are offered a complimentary revision to ensure complete satisfaction.",
+   Punkt3Head: "DELIVERY",
+   Punkt3: "Artworks are delivered within Sweden using PostNord, DHL, UPS, or BRING, with an option for pickup in Stockholm. For deliveries to Poland, ferry transportation is used, and the delivery time ranges from 1 to 3 months, depending on the agreement.",
+   Punkt4Head: "PAYMENT",
+   Punkt4: "A deposit of 15% of the artwork’s price is required upon order confirmation. Detailed payment information is provided at this stage.",
 };

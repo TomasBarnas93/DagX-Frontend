@@ -30,11 +30,12 @@ export const plTranslation = {
   Sold: "SPRZEDANY",
 
   //Info
-  Punkt1: "Dzieła sztuki można zamówić elektronicznie przez mój Facebook lub Instagram. Zamówienie jest uznane za ważne po otrzymaniu potwierdzenia ode mnie.",
-  Punkt2: "Aby zamówić obraz, musisz podać kilka ważnych informacji, abym mógł ustalić cenę dzieła sztuki: rozmiar, ilość i jakie kolory chcesz mieć na swoim obrazie oraz czy ma on mieć strukturę.",
-  Punkt3: "Omawiamy jaki efekt chcesz osiągnąć. Czy mam dostosować dzieło sztuki do wnętrza, czy może masz inspirację, której powinienem podążać?",
-  Punkt4: "Masz prawo do jednej darmowej korekty.",
-  Punkt5: 'Będę wysyłać filmy lub zdjęcia "za kulisami", jeśli chcesz być na bieżąco.',
-  Punkt6: "Możliwa dostawa w Szwecji przez PostNord lub DHL/UPS/BRING. Odbiór osobisty możliwy w Sztokholmie.",
-  Punkt7: "Dla zamówień do Polski dostawa odbywa się promem. Może wystąpić nieco dłuższy czas oczekiwania.",
+  Punkt1Head: "PROCES ZAMAWIANIA",
+  Punkt1: "Aby zamówić unikalne dzieło sztuki, prosimy o kontakt za pośrednictwem strony internetowej DAGX.se, Facebooka lub Instagrama. Po potwierdzeniu zamówienia na tych platformach, jest ono uznawane za oficjalnie zaakceptowane. Szczegóły takie jak rozmiar, wybór kolorów, liczba kolorów i ewentualna struktura powinny zostać określone, aby umożliwić dostosowany proces tworzenia oraz ustalić finalną cenę. ",
+  Punkt2Head: "REALIZACJA",
+  Punkt2: "Projekt dzieła sztuki jest omawiany, aby zapewnić zgodność z wizją klienta, w tym ewentualne dostosowania do wystroju wnętrz lub określonych źródeł inspiracji. Klientom oferuje się jedną bezpłatną korektę, aby zapewnić pełne zadowolenie.",
+  Punkt3Head: "DOSTAWA",
+  Punkt3: "Dzieła są dostarczane na terenie Szwecji za pomocą PostNord, DHL, UPS lub BRING z możliwością odbioru osobistego w Sztokholmie. Zamówienia do Polski transportowane są promem a czas dostawy wynosi od 1 do 3 miesięcy, w zależności od uzgodnienia.",
+  Punkt4Head: "PŁATNOŚĆ",
+  Punkt4: "Wymagany jest zadatek w wysokości 15% ceny dzieła przy potwierdzeniu zamówienia. Szczegółowe informacje dotyczące płatności są podawane na tym etapie.",
 };

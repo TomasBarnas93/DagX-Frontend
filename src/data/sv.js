@@ -29,11 +29,12 @@ export const svTranslation = {
    Sold: "SÅLD",
 
    //Info
-   Punkt1: "Konstverk kan beställas elektroniskt via min Facebook eller Instagram. En beställning anses vara giltig efter att ha mottagit bekräftelse från mig.",
-   Punkt2: "För att beställa en tavla behöver du skriva några viktiga uppgifter så att jag kan fastställa priset för konstverket: Storlek, hur många och vilka färger vill du ha i sin tavla och om den ska ha en struktur.",
-   Punkt3: "Vi diskuterar vilken effekt du önskar. Om jag ska anpassa konstverk till inredning eller kanske du har en inspiration vilken ska jag följa?",
-   Punkt4: "Du har rätt till ett gratis korrigering.",
-   Punkt5: "Jag kommer att skicka filmer eller bilder ”bakom scen” om du önskar bli uppdaterad.",
-   Punkt6: "Möjlig leverans inom Sverige via PostNord eller DHL/UPS/BRING. Avhämtning på plats möjligt i Stockholm.",
-   Punkt7: "För beställning till Polen gäller leverans via färjan. Lite längre väntetid kan förekomma.",
+   Punkt1Head: "BESTÄLLNINGSPROCESS",
+   Punkt1: "För att beställa ett unikt konstverk, vänligen kontakta via hemsida DAGX.se, Facebook eller Instagram. Efter att beställningen bekräftats via dessa plattformar, anses den vara officiellt accepterad. Detaljer som storlek, färgval, antal färger och eventuell struktur bör specificeras för att möjliggöra en skräddarsydd skapelseprocess och fastställa det slutliga priset. ",
+   Punkt2Head: "REALISERING",
+   Punkt2: "Konstverkets utformning diskuteras för att säkerställa att det motsvarar kundens vision, inklusive eventuella anpassningar till inredning eller specifika inspirationskällor. Kunden erbjuds en kostnadsfri korrigering för att säkerställa fullständig tillfredsställelse.",
+   Punkt3Head: "LEVERANS",
+   Punkt3: "Konstverk levereras inom Sverige via PostNord, DHL, UPS, eller BRING med möjlighet för avhämtning i Stockholm. För leveranser till Polen används färjetransport, och leveranstiden varierar mellan 1 till 3 månader beroende på överenskommelse.",
+   Punkt4Head: "BETALNING",
+   Punkt4: "En handpenning om 15 % av konstverkets pris erfordras vid beställningens bekräftelse. Detaljerad betalningsinformation tillhandahålls vid detta tillfälle.",
 };
