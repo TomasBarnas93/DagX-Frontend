@@ -5,12 +5,12 @@ export const svTranslation = {
   Projects: "Portfölj",
   Create: "Skapa",
   MottoHead: "ABSTRAKTION",
-  Motto: "DET ÄR HJÄRTATS MOD, UTTRYCKT PÅ DUK, DÄR FÄRG OCH FORM BLIR SJÄLENS SPRÅK...",
+  Motto: "DET ÄR HJÄRTATS MOD, UTTRYCKT PÅ DUK,<br /> DÄR FÄRG OCH FORM BLIR SJÄLENS SPRÅK...",
   MottoMobile: "<br /> DET ÄR HJÄRTATS MOD, UTTRYCKT PÅ DUK, DÄR FÄRG OCH FORM<br />BLIR SJÄLENS SPRÅK...",
 
   //Home
   AboutHead: "JAG ÄR HÄR FÖR ATT FÖRVANDLA DIN VISION TILL VERKLIGHET.",
-  About: "Mitt namn är Dagmara Barnas och jag har ägnat mig åt måleri som en hobby, men med stor passion sedan 2018. Jag vill att din föreställning om en modern och smakfull inredning ska bli sann. Därför kan du beställa en abstrakt målning från mig med användning av blandade tekniker, precis som du drömmer om.",
+  About: "Mitt namn är Dagmara Barnas och jag har ägnat mig åt måleri som en hobby men med stor passion sedan 2018. Jag vill att din föreställning om en modern och smakfull inredning ska bli sann. Därför kan du beställa en abstrakt målning från mig med användning av blandade tekniker, precis som du drömmer om.",
   //Contact
   Name: "Namn",
   Email: "E-postadress",

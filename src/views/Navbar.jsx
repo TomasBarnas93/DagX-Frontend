@@ -60,7 +60,7 @@ const Navbar = () => {
     const fontSizes = {
       base: { en: "1.1rem", sv: "1.3rem", pl: "1.3rem" }, 
       md: { en: "1.5rem", sv: "1.6rem", pl: "1.6rem" }, 
-      lg: { en: "2rem", sv: "2rem", pl: "2rem" }, 
+      lg: { en: "1.8rem", sv: "1.8rem", pl: "1.8rem" }, 
       xl: { en: "1.8rem", sv: "2rem", pl: "2rem" }, 
     };
   
@@ -82,7 +82,7 @@ const Navbar = () => {
       zIndex="100"
       transition="background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s"
     >
-{isHomePage && scrollPosition < 100 && (
+{isHomePage && scrollPosition < 20 && (
   <Box
     textAlign="center"
     paddingTop="2rem"
@@ -121,15 +121,15 @@ const Navbar = () => {
             <Flex
               alignItems="center"
               spacing="4"
-              gap="4rem"
-              opacity={scrollPosition > 100 ? 0 : 1}
+              gap="3rem"
+              opacity={scrollPosition > 20 ? 0 : 1}
             >
               <Box>
                 <ChakraLink
                   as={Link}
                   to="/"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -141,7 +141,7 @@ const Navbar = () => {
                   as={Link}
                   to="/projects"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -153,7 +153,7 @@ const Navbar = () => {
                   as={Link}
                   to="/info"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -165,7 +165,7 @@ const Navbar = () => {
                   as={Link}
                   to="/contact"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -177,7 +177,7 @@ const Navbar = () => {
                   as={Link}
                   to="/create"
                   color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.6rem", md: "1.7rem"}}
+                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
                   className="underlineCustom2"
                   _hover={{ textDecoration: "none" }}
                 >
@@ -187,12 +187,12 @@ const Navbar = () => {
             </Flex>
           )}
           {!isMobile && (
-            <Box ml="2rem" opacity={scrollPosition > 100 ? 0 : 1}>
+            <Box ml="2rem" opacity={scrollPosition > 20 ? 0 : 1}>
               <Select
                 onChange={handleLanguageChange}
                 value={selectedLanguage}
                 fontFamily="Poiret One"
-                fontSize={{xl: "1.5rem", lg: "1.2rem" , md: "1.4rem"}}
+                fontSize={{xl: "1.5rem", lg: "1rem" , md: "1.4rem"}}
               >
                 <option value="en">EN</option>
                 <option value="pl">PL</option>

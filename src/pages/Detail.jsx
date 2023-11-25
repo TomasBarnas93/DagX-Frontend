@@ -67,13 +67,13 @@ function Detail() {
           className="imageWrapper"
           src={image.url}
           alt={image.name}
-          height={{ base: "auto", md: "auto", xl: "50rem" }}
+          height={{ base: "auto", md: "50rem", xl: "50rem" }}
           width={{ base: "100%", md: "auto" }}
           margin="auto"
         />
         <Text
           fontSize={{ base: "3xl", lg: "4xl", xl: "5xl" }}
-          mt={2}
+          mt={6}
           fontWeight="semibold"
         >
           {image.name}
@@ -138,14 +138,14 @@ function Detail() {
             alt={`Detail ${index + 1}`}
             height={{
               base: detail.width === "small" ? "30rem" : "auto",
-              lg: detail.width === "small" ? "20rem" : "40rem",
+              lg: detail.width === "small" ? "90%" : "auto",
               xl: detail.width === "small" ? "50rem" : "50rem",
               sm: detail.width === "small" ? "40rem" : "auto",
               md: detail.width === "small" ? "40rem" : "auto",
             }}
             width={{
               base: detail.width === "small" ? "20rem" : "90%",
-              lg: detail.width === "small" ? "30rem" : "80%",
+              lg: detail.width === "small" ? "80%" : "90%",
               xl: detail.width === "small" ? "40rem" : "auto",
               sm: detail.width === "small" ? "30rem" : "80%",
               md: detail.width === "small" ? "30rem" : "80%",
@@ -154,7 +154,7 @@ function Detail() {
             gridColumn={
               sortedDetails.length % 2 !== 0 &&
               index === sortedDetails.length - 1
-                ? { base: null, md: "span 2 / auto" }
+                ? { base: null, md: "1fr ",lg: "span 2 / auto" }
                 : null
             }
           />

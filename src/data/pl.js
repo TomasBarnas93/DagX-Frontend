@@ -5,7 +5,7 @@ export const plTranslation = {
   Projects: "Portfolio",
   Create: "Stwórz",
   MottoHead: "ABSTRAKCJA",
-  Motto: "TO ODWAGA SERCA, WYRAŻONA NA PŁÓTNIE, GDZIE KOLOR I FORMA STAJĄ SIĘ JĘZYKIEM DUSZY...",
+  Motto: "TO ODWAGA SERCA, WYRAŻONA NA PŁÓTNIE,<br /> GDZIE KOLOR I FORMA STAJĄ SIĘ JĘZYKIEM DUSZY...",
   MottoMobile: "<br /> TO ODWAGA SERCA, WYRAŻONA NA PŁÓTNIE, GDZIE KOLOR I FORMA<br />STAJĄ SIĘ JĘZYKIEM DUSZY...",
 
   //Home

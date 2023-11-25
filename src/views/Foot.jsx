@@ -11,7 +11,7 @@ function Foot() {
 
   return (
     <>
-      <Container marginTop={5} textAlign="center">
+      <Container marginTop={8} marginBottom={5} textAlign="center">
         <Box>
           <Flex justify="center" gap={5}>
             <ChakraLink href="https://www.facebook.com/DAGX.art" isExternal>

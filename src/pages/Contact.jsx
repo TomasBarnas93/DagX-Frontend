@@ -97,16 +97,16 @@ function Contact() {
         justifyContent="center"
         alignItems="center"
         rounded="md"
-        width="50rem"
-        height="50rem"
+        width={{ base: "90%", md: "60%", lg: "40rem" }} // Responsive width
         backgroundColor="#f3eee7"
         fontFamily="Poiret One"
         className="imageWrapper"
+        p={5} // Padding for the flex container
       >
-        <form onSubmit={handleSubmit}>
-          <VStack spacing={5}>
-            <FormControl isRequired>
-              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Name")}</FormLabel>
+        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+          <VStack spacing={5} alignItems="center" width="100%">
+            <FormControl isRequired width="100%">
+              <FormLabel fontSize="2xl">{t("Name")}</FormLabel>
               <Input
                 type="text"
                 name="name"
@@ -115,8 +115,8 @@ function Contact() {
                 border="1px solid darkgrey"
               />
             </FormControl>
-            <FormControl isRequired>
-              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Email")}</FormLabel>
+            <FormControl isRequired width="100%">
+              <FormLabel fontSize="2xl">{t("Email")}</FormLabel>
               <Input
                 type="email"
                 name="email"
@@ -125,8 +125,8 @@ function Contact() {
                 border="1px solid darkgrey"
               />
             </FormControl>
-            <FormControl isRequired>
-              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Message")}</FormLabel>
+            <FormControl isRequired width="100%">
+              <FormLabel fontSize="2xl">{t("Message")}</FormLabel>
               <Textarea
                 name="message"
                 value={formData.message}
@@ -134,8 +134,8 @@ function Contact() {
                 border="1px solid darkgrey"
               />
             </FormControl>
-            <FormControl>
-              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Size")}</FormLabel>
+            <FormControl width="100%">
+              <FormLabel fontSize="2xl">{t("Size")}</FormLabel>
               <Input
                 name="size"
                 value={formData.size}
@@ -143,8 +143,8 @@ function Contact() {
                 border="1px solid darkgrey"
               />
             </FormControl>
-            <FormControl>
-              <FormLabel ml={{ base: "1rem", md: "0" }} fontSize="3xl">{t("Attachment")}</FormLabel>
+            <FormControl width="100%">
+              <FormLabel fontSize="2xl">{t("Attachment")}</FormLabel>
               <Input type="file" onChange={handleFileChange} />
             </FormControl>
             <Button
@@ -152,7 +152,7 @@ function Contact() {
               type="submit"
               backgroundColor="#DDDCDB"
               size="lg"
-              fontSize="2xl"
+              fontSize="xl"
               fontWeight="normal"
             >
               {t("Send")}
@@ -161,7 +161,7 @@ function Contact() {
         </form>
       </Flex>
     </Box>
-  );
+  );  
 }
 
 export default Contact;

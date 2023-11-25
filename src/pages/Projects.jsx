@@ -6,7 +6,7 @@ import PaintingCardLeftText from "../components/paintingCardLeftText";
 
 function Projects() {
   const images = useContext(ImageContext);
- const isMobile = useBreakpointValue({ base: true, md: true, lg: true, xl: false });
+ const isMobile = useBreakpointValue({ base: true, md: true, lg: false, xl: false });
 
   useEffect(() => {
     window.scrollTo(0, 0);

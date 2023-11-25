@@ -83,7 +83,7 @@ canvas {
 
 @media screen and (min-width: 1202px) and (max-width: 1440px) {
     .videoStyle {
-      object-position: center -60rem;
+      object-position: center -55rem;
     }
   }
 
