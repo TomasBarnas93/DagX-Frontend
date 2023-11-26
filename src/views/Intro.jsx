@@ -6,7 +6,7 @@ import introImg from "../assets/images/introLogo.JPG";
 const MotionBox = motion(Box);
 
 const Intro = ({ onAnimationEnd }) => {
-  const marginLeft = useBreakpointValue({ base: "-4rem", md: "auto" }); 
+  const marginLeft = useBreakpointValue({ base: "-1rem", md: "auto" }); 
   const scaleValue = useBreakpointValue({ base: "0.8", md: "1" }); 
   const width = useBreakpointValue({ base: "90rem", md: "auto" });
   const height = useBreakpointValue({ base: "60rem", md: "auto" });

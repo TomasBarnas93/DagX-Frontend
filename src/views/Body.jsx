@@ -19,7 +19,7 @@ function Body() {
       location.pathname === "/contact" ||
       location.pathname.startsWith("/detail/")
     ) {
-      return { base: "5rem", lg: "6.5rem", xl: "10rem" };
+      return { base: "5rem", md: "-1rem", lg: "6.5rem", xl: "8rem" };
     } else if (location.pathname === "/") {
       return { base: "10rem", md: "9rem", xl: "9.5rem" };
     } else if (location.pathname === "/info") {

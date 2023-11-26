@@ -97,11 +97,11 @@ function Contact() {
         justifyContent="center"
         alignItems="center"
         rounded="md"
-        width={{ base: "90%", md: "60%", lg: "40rem" }} // Responsive width
+        width={{ base: "90%", md: "80%", lg: "70%" }}
         backgroundColor="#f3eee7"
         fontFamily="Poiret One"
         className="imageWrapper"
-        p={5} // Padding for the flex container
+        p={5}
       >
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
           <VStack spacing={5} alignItems="center" width="100%">
