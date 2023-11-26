@@ -40,7 +40,7 @@ function Home() {
         overflow="hidden"
         textAlign="justify"
       >
-        <video autoPlay loop muted className="videoStyle">
+        <video autoPlay={true} loop={true} muted={true} className="videoStyle">
           <source src={homeVideo} type="video/mp4" />
         </video>
 
