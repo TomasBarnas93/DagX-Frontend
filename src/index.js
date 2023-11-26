@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -35,7 +35,10 @@ i18n.use(initReactI18next).init({
   },
 });
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(
   <BrowserRouter>
     <I18nextProvider i18n={i18n}>
       <ChakraProvider>
@@ -48,8 +51,7 @@ ReactDOM.render(
         </LanguageProvider>
       </ChakraProvider>
     </I18nextProvider>
-  </BrowserRouter>,
-  document.getElementById("root")
+  </BrowserRouter>
 );
 
 reportWebVitals();
