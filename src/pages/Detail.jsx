@@ -146,7 +146,7 @@ function Detail() {
             width={{
               base: detail.width === "small" ? "20rem" : "90%",
               lg: detail.width === "small" ? "80%" : "90%",
-              xl: detail.width === "small" ? "40rem" : "auto",
+              xl: detail.width === "small" ? "40rem" : "95%",
               sm: detail.width === "small" ? "30rem" : "80%",
               md: detail.width === "small" ? "30rem" : "80%",
             }}

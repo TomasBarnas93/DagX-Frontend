@@ -52,7 +52,7 @@ function Contact() {
     formDataObj.append("attachment", formData.attachment);
 
     try {
-      const response = await fetch("http://localhost:3000/contact_form", {
+      const response = await fetch("https://api.dagx.se/contact_form", {
         method: "POST",
         body: formDataObj,
       });

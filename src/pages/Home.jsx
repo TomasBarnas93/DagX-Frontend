@@ -63,7 +63,7 @@ function Home() {
           viewport={{ once: true }}
         >
           <Text
-            fontSize={{ base: "1.5rem", md: "1.8rem" }}
+            fontSize={{ base: "1.3rem", md: "1.8rem" }}
             textAlign={{ base: "center", md: "center" }}
             marginLeft={{ base: 3, md: 5 }}
             marginRight={{ base: 3, md: 5 }}
