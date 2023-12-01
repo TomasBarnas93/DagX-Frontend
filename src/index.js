@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter  } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -39,7 +39,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <I18nextProvider i18n={i18n}>
       <ChakraProvider>
         <LanguageProvider>
@@ -51,7 +51,7 @@ root.render(
         </LanguageProvider>
       </ChakraProvider>
     </I18nextProvider>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 reportWebVitals();
