@@ -52,7 +52,7 @@ function Contact() {
     formDataObj.append("attachment", formData.attachment);
 
     try {
-      const response = await fetch("https://dagx-backend.onrender.com/contact_form", {
+      const response = await fetch("https://www.api.dagx.se/contact_form", {
         method: "POST",
         body: formDataObj,
       });
