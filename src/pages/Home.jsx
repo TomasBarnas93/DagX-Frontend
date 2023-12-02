@@ -40,7 +40,14 @@ function Home() {
         overflow="hidden"
         textAlign="justify"
       >
-        <video autoPlay={true} loop={true} muted={true} controls={false} className="videoStyle">
+        <video
+          autoPlay={true}
+          loop={true}
+          muted={true}
+          controls={false}
+          className="videoStyle"
+          style={{ pointerEvents: "none" }}
+        >
           <source src={homeVideo} type="video/mp4" />
         </video>
 
