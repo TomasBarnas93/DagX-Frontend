@@ -48,8 +48,12 @@ function Contact() {
     formDataObj.append("name", formData.name);
     formDataObj.append("email", formData.email);
     formDataObj.append("message", formData.message);
-    formDataObj.append("size", formData.size);
-    formDataObj.append("attachment", formData.attachment);
+    if (formData.size) {
+      formDataObj.append("size", formData.size);
+    }
+    if (formData.attachment) {
+      formDataObj.append("attachment", formData.attachment);
+    }
 
     try {
       const response = await fetch("https://www.api.dagx.se/contact_form", {
