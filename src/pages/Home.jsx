@@ -47,6 +47,7 @@ function Home() {
           controls={false}
           className="videoStyle"
           style={{ pointerEvents: "none" }}
+          playsInline
         >
           <source src={homeVideo} type="video/mp4" />
         </video>
