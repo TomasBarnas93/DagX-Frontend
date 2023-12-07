@@ -19,13 +19,9 @@
     <div id="root"></div>
 
     <script type="text/javascript">
-      (function() {
-        var redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        if (redirect && redirect != location.href) {
-          history.replaceState(null, null, redirect);
-        }
-      })();
+      if (!window.location.hash && window.location.pathname !== '/') {
+        window.location.replace('/#' + window.location.pathname);
+      }
     </script>
     
   </body>
