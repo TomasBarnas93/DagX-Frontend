@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -19,9 +19,13 @@
     <div id="root"></div>
 
     <script type="text/javascript">
-      if (!window.location.hash && window.location.pathname !== '/') {
-        window.location.replace('/#' + window.location.pathname);
-      }
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
     </script>
     
   </body>
