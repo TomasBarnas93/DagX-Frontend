@@ -56,7 +56,7 @@ function Contact() {
     }
 
     try {
-      const response = await fetch("https://www.api.dagx.se/contact_form", {
+      const response = await fetch("https://api.dagx.se/contact_form", {
         method: "POST",
         body: formDataObj,
       });
