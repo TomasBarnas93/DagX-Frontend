@@ -37,7 +37,7 @@ const Info = () => {
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-              marginBottom={{ base: "0.5rem", md: "2rem" }}
+              marginBottom={{ base: "2rem", md: "2rem" }}
               textAlign="center"
               dangerouslySetInnerHTML={{ __html: t("Punkt1Head") }}
             >
@@ -60,7 +60,7 @@ const Info = () => {
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-              marginBottom={{ base: "0.5rem", md: "2rem" }}
+              marginBottom={{ base: "2rem", md: "2rem" }}
             >
               {t("Punkt2Head")}
             </Text>
@@ -82,7 +82,7 @@ const Info = () => {
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-              marginBottom={{ base: "0.5rem", md: "2rem" }}
+              marginBottom={{ base: "2rem", md: "2rem" }}
             >
               {t("Punkt3Head")}
             </Text>
@@ -104,7 +104,7 @@ const Info = () => {
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-              marginBottom={{ base: "0.5rem", md: "2rem" }}
+              marginBottom={{ base: "2rem", md: "2rem" }}
             >
               {t("Punkt4Head")}
             </Text>

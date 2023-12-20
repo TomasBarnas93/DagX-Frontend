@@ -12,6 +12,16 @@ footer {
     font-weight: bold;
 }
 
+.footer {
+  font-size: 1rem;
+}
+
+@media (max-width: 769px) {
+  .footer {
+    font-size: 0.8rem;
+  }
+}
+
 canvas {
     border: none;
     padding: 0;
