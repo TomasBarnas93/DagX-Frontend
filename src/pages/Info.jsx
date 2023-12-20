@@ -3,25 +3,13 @@ import {
   List,
   Flex,
   Box,
-  Image,
   useBreakpointValue,
   Text,
 } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import listPunkt from "../assets/images/listPunkt2.png";
 
 const Info = () => {
   const { t } = useTranslation();
-
-  const CustomListIcon = ({ src }) => (
-    <Image
-      src={src}
-      alt="List Icon"
-      boxSize={{ base: "8rem", md: "9rem", lg: "10rem", xl: "10rem" }}
-      marginRight={{ base: "-2rem", md: "none" }}
-      marginLeft={{ base: "-2rem", md: "none" }}
-    />
-  );
 
   const fontSize = useBreakpointValue({
     base: "xl",
@@ -38,22 +26,21 @@ const Info = () => {
       textAlign={{ base: "left", md: "justify" }}
       fontFamily="Poiret One"
     >
-      <Box width="90%">
+      <Box width="80%">
         <List styleType="none" paddingRight={{ base: "2rem", md: "0" }}>
           <Flex
             direction="column"
             alignItems="center"
             justifyContent="center"
             alignContent="center"
-
           >
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-              marginBottom={{base: "0.5rem", md: "2rem"}}
+              marginBottom={{ base: "0.5rem", md: "2rem" }}
               textAlign="center"
+              dangerouslySetInnerHTML={{ __html: t("Punkt1Head") }}
             >
-              {t("Punkt1Head")}
             </Text>
             <Flex
               as="li"
@@ -61,8 +48,7 @@ const Info = () => {
               fontSize={fontSize}
               marginBottom="3rem"
             >
-              <CustomListIcon src={listPunkt} />
-              <Box>{t("Punkt1")}</Box>
+              <Box dangerouslySetInnerHTML={{ __html: t("Punkt1") }}></Box>
             </Flex>
           </Flex>
           <Flex
@@ -74,7 +60,7 @@ const Info = () => {
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-              marginBottom={{base: "0.5rem", md: "2rem"}}
+              marginBottom={{ base: "0.5rem", md: "2rem" }}
             >
               {t("Punkt2Head")}
             </Text>
@@ -84,7 +70,6 @@ const Info = () => {
               fontSize={fontSize}
               marginBottom="3rem"
             >
-              <CustomListIcon src={listPunkt} />
               <Box>{t("Punkt2")}</Box>
             </Flex>
           </Flex>
@@ -97,7 +82,7 @@ const Info = () => {
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-              marginBottom={{base: "0.5rem", md: "2rem"}}
+              marginBottom={{ base: "0.5rem", md: "2rem" }}
             >
               {t("Punkt3Head")}
             </Text>
@@ -107,8 +92,7 @@ const Info = () => {
               fontSize={fontSize}
               marginBottom={{ base: "2rem", md: "3rem" }}
             >
-              <CustomListIcon src={listPunkt} />
-              <Box>{t("Punkt3")}</Box>
+              <Box dangerouslySetInnerHTML={{ __html: t("Punkt3") }}></Box>
             </Flex>
           </Flex>
           <Flex
@@ -120,12 +104,11 @@ const Info = () => {
             <Text
               fontWeight="bold"
               fontSize={{ base: "2xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-              marginBottom={{base: "0.5rem", md: "2rem"}}
+              marginBottom={{ base: "0.5rem", md: "2rem" }}
             >
               {t("Punkt4Head")}
             </Text>
             <Flex as="li" alignItems="center" fontSize={fontSize}>
-              <CustomListIcon src={listPunkt} />
               <Box> {t("Punkt4")}</Box>
             </Flex>
           </Flex>

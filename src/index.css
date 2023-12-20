@@ -55,9 +55,9 @@ canvas {
 }
 
 /* Mobile */
-@media (min-width: 769px) {
+@media (max-width: 769px) {
     .videoStyle {
-        object-position: center -90rem;
+      max-height: 60vh; 
     }
 }
 /* Laptop */
