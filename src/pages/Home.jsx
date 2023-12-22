@@ -13,7 +13,7 @@ function Home() {
   const getAboutWidth = () => {
     switch (i18n.language) {
       case "pl":
-        return { base: "98%", md: "95%" };
+        return { base: "90%", md: "95%" };
       default:
         return { base: "90%", md: "95%" };
     }
