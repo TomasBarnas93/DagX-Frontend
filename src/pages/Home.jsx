@@ -19,6 +19,10 @@ function Home() {
     }
   };
 
+  const newestImage = images
+    .slice()
+    .sort((a, b) => b.originalIndex - a.originalIndex)[0];
+
   return (
     <Box>
       <Box
@@ -98,6 +102,20 @@ function Home() {
           </Text>
         </motion.div>
       </Flex>
+
+      {newestImage && (
+        <Box marginTop="5rem" width="100%" height="auto">
+          <PaintingCardRightText
+            image={newestImage}
+            index={newestImage.originalIndex}
+            key={newestImage.originalIndex}
+            alt={`Image ${newestImage.originalIndex + 1}`}
+            fontSizeName={{ base: "2.5rem", md: "5xl" }}
+            fontSizeSize={{ base: "1.2rem", md: "2xl" }}
+            fontSizeAvailable={{ base: "1.2rem", md: "2xl" }}
+          />
+        </Box>
+      )}
 
       <Box marginTop="5rem" width="100%" height="auto">
         {images.slice(0, 9).map((image, index) => (
