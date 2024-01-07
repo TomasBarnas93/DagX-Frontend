@@ -73,7 +73,7 @@ function Projects() {
               <IoIosSearch color="gray.300" />
             </InputLeftElement>
             <Input
-              type="tel"
+              type="search"
               placeholder="Search"
               fontFamily="Poiret One"
               onChange={handleSearchChange}
@@ -116,7 +116,7 @@ function Projects() {
               <IoIosSearch color="gray.300" />
             </InputLeftElement>
             <Input
-              type="tel"
+              type="search"
               placeholder="Search"
               fontFamily="Poiret One"
               onChange={handleSearchChange}
@@ -157,7 +157,7 @@ function Projects() {
             <IoIosSearch color="gray.300" />
           </InputLeftElement>
           <Input
-            type="tel"
+            type="search"
             placeholder="Search"
             fontFamily="Poiret One"
             onChange={handleSearchChange}
