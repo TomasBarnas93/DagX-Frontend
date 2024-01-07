@@ -9,13 +9,9 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
-  Select,
-  Button,
 } from "@chakra-ui/react";
 import PaintingCardLeftText from "../components/paintingCardLeftText";
 import { IoIosSearch } from "react-icons/io";
-import { IoFilterOutline } from "react-icons/io5";
-import { useTranslation } from "react-i18next";
 
 function Projects() {
   const images = useContext(ImageContext);
@@ -27,9 +23,6 @@ function Projects() {
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
-  const [availableFilter, setAvailableFilter] = useState(null);
-  const [showFilterOptions, setShowFilterOptions] = useState(false);
-  const { t } = useTranslation();
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -40,14 +33,11 @@ function Projects() {
     window.scrollTo(0, 0);
   }, []);
 
-  const applyFilters = (image) => {
-    return (
-      (availableFilter === null || availableFilter === "" || image.avalible === availableFilter) &&
-      image.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  const applySearch = (image) => {
+    return image.name.toLowerCase().includes(searchTerm.toLowerCase());
   };
 
-  const filteredImages = images.filter(applyFilters);
+  const filteredImages = images.filter(applySearch);
 
   const separateImages = (orientation, sourceArray) => {
     return sourceArray.reduce((acc, image) => {
@@ -57,7 +47,7 @@ function Projects() {
       return acc;
     }, []);
   };
-
+  
   // Separate the images into small, big and all categories
   const smallImages = separateImages("horizontal", filteredImages);
   const bigImages = separateImages("vertical", filteredImages);
@@ -88,26 +78,11 @@ function Projects() {
               fontFamily="Poiret One"
               onChange={handleSearchChange}
               focusBorderColor="transparent"
-              sx={{ '&:focus': { boxShadow: 'none', borderColor: 'transparent' } }}
+              sx={{
+                "&:focus": { boxShadow: "none", borderColor: "transparent" },
+              }}
             />
           </InputGroup>
-          <Box marginLeft="2rem">
-          <Button onClick={() => setShowFilterOptions(!showFilterOptions)} variant="ghost">
-            <IoFilterOutline size="2rem" />
-          </Button>
-            {showFilterOptions && (
-              <Box>
-               <Select
-                  placeholder= {t("Available")}
-                  onChange={(e) => setAvailableFilter(e.target.value)}
-                >
-                  <option value="yes">{t("Yes")}</option>
-                  <option value="no">{t("No")}</option>
-                  <option value="">{t("Reset")}</option>
-                </Select>
-              </Box>
-            )}
-          </Box>
         </Flex>
         <Flex direction="column" alignItems="center">
           {filteredImages.map((image, index) => (
@@ -146,26 +121,11 @@ function Projects() {
               fontFamily="Poiret One"
               onChange={handleSearchChange}
               focusBorderColor="transparent"
-              sx={{ '&:focus': { boxShadow: 'none', borderColor: 'transparent' } }}
+              sx={{
+                "&:focus": { boxShadow: "none", borderColor: "transparent" },
+              }}
             />
           </InputGroup>
-          <Box marginLeft="2rem">
-          <Button onClick={() => setShowFilterOptions(!showFilterOptions)} variant="ghost">
-            <IoFilterOutline size="2rem" />
-          </Button>
-            {showFilterOptions && (
-              <Box>
-                <Select
-                  placeholder= {t("Available")}
-                  onChange={(e) => setAvailableFilter(e.target.value)}
-                >
-                  <option value="yes">{t("Yes")}</option>
-                  <option value="no">{t("No")}</option>
-                  <option value="">{t("Reset")}</option>
-                </Select>
-              </Box>
-            )}
-          </Box>
         </Flex>
         <Flex direction="column" alignItems="center">
           {filteredImages.map((image, index) => (
@@ -202,26 +162,11 @@ function Projects() {
             fontFamily="Poiret One"
             onChange={handleSearchChange}
             focusBorderColor="transparent"
-            sx={{ '&:focus': { boxShadow: 'none', borderColor: 'transparent' } }}
+            sx={{
+              "&:focus": { boxShadow: "none", borderColor: "transparent" },
+            }}
           />
         </InputGroup>
-        <Box marginLeft="2rem">
-        <Button onClick={() => setShowFilterOptions(!showFilterOptions)} variant="ghost">
-            <IoFilterOutline size="2rem" />
-          </Button>
-          {showFilterOptions && (
-            <Box>
-              <Select
-                  placeholder= {t("Available")}
-                  onChange={(e) => setAvailableFilter(e.target.value)}
-                >
-                  <option value="yes">{t("Yes")}</option>
-                  <option value="no">{t("No")}</option>
-                  <option value="">{t("Reset")}</option>
-                </Select>
-            </Box>
-          )}
-        </Box>
       </Flex>
       {/* Render small images */}
       {leftSmallImages.map((leftImage, index) => {

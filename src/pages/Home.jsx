@@ -51,7 +51,8 @@ function Home() {
             cursor="pointer"
             alignItems="center"
             justifyContent="center"
-            marginTop="1rem"
+            marginTop="15rem"
+            shadow="dark-lg"
           >
             <CloseButton
               position="absolute"
@@ -65,7 +66,7 @@ function Home() {
             <Image src={newBanner} alt="New Banner" />
           </Flex>
         ),
-        duration: 2000,
+        duration: 3000,
         isClosable: true,
       });
     }
