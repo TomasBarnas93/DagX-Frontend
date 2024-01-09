@@ -155,6 +155,13 @@ function Detail() {
         >
           {image.size}
         </Text>
+        <Text
+          fontSize={{ base: "2xl", lg: "2xl", xl: "3xl" }}
+          mt={2}
+          fontWeight="semibold"
+        >
+           {image.avalible === "yes" ? t("Available") : t("Sold")}
+        </Text>
         <Box
           className="underlineCustom"
           mt={{ base: "1rem", md: "2rem" }}

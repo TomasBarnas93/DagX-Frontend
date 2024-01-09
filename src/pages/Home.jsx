@@ -1,26 +1,26 @@
-import React, { useContext, useEffect, useRef, useCallback } from "react";
+import React, { useContext } from "react";
 import {
   Flex,
   Box,
   Text,
-  useToast,
-  Image,
-  CloseButton,
+  // Image,
+  // useToast,
+  // CloseButton,
 } from "@chakra-ui/react";
 import homeVideo from "../assets/videos/HomeVideo.mp4";
 import PaintingCardRightText from "../components/paintingCardRightText";
 import { ImageContext } from "../services/ImageContext";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import newBanner from "../assets/images/newBanner.JPG";
-import { useNavigate } from "react-router-dom";
+// import newBanner from "../assets/images/newBanner.JPG";
+// import { useNavigate } from "react-router-dom";
 
 function Home() {
   const images = useContext(ImageContext);
   const { t, i18n } = useTranslation();
-  const toast = useToast();
-  const navigate = useNavigate();
-  const toastShown = useRef(false);
+  // const toast = useToast();
+  // const navigate = useNavigate();
+  // const toastShown = useRef(false);
 
   const getAboutWidth = () => {
     switch (i18n.language) {
@@ -35,53 +35,53 @@ function Home() {
     .slice()
     .sort((a, b) => b.originalIndex - a.originalIndex)[0];
 
-  const showToast = useCallback(() => {
-    if (newestImage) {
-      const toastId = `newest-image-toast-${newestImage.originalIndex}`;
-      toast({
-        id: toastId,
-        position: "top",
-        render: () => (
-          <Flex
-            position="relative"
-            onClick={() => {
-              navigate(`/detail/${newestImage.originalIndex + 1}`);
-              toast.close(toastId);
-            }}
-            cursor="pointer"
-            alignItems="center"
-            justifyContent="center"
-            marginTop="15rem"
-            shadow="dark-lg"
-          >
-            <CloseButton
-              position="absolute"
-              right="8px"
-              top="8px"
-              onClick={(event) => {
-                event.stopPropagation();
-                toast.close(toastId);
-              }}
-            />
-            <Image src={newBanner} alt="New Banner" />
-          </Flex>
-        ),
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  }, [navigate, toast, newestImage]);
+  // const showToast = useCallback(() => {
+  //   if (newestImage) {
+  //     const toastId = `newest-image-toast-${newestImage.originalIndex}`;
+  //     toast({
+  //       id: toastId,
+  //       position: "top",
+  //       render: () => (
+  //         <Flex
+  //           position="relative"
+  //           onClick={() => {
+  //             navigate(`/detail/${newestImage.originalIndex + 1}`);
+  //             toast.close(toastId);
+  //           }}
+  //           cursor="pointer"
+  //           alignItems="center"
+  //           justifyContent="center"
+  //           marginTop="15rem"
+  //           shadow="dark-lg"
+  //         >
+  //           <CloseButton
+  //             position="absolute"
+  //             right="8px"
+  //             top="8px"
+  //             onClick={(event) => {
+  //               event.stopPropagation();
+  //               toast.close(toastId);
+  //             }}
+  //           />
+  //           <Image src={newBanner} alt="New Banner" />
+  //         </Flex>
+  //       ),
+  //       duration: 3000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // }, [navigate, toast, newestImage]);
 
-  useEffect(() => {
-    const lastVisitDate = localStorage.getItem('lastVisitDate');
-    const today = new Date().toDateString();
+  // useEffect(() => {
+  //   const lastVisitDate = localStorage.getItem('lastVisitDate');
+  //   const today = new Date().toDateString();
 
-    if (lastVisitDate !== today && !toastShown.current && newestImage) {
-      showToast();
-      localStorage.setItem('lastVisitDate', today);
-      toastShown.current = true;
-    }
-  }, [newestImage, showToast]);
+  //   if (lastVisitDate !== today && !toastShown.current && newestImage) {
+  //     showToast();
+  //     localStorage.setItem('lastVisitDate', today);
+  //     toastShown.current = true;
+  //   }
+  // }, [newestImage, showToast]);
 
   return (
     <Box>
