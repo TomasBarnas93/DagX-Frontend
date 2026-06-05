@@ -1,47 +1,62 @@
-import React, { createContext, useState, useEffect } from "react";
-import { storage, db } from "../services/helpers/firebase";
-import { ref, listAll } from "firebase/storage";
-import { get, ref as dbRef } from "firebase/database";
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { sanityClient, urlFor } from './sanityClient';
 
 export const ImageContext = createContext();
 
-const ImageProvider = ({ children }) => {
+export const ImageProvider = ({ children }) => {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      let imagesArray = [];
-      const listRef = ref(storage);
-      const list = await listAll(listRef);
-
-      for (let i = 1; i <= list.items.length; i++) {
-        const imageRef = dbRef(db, `images/image${i}`);
-        const imageSnap = await get(imageRef);
-        const imageData = imageSnap.val();
-
-        if (imageData) {
-          const detailsArray = [];
-          if (imageData.detailImages) {
-            for (const detailKey in imageData.detailImages) {
-              const detailData = imageData.detailImages[detailKey];
-              detailsArray.push({ subUrl: detailData.subUrl, width: detailData.width });
-            }
+    const fetchPaintings = async () => {
+      try {
+        const query = `*[_type == "painting"] | order(order asc) {
+          _id,
+          title,
+          size,
+          available,
+          order,
+          mainImage,
+          descriptions,
+          detailImages[] {
+            ...,
+            width
           }
+        }`;
 
-          imagesArray.push({ ...imageData, details: detailsArray, originalIndex: i - 1 });
-        } else {
-        }
+        const data = await sanityClient.fetch(query);
+
+        const formattedImages = data.map((painting) => ({
+          ...painting,
+          name: painting.title,
+          url: painting.mainImage ? urlFor(painting.mainImage) : '',
+          originalIndex: painting.order ?? 0,
+          descriptions: painting.descriptions || {},
+          details: (painting.detailImages || []).map((img) => ({
+            subUrl: urlFor(img),
+            width: img.width || 'normal',
+          })),
+        }));
+
+        setImages(formattedImages);
+      } catch (error) {
+        console.error("Failed to fetch paintings from Sanity:", error);
+        setImages([]);
+      } finally {
+        setLoading(false);
       }
-      console.log(imagesArray);
-      setImages(imagesArray);
     };
 
-    fetchImages();
+    fetchPaintings();
   }, []);
 
   return (
-    <ImageContext.Provider value={images}>{children}</ImageContext.Provider>
+    <ImageContext.Provider value={{ images, loading }}>
+      {children}
+    </ImageContext.Provider>
   );
 };
 
-export default ImageProvider;
+export const useImages = () => useContext(ImageContext);
+
+export default ImageContext;

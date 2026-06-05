@@ -15,10 +15,15 @@ export const svTranslation = {
   //Home
   AboutHead: "JAG ÄR HÄR FÖR ATT FÖRVANDLA DIN VISION TILL VERKLIGHET.",
   About: "Mitt namn är Dagmara Barnas och jag har ägnat mig åt måleri som en hobby men med stor passion sedan 2018. Jag vill att din föreställning om en modern och smakfull inredning ska bli sann. Därför kan du beställa en abstrakt målning från mig med användning av blandade tekniker, precis som du drömmer om.",
+ 
   //Contact
+  ContactInformation: "Kontaktinformation",
   Name: "Namn",
   Email: "E-postadress",
+  SendMessage: "Skicka meddelande",
   Message: "Meddelande",
+  MessageHolder: "Skriv ditt meddelande här...",
+  Phone: "Telefonnummer",
   Size: "Tavlanstorlek",
   Attachment: "Bifogad fil",
   Send: "Skicka",

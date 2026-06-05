@@ -8,10 +8,16 @@ import {
   VStack,
   Box,
   Flex,
+  Text,
+  Heading,
+  Link as ChakraLink,
+  HStack,
 } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 import emailjs from "emailjs-com";
+import { PhoneIcon, EmailIcon } from "@chakra-ui/icons";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 function Contact() {
   const { t } = useTranslation();
@@ -30,10 +36,7 @@ function Contact() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -48,27 +51,19 @@ function Contact() {
       message: formData.message,
       user_email: formData.email,
       user_telefon: formData.phone,
-      size: formData.size, 
+      size: formData.size,
     };
 
     emailjs
       .send(SERVICE_ID, TEMPLATE_ID, templateParams, USER_ID)
-      .then((response) => {
-        console.log("Email sent successfully:", response);
+      .then(() => {
         Swal.fire({
           icon: "success",
           title: t("Success"),
         });
-        setFormData({
-          name: "",
-          email: "",
-          message: "",
-          phone: "",
-          size: "",
-        });
+        setFormData({ name: "", email: "", message: "", phone: "", size: "" });
       })
       .catch((error) => {
-        console.error("Error sending email:", error);
         Swal.fire({
           icon: "error",
           title: t("Wrong"),
@@ -78,98 +73,154 @@ function Contact() {
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="85vh"
-      py={10}
-    >
+    <Box py={12} px={5} bg="#F0E7D8" minH="100vh">
       <Flex
-        justifyContent="center"
-        alignItems="center"
-        rounded="md"
-        width={{ base: "90%", md: "80%", lg: "70%" }}
-        backgroundColor="#f3eee7"
-        fontFamily="Poiret One"
-        className="imageWrapper"
-        p={8}
+        direction={{ base: "column", lg: "row" }}
+        maxW="1200px"
+        mx="auto"
+        gap={12}
+        align="start"
       >
-        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-          <VStack spacing={6} alignItems="stretch" width="100%">
-            <FormControl isRequired>
-              <FormLabel fontSize="2xl">{t("Name")}</FormLabel>
-              <Input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                border="1px solid darkgrey"
-                placeholder="Your name"
-              />
-            </FormControl>
+        <Box flex="1" minW={{ base: "100%", lg: "380px" }}>
+          <Heading fontFamily="Poiret One" size="xl" mb={8} color="#2C2C2C">
+            {t("ContactInformation") || "Kontaktinformation"}
+          </Heading>
 
-            <FormControl isRequired>
-              <FormLabel fontSize="2xl">{t("Email")}</FormLabel>
-              <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                border="1px solid darkgrey"
-                placeholder="your@email.com"
-              />
-            </FormControl>
+          <VStack align="stretch" spacing={8} fontSize="lg">
+            <HStack>
+              <PhoneIcon color="gray.700" boxSize={6} />
+              <Box>
+                <Text fontWeight="bold">Telefon:</Text>
+                <Text>+46 123 456 789</Text>
+              </Box>
+            </HStack>
 
-            <FormControl>
-              <FormLabel fontSize="2xl">{t("Phone")}</FormLabel>
-              <Input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                border="1px solid darkgrey"
-                placeholder="+46 123 456 789"
-              />
-            </FormControl>
+            <HStack>
+              <EmailIcon color="gray.700" boxSize={6} />
+              <Box>
+                <Text fontWeight="bold">E-post:</Text>
+                <ChakraLink href="mailto:info@dagx.art" color="blue.700" fontWeight="medium">
+                  info@dagx.art
+                </ChakraLink>
+              </Box>
+            </HStack>
 
-            <FormControl isRequired>
-              <FormLabel fontSize="2xl">{t("Message")}</FormLabel>
-              <Textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                border="1px solid darkgrey"
-                rows={6}
-                placeholder="Write your message here..."
-              />
-            </FormControl>
-
-            <FormControl>
-              <FormLabel fontSize="2xl">{t("Size")}</FormLabel>
-              <Input
-                name="size"
-                value={formData.size}
-                onChange={handleChange}
-                border="1px solid darkgrey"
-                placeholder="e.g. 50x70 cm"
-              />
-            </FormControl>
-
-            <Button
-              type="submit"
-              backgroundColor="#DDDCDB"
-              size="lg"
-              fontSize="xl"
-              fontWeight="normal"
-              fontFamily="Poiret One"
-              mt={4}
-              _hover={{ backgroundColor: "#c9c8c3" }}
-            >
-              {t("Send")}
-            </Button>
+            <Box>
+              <Text fontWeight="bold" mb={2}>Adress:</Text>
+              <Text>Hässelby, Stockholm</Text>
+            </Box>
           </VStack>
-        </form>
+
+          <Box mt={12}>
+            <Text fontWeight="bold" mb={4} fontSize="lg">Följ oss</Text>
+            <HStack spacing={8}>
+              <ChakraLink href="https://www.facebook.com/DAGX.art" isExternal color="gray.700" _hover={{ color: "blue.600" }}>
+                <FaFacebook size="32px" />
+              </ChakraLink>
+              <ChakraLink href="https://www.instagram.com/dagx.art/" isExternal color="gray.700" _hover={{ color: "#E1306C" }}>
+                <FaInstagram size="32px" />
+              </ChakraLink>
+            </HStack>
+          </Box>
+        </Box>
+
+        <Box flex="1.2">
+          <Box
+            bg="white"
+            p={{ base: 8, md: 12 }}
+            borderRadius="2xl"
+            boxShadow="xl"
+            border="1px solid #E2D9C8"
+            _hover={{ boxShadow: "2xl" }}
+            transition="all 0.3s ease"
+          >
+            <Heading fontFamily="Poiret One" size="xl" mb={10} textAlign="center" color="#2C2C2C">
+              {t("SendMessage") || "Skicka meddelande"}
+            </Heading>
+
+            <form onSubmit={handleSubmit}>
+              <VStack spacing={8} align="stretch">
+                <FormControl isRequired>
+                  <FormLabel fontSize="xl" fontWeight="medium">{t("Name")}</FormLabel>
+                  <Input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder=""
+                    size="lg"
+                    borderRadius="md"
+                  />
+                </FormControl>
+
+                <FormControl isRequired>
+                  <FormLabel fontSize="xl" fontWeight="medium">{t("Email")}</FormLabel>
+                  <Input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder=""
+                    size="lg"
+                    borderRadius="md"
+                  />
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel fontSize="xl" fontWeight="medium">{t("Phone")}</FormLabel>
+                  <Input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder=""
+                    size="lg"
+                    borderRadius="md"
+                  />
+                </FormControl>
+
+                <FormControl isRequired>
+                  <FormLabel fontSize="xl" fontWeight="medium">{t("Message")}</FormLabel>
+                  <Textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder={t("MessageHolder")}
+                    size="lg"
+                    rows={7}
+                    borderRadius="md"
+                  />
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel fontSize="xl" fontWeight="medium">{t("Size")}</FormLabel>
+                  <Input
+                    name="size"
+                    value={formData.size}
+                    onChange={handleChange}
+                    placeholder="50x70 cm"
+                    size="lg"
+                    borderRadius="md"
+                  />
+                </FormControl>
+
+                <Button
+                  type="submit"
+                  size="lg"
+                  height="60px"
+                  fontSize="2xl"
+                  fontFamily="Poiret One"
+                  bg="#DDDCDB"
+                  color="#2C2C2C"
+                  _hover={{ bg: "#C9C8C3", transform: "translateY(-2px)" }}
+                  transition="all 0.2s"
+                  mt={4}
+                >
+                  {t("Send")}
+                </Button>
+              </VStack>
+            </form>
+          </Box>
+        </Box>
       </Flex>
     </Box>
   );

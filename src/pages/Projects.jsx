@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ImageContext } from "../services/ImageContext";
 import PaintingCardRightText from "../components/paintingCardRightText";
+import PaintingCardLeftText from "../components/paintingCardLeftText";
 import {
   Flex,
   Box,
@@ -10,17 +11,12 @@ import {
   InputLeftElement,
   Input,
 } from "@chakra-ui/react";
-import PaintingCardLeftText from "../components/paintingCardLeftText";
 import { IoIosSearch } from "react-icons/io";
 
 function Projects() {
-  const images = useContext(ImageContext);
-  const isMobile = useBreakpointValue({
-    base: true,
-    md: true,
-    lg: false,
-    xl: false,
-  });
+  const { images, loading } = useContext(ImageContext);
+  const isMobile = useBreakpointValue({ base: true, md: true, lg: false, xl: false });
+
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
 
@@ -33,41 +29,22 @@ function Projects() {
     window.scrollTo(0, 0);
   }, []);
 
-  const applySearch = (image) => {
-    return image.name.toLowerCase().includes(searchTerm.toLowerCase());
-  };
+  // Filter images based on search
+  const filteredImages = images.filter((image) =>
+    (image.name || image.title || "")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
 
-  const filteredImages = images.filter(applySearch);
+  if (loading) {
+    return <Flex justify="center" align="center" minH="50vh">Loading paintings...</Flex>;
+  }
 
-  const separateImages = (orientation, sourceArray) => {
-    return sourceArray.reduce((acc, image) => {
-      if (image.orientation === orientation) {
-        acc.push(image);
-      }
-      return acc;
-    }, []);
-  };
-  
-  // Separate the images into small, big and all categories
-  const smallImages = separateImages("horizontal", filteredImages);
-  const bigImages = separateImages("vertical", filteredImages);
-
-  // Split each category into left and right arrays
-  const leftSmallImages = smallImages.slice(0, smallImages.length / 2);
-  const rightSmallImages = smallImages.slice(smallImages.length / 2);
-  const leftBigImages = bigImages.slice(0, bigImages.length / 2);
-  const rightBigImages = bigImages.slice(bigImages.length / 2);
-
+  // Search mode
   if (isSearchActive) {
     return (
       <Flex direction="column">
-        <Flex
-          width="90%"
-          justifyContent="center"
-          mt="7rem"
-          mb="-5rem"
-          direction="row"
-        >
+        <Flex width="90%" justifyContent="center" mt="7rem" mb="2rem">
           <InputGroup maxWidth="md">
             <InputLeftElement pointerEvents="none">
               <IoIosSearch color="gray.300" />
@@ -78,18 +55,16 @@ function Projects() {
               fontFamily="Poiret One"
               onChange={handleSearchChange}
               focusBorderColor="transparent"
-              sx={{
-                "&:focus": { boxShadow: "none", borderColor: "transparent" },
-              }}
+              sx={{ "&:focus": { boxShadow: "none", borderColor: "transparent" } }}
             />
           </InputGroup>
         </Flex>
+
         <Flex direction="column" alignItems="center">
-          {filteredImages.map((image, index) => (
+          {filteredImages.map((image) => (
             <PaintingCardRightText
-              key={index}
+              key={image._id}
               image={image}
-              index={index}
               fontSizeName={{ base: "2.5rem", md: "3xl", xl: "5xl" }}
               fontSizeSize={{ base: "1.2rem", md: "md", xl: "2xl" }}
               fontSizeAvailable={{ base: "1.2rem", md: "lg", xl: "2xl" }}
@@ -100,17 +75,11 @@ function Projects() {
     );
   }
 
+  // Mobile version
   if (isMobile) {
     return (
       <Flex direction="column">
-        <Flex
-          width="90%"
-          justifyContent="center"
-          mt="5rem"
-          mb="3rem"
-          ml="0.5rem"
-          direction="row"
-        >
+        <Flex width="90%" justifyContent="center" mt="5rem" mb="3rem" ml="0.5rem">
           <InputGroup maxWidth="md">
             <InputLeftElement pointerEvents="none">
               <IoIosSearch color="gray.300" />
@@ -121,21 +90,19 @@ function Projects() {
               fontFamily="Poiret One"
               onChange={handleSearchChange}
               focusBorderColor="transparent"
-              sx={{
-                "&:focus": { boxShadow: "none", borderColor: "transparent" },
-              }}
+              sx={{ "&:focus": { boxShadow: "none", borderColor: "transparent" } }}
             />
           </InputGroup>
         </Flex>
+
         <Flex direction="column" alignItems="center">
-          {filteredImages.map((image, index) => (
+          {filteredImages.map((image) => (
             <PaintingCardRightText
-              key={index}
+              key={image._id}
               image={image}
-              index={index}
-              fontSizeName={"1.5rem"}
-              fontSizeSize={"1rem"}
-              fontSizeAvailable={"1rem"}
+              fontSizeName="1.5rem"
+              fontSizeSize="1rem"
+              fontSizeAvailable="1rem"
             />
           ))}
         </Flex>
@@ -143,15 +110,10 @@ function Projects() {
     );
   }
 
+  // Desktop version - Alternating Left & Right cards
   return (
     <Flex direction="column" alignItems="center">
-      <Flex
-        width="100%"
-        justifyContent="center"
-        mt="7rem"
-        mb="-5rem"
-        direction="row"
-      >
+      <Flex width="100%" justifyContent="center" mt="7rem" mb="-5rem">
         <InputGroup maxWidth="md">
           <InputLeftElement pointerEvents="none">
             <IoIosSearch color="gray.300" />
@@ -162,70 +124,30 @@ function Projects() {
             fontFamily="Poiret One"
             onChange={handleSearchChange}
             focusBorderColor="transparent"
-            sx={{
-              "&:focus": { boxShadow: "none", borderColor: "transparent" },
-            }}
+            sx={{ "&:focus": { boxShadow: "none", borderColor: "transparent" } }}
           />
         </InputGroup>
       </Flex>
-      {/* Render small images */}
-      {leftSmallImages.map((leftImage, index) => {
-        const rightImage = rightSmallImages[index];
-        return (
-          <HStack key={index} spacing={4} width="100%">
+
+      {filteredImages.map((image, index) => (
+        <React.Fragment key={image._id}>
+          {index % 2 === 0 ? (
             <PaintingCardRightText
-              image={leftImage}
-              index={index}
+              image={image}
               fontSizeName={{ base: "2.5rem", md: "3xl", xl: "5xl" }}
               fontSizeSize={{ base: "1.2rem", md: "md", xl: "2xl" }}
               fontSizeAvailable={{ base: "1.2rem", md: "lg", xl: "2xl" }}
             />
-            <Box
-              borderLeft="1px solid black"
-              height="200px"
-              marginTop="12rem"
-            />
-            {rightImage && (
-              <PaintingCardLeftText
-                image={rightImage}
-                index={index + leftSmallImages.length}
-                fontSizeName={{ base: "2.5rem", md: "3xl", xl: "5xl" }}
-                fontSizeSize={{ base: "1.2rem", md: "md", xl: "2xl" }}
-                fontSizeAvailable={{ base: "1.2rem", md: "lg", xl: "2xl" }}
-              />
-            )}
-          </HStack>
-        );
-      })}
-      {/* Render big images */}
-      {leftBigImages.map((leftImage, index) => {
-        const rightImage = rightBigImages[index];
-        return (
-          <HStack key={index} spacing={4} width="100%">
-            <PaintingCardRightText
-              image={leftImage}
-              index={index}
+          ) : (
+            <PaintingCardLeftText
+              image={image}
               fontSizeName={{ base: "2.5rem", md: "3xl", xl: "5xl" }}
               fontSizeSize={{ base: "1.2rem", md: "md", xl: "2xl" }}
               fontSizeAvailable={{ base: "1.2rem", md: "lg", xl: "2xl" }}
             />
-            <Box
-              borderLeft="1px solid black"
-              height="200px"
-              marginTop="12rem"
-            />
-            {rightImage && (
-              <PaintingCardLeftText
-                image={rightImage}
-                index={index + leftBigImages.length}
-                fontSizeName={{ base: "2.5rem", md: "3xl", xl: "5xl" }}
-                fontSizeSize={{ base: "1.2rem", md: "md", xl: "2xl" }}
-                fontSizeAvailable={{ base: "1.2rem", md: "lg", xl: "2xl" }}
-              />
-            )}
-          </HStack>
-        );
-      })}
+          )}
+        </React.Fragment>
+      ))}
     </Flex>
   );
 }
