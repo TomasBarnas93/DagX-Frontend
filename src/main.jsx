@@ -11,7 +11,7 @@ import { enTranslation } from "./data/en";
 import { svTranslation } from "./data/sv";
 import { plTranslation } from "./data/pl";
 import { LanguageProvider } from "./services/LanguageContext";
-import ImageProvider from "./services/ImageContext";
+import { ImageProvider } from "./services/ImageContext";
 
 const resources = {
   en: { translation: enTranslation },
@@ -27,17 +27,17 @@ i18n.use(initReactI18next).init({
 });
 
 createRoot(document.getElementById("root")).render(
-  <HashRouter>
-    <I18nextProvider i18n={i18n}>
-      <ChakraProvider>
-        <LanguageProvider>
-          <ImageProvider>
-            <React.StrictMode>
+  <React.StrictMode>
+    <HashRouter>
+      <I18nextProvider i18n={i18n}>
+        <ChakraProvider>
+          <LanguageProvider>
+            <ImageProvider>
               <App />
-            </React.StrictMode>
-          </ImageProvider>
+            </ImageProvider>
         </LanguageProvider>
       </ChakraProvider>
-    </I18nextProvider>
-  </HashRouter>
+      </I18nextProvider>
+    </HashRouter>
+  </React.StrictMode>
 );

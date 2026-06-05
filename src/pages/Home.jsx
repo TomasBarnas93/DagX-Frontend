@@ -8,13 +8,23 @@ import { motion } from "framer-motion";
 
 function Home() {
   const { images, loading } = useContext(ImageContext);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
-  const getAboutWidth = () => {
-    return { base: "90%", md: "95%" };
-  };
+  console.log("Total paintings loaded:", images.length);
 
-  const newestImage = images.length > 0 ? [...images].sort((a, b) => b.order - a.order)[0] : null;
+  const getAboutWidth = () => ({ base: "90%", md: "95%" });
+
+  const newestImage = images.length > 0 
+    ? [...images].sort((a, b) => (b.order || 0) - (a.order || 0))[0] 
+    : null;
+
+  const remainingImages = newestImage 
+    ? images.filter(img => img._id !== newestImage._id) 
+    : images;
+
+  if (loading) {
+    return <Box textAlign="center" py={20}>Loading paintings...</Box>;
+  }
 
   return (
     <Box>
@@ -80,7 +90,6 @@ function Home() {
         </Flex>
       </motion.div>
 
-      {/* Newest Painting */}
       {newestImage && (
         <Box mt="6rem" width="100%">
           <PaintingCardRightText
@@ -92,11 +101,10 @@ function Home() {
         </Box>
       )}
 
-      {/* All Paintings */}
       <Box mt="4rem" width="100%">
-        {images.map((image, index) => (
+        {remainingImages.map((image) => (
           <PaintingCardRightText
-            key={image._id || index}
+            key={image._id}
             image={image}
             fontSizeName={{ base: "2.5rem", md: "5xl" }}
             fontSizeSize={{ base: "1.2rem", md: "2xl" }}

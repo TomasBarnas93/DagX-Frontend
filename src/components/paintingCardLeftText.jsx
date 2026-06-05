@@ -43,9 +43,6 @@ function PaintingCardLeftText({
             <Box className="underlineCustom" mt={4} />
             <Text fontSize={fontSizeSize}>{image.size}</Text>
 
-            <Text fontSize="lg" mt={6} color={image.available ? "green.600" : "red.600"}>
-              {image.available ? t("Available") : t("Sold")}
-            </Text>
           </Box>
 
           <Box className="imageWrapper">

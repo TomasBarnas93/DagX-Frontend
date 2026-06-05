@@ -1,18 +1,26 @@
 import { createClient } from '@sanity/client';
+import { createImageUrlBuilder } from '@sanity/image-url';
 
 export const sanityClient = createClient({
   projectId: '97evmjrm',
   dataset: 'production',
   apiVersion: '2025-06-05',
-  useCdn: true,        
+  useCdn: true,
 });
 
+const builder = createImageUrlBuilder(sanityClient);
+
 export const urlFor = (source) => {
-  if (!source?.asset?._ref) return '';
+  if (!source?.asset?._ref) {
+    return '';
+  }
 
-  let imageUrl = source.asset._ref
-    .replace('image-', '')
-    .replace(/-([a-z0-9]+)-([a-z0-9]+)$/, '.$2');
+  const url = builder
+    .image(source)
+    .width(1400)
+    .format('jpg')
+    .quality(85)
+    .url();
 
-  return `https://cdn.sanity.io/images/97evmjrm/production/${imageUrl}`;
+  return url;
 };
