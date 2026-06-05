@@ -15,8 +15,8 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { useContext, useEffect, useState } from "react";
-import { LanguageContext } from "../services/LanguageContext";
+import { useEffect, useState } from "react";
+import { useLanguage } from "../services/LanguageContext";   
 import { Link, useLocation } from "react-router-dom";
 import { SlArrowUp } from "react-icons/sl";
 import { VscMenu } from "react-icons/vsc";
@@ -25,7 +25,9 @@ const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { i18n } = useTranslation();
-  const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext);
+  
+  const { selectedLanguage, setSelectedLanguage } = useLanguage();
+  
   const { t } = useTranslation();
 
   const location = useLocation();
@@ -51,22 +53,19 @@ const Navbar = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const useGetFontSize = () => {
     const fontSizes = {
-      base: { en: "1.1rem", sv: "1.3rem", pl: "1.3rem" }, 
-      md: { en: "1.5rem", sv: "1.6rem", pl: "1.6rem" }, 
-      lg: { en: "1.8rem", sv: "1.8rem", pl: "1.8rem" }, 
-      xl: { en: "1.8rem", sv: "2rem", pl: "2rem" }, 
+      base: { en: "1.1rem", sv: "1.3rem", pl: "1.3rem" },
+      md: { en: "1.5rem", sv: "1.6rem", pl: "1.6rem" },
+      lg: { en: "1.8rem", sv: "1.8rem", pl: "1.8rem" },
+      xl: { en: "1.8rem", sv: "2rem", pl: "2rem" },
     };
-  
+
     const fontSizeForBreakpoint = useBreakpointValue(fontSizes);
-  
-    return fontSizeForBreakpoint[i18n.language] || fontSizeForBreakpoint.base;
+    return fontSizeForBreakpoint[i18n.language] || fontSizeForBreakpoint?.base;
   };
 
   const fontSize = useGetFontSize();
@@ -82,26 +81,27 @@ const Navbar = () => {
       zIndex="100"
       transition="background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s"
     >
-{isHomePage && scrollPosition < 20 && (
-  <Box
-    textAlign="center"
-    paddingTop="2rem"
-    display="inline-block"
-    width={{base: "90%", md: "100%"}}
-  >
-    <Text
-      fontSize={fontSize}
-      fontFamily="Poiret One"
-      display="inline"
-      dangerouslySetInnerHTML={{
-        __html: `
-          <span style="font-weight: bold;">${t("MottoHead")}</span>
-          ${isMobile ? '<div class="underlineCustom" style="margin-top: 1.5rem;"></div>' : ''}
-          ${isMobile ? t("MottoMobile") : t("Motto")}`,
-      }}
-    />
-  </Box>
-)}
+      {isHomePage && scrollPosition < 20 && (
+        <Box
+          textAlign="center"
+          paddingTop="2rem"
+          display="inline-block"
+          width={{ base: "90%", md: "100%" }}
+        >
+          <Text
+            fontSize={fontSize}
+            fontFamily="Poiret One"
+            display="inline"
+            dangerouslySetInnerHTML={{
+              __html: `
+                <span style="font-weight: bold;">${t("MottoHead")}</span>
+                ${isMobile ? '<div class="underlineCustom" style="margin-top: 1.5rem;"></div>' : ''}
+                ${isMobile ? t("MottoMobile") : t("Motto")}`,
+            }}
+          />
+        </Box>
+      )}
+
       <Flex
         width="100%"
         alignItems="center"
@@ -110,7 +110,6 @@ const Navbar = () => {
           location.pathname === "/create" ||
           location.pathname === "/projects" ||
           location.pathname === "/contact" ||
-          location.pathname === "/info" ||
           location.pathname.startsWith("/detail/")
             ? "1rem"
             : "3rem"
@@ -118,81 +117,37 @@ const Navbar = () => {
       >
         <Flex flex="1" justifyContent="center" alignItems="center">
           {!isMobile && (
-            <Flex
-              alignItems="center"
-              spacing="4"
-              gap="3rem"
-              opacity={scrollPosition > 20 ? 0 : 1}
-            >
+            <Flex alignItems="center" gap="3rem" opacity={scrollPosition > 20 ? 0 : 1}>
               <Box>
-                <ChakraLink
-                  as={Link}
-                  to="/"
-                  color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
-                  className="underlineCustom2"
-                  _hover={{ textDecoration: "none" }}
-                >
+                <ChakraLink as={Link} to="/" color="black" fontSize={{ xl: "1.9rem", lg: "1.4rem", md: "1.7rem" }} className="underlineCustom2">
                   <Text fontFamily="Poiret One">{t("Home")}</Text>
                 </ChakraLink>
               </Box>
               <Box>
-                <ChakraLink
-                  as={Link}
-                  to="/projects"
-                  color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
-                  className="underlineCustom2"
-                  _hover={{ textDecoration: "none" }}
-                >
+                <ChakraLink as={Link} to="/projects" color="black" fontSize={{ xl: "1.9rem", lg: "1.4rem", md: "1.7rem" }} className="underlineCustom2">
                   <Text fontFamily="Poiret One">{t("Projects")}</Text>
                 </ChakraLink>
               </Box>
               <Box>
-                <ChakraLink
-                  as={Link}
-                  to="/info"
-                  color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
-                  className="underlineCustom2"
-                  _hover={{ textDecoration: "none" }}
-                >
-                  <Text fontFamily="Poiret One">{t("Info")}</Text>
-                </ChakraLink>
-              </Box>
-              <Box>
-                <ChakraLink
-                  as={Link}
-                  to="/contact"
-                  color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
-                  className="underlineCustom2"
-                  _hover={{ textDecoration: "none" }}
-                >
+                <ChakraLink as={Link} to="/contact" color="black" fontSize={{ xl: "1.9rem", lg: "1.4rem", md: "1.7rem" }} className="underlineCustom2">
                   <Text fontFamily="Poiret One">{t("Contact")}</Text>
                 </ChakraLink>
               </Box>
               <Box>
-                <ChakraLink
-                  as={Link}
-                  to="/create"
-                  color="black"
-                  fontSize={{xl: "1.9rem", lg: "1.4rem", md: "1.7rem"}}
-                  className="underlineCustom2"
-                  _hover={{ textDecoration: "none" }}
-                >
+                <ChakraLink as={Link} to="/create" color="black" fontSize={{ xl: "1.9rem", lg: "1.4rem", md: "1.7rem" }} className="underlineCustom2">
                   <Text fontFamily="Poiret One">{t("Create")}</Text>
                 </ChakraLink>
               </Box>
             </Flex>
           )}
+
           {!isMobile && (
             <Box ml="2rem" opacity={scrollPosition > 20 ? 0 : 1}>
               <Select
                 onChange={handleLanguageChange}
                 value={selectedLanguage}
                 fontFamily="Poiret One"
-                fontSize={{xl: "1.5rem", lg: "1rem" , md: "1.4rem"}}
+                fontSize={{ xl: "1.5rem", lg: "1rem", md: "1.4rem" }}
               >
                 <option value="en">EN</option>
                 <option value="pl">PL</option>
@@ -213,7 +168,7 @@ const Navbar = () => {
           />
         )}
 
-        {/* Mobile */}
+        {/* Mobile Drawer */}
         {isMobile && (
           <Drawer isOpen={isOpen} size="full" onClose={onToggle}>
             <DrawerOverlay>
@@ -227,7 +182,6 @@ const Navbar = () => {
                       w="25%"
                       color="black"
                       fontFamily="Poiret One"
-                      fontSize="1xl"
                     >
                       <option value="en">EN</option>
                       <option value="pl">PL</option>
@@ -236,17 +190,10 @@ const Navbar = () => {
                   </Flex>
                 </DrawerHeader>
                 <DrawerBody fontSize="3xl" fontFamily="Poiret One">
-                  <Flex
-                    direction="column"
-                    gap={5}
-                    justifyContent="center"
-                    alignItems="center"
-                    height="100%"
-                  >
+                  <Flex direction="column" gap={5} justifyContent="center" alignItems="center" height="100%">
                     {[
                       { path: "/", label: "Home" },
                       { path: "/projects", label: "Projects" },
-                      { path: "/info", label: "Info" },
                       { path: "/contact", label: "Contact" },
                       { path: "/create", label: "Create" },
                     ].map((item) => (
@@ -254,8 +201,6 @@ const Navbar = () => {
                         as={Link}
                         to={item.path}
                         key={item.path}
-                        marginBottom="1rem"
-                        display="block"
                         onClick={onToggle}
                         className="underlineCustom"
                       >
@@ -284,4 +229,5 @@ const Navbar = () => {
     </Flex>
   );
 };
+
 export default Navbar;

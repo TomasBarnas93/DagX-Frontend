@@ -17,9 +17,13 @@ export const plTranslation = {
   About: "Nazywam się Dagmara Barnas i zajmuję się malarstwem hobbystycznie lecz z wielką pasją od 2018 roku. Chcę aby Twoje wyobrażenie o nowoczesnym i gustownym wnętrzu stało się prawdą. Dlatego też możesz zamówić u mnie obraz abstrakcyjny z wykorzystaniem technik mieszanych, taki jaki sobie wymarzysz.",
 
   //Contact
+  ContactInformation: "Dane kontaktowe",
   Name: "Imię",
   Email: "Adres e-mail",
+  SendMessage: "Wyślij wiadomość",
   Message: "Wiadomość",
+  MessageHolder: "Wpisz swoją wiadomość tutaj...",
+  Phone: "Numer telefonu",
   Size: "Rozmiar obrazu",
   Attachment: "Załącznik",
   Send: "Wyślij",
