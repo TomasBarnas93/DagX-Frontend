@@ -34,13 +34,13 @@
     "sweetalert2": "^11.26.25",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
+    "scripts": {
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": [
